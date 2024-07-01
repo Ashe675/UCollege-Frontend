@@ -10,7 +10,7 @@ export default function AdmissionLayout() {
       <AdmisssionNavbar />
 
       <div className="absolute bottom-0 w-full -z-10 ">
-          <img src="wave.svg" />
+          <img src="/wave.svg" />
           <div className=" h-40 lg:h-10 bg-[#172B4D]"></div>
       </div>
     </>
