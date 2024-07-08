@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdmissionLayout from "./layouts/admission/AdmissionLayout";
+import AdmissionLayout from "./layouts/Admission/AdmissionLayout";
 import InitialView from "./views/admission/InitialView";
 import Inscripcion from "./views/admission/Inscripcion";
 import Examenes from "./views/admission/Examenes";
