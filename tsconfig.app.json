@@ -7,16 +7,9 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/components/*" : ["components/*"],
-      "@/views/*" : ["views/*"],
-      "@/layouts/*" : ["layouts/*"],
-      "@/api/*" : ["api/*"],
-      "@/types/*" : ["types/*"],
-      "@/lib/*" : ["lib/*"],
-      "@/utils/*" : ["utils/*"],
-      "@/hooks/*" : ["hooks/*"],
+      "@/*" : ["./src/*"]
     },
 
     /* Bundler mode */
