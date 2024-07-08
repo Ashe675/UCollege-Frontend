@@ -51,6 +51,7 @@ export default function UploadNotesSection() {
         onSubmit={handleSubmit(handleSendGrades)}
         noValidate
         className=" w-full sm:max-w-lg mx-auto space-y-3"
+        hidden = {mutation.isPending}
       >
         <div className="  flex flex-col rounded-md">
           <input

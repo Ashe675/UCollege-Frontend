@@ -15,7 +15,7 @@ export default function InscriptionForm() {
     queryFn: getRegionalCenters,
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn : createInscription,
     onError : (error) =>{
       toast.update(toastId.current!, {
@@ -123,6 +123,7 @@ export default function InscriptionForm() {
     <form
       onSubmit={handleSubmit(handleSendInscription)}
       noValidate
+      hidden = {isPending}
       className=" bg-white rounded-sm shadow-md p-4 space-y-6 mt-5 py-9 mb-12"
     >
       <div className=" space-y-1 flex flex-col">
@@ -140,9 +141,9 @@ export default function InscriptionForm() {
           {...register("name", {
             required: "Los nombres son obligatorios",
             pattern: {
-              value: /^[a-zA-ZÀ-ÿ]+(?: [a-zA-ZÀ-ÿ]+)?$/,
+              value: /^[A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*(?: [A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*)?$/,
               message:
-                "EL campo no puede contener números, ni espacios de más, debe ingresar obligatorio el primer nombre",
+                "EL campo no puede contener números, ni espacios de más, debe ingresar obligatorio el primer nombre, cada nombre debe empezar por mayúscula",
             },
           })}
         />
@@ -163,9 +164,9 @@ export default function InscriptionForm() {
           {...register("lastName", {
             required: "Los apellidos son obligatorios",
             pattern: {
-              value: /^[a-zA-ZÀ-ÿ]+(?: [a-zA-ZÀ-ÿ]+)?$/,
+              value: /^[A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*(?: [A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*)?$/,
               message:
-                "EL campo no puede contener números, ni espacios de más, debe ingresar obligatorio el primer apellido",
+                "EL campo no puede contener números, ni espacios de más, debe ingresar obligatorio el primer apellido, cada nombre debe empezar por mayúscula",
             },
           })}
         />
