@@ -5,6 +5,7 @@ import Inscripcion from "./views/admission/Inscripcion";
 import Examenes from "./views/admission/Examenes";
 import Resultados from "./views/admission/Resultados";
 import AdminAdmission from "./views/admin/AdminAdmission";
+import Login from "./views/login/login";
 
 export default function Router() {
   return (
@@ -15,6 +16,7 @@ export default function Router() {
                 <Route path="/admisiones/inscripcion" element={<Inscripcion/>}></Route>
                 <Route path="/admisiones/examenes" element={<Examenes/>}></Route>
                 <Route path="/admisiones/resultados" element={<Resultados/>}></Route>
+                <Route path="/login" element={<Login />}></Route>
             </Route>
             <Route path="/admisiones/admin" element={<AdminAdmission/>}/>
         </Routes>

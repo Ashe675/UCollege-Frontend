@@ -5,5 +5,5 @@ type FacultyLogoProps = {
 };
 
 export default function FacultyLogo({ src, alt, className }: FacultyLogoProps) {
-  return <img src={src} alt={alt} className={className} />;
+  return <img src={src} alt={alt} className={className} style={{width:"18%", marginLeft:"65vw", marginTop:"0"}}/>;
 }

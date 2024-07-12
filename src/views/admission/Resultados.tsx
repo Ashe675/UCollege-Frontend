@@ -67,7 +67,9 @@ export default function Resultados() {
   };
 
   return (
-    <Hero
+    <>
+      <div style={{textAlign:"justify"}}>
+      <Hero
       title="Resultados"
       description="¡Felicidades por haber completado tus exámenes de admisión! Aquí podrás consultar los resultados de tus exámenes y descubrir si has sido admitido a la carrera de tus sueños. Para comenzar, simplemente ingresa tu número de identidad en el buscador a continuación."
       className=" md:max-w-5xl pb-8"
@@ -97,5 +99,7 @@ export default function Resultados() {
         {mutation.error && <ErrorMessage>{mutation.error.message}</ErrorMessage>}
       </div>
     </Hero>
+      </div>
+    </>
   );
 }

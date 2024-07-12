@@ -31,8 +31,10 @@ export default function Examenes() {
   };
 
   return (
-    <Hero
-      title="Examenes"
+    <>
+      <div style={{textAlign:"justify"}}>
+      <Hero
+      title="Exámenes"
       description="Bienvenido a la sección de Exámenes de Admisión. Aquí puedes verificar fácilmente qué exámenes necesitas realizar. Para comenzar, simplemente ingresa tu número de identidad en el buscador a continuación. Nuestro sistema te mostrará toda la información relevante sobre tus exámenes, incluyendo los puntajes para aprobarlos fechas, horarios y ubicaciones."
       className=" md:max-w-5xl pb-8"
     >
@@ -62,5 +64,7 @@ export default function Examenes() {
         {mutation.error && <ErrorMessage>{mutation.error.message}</ErrorMessage>}
       </div>
     </Hero>
+      </div>
+    </>
   );
 }

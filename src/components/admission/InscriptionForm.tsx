@@ -270,7 +270,7 @@ export default function InscriptionForm() {
         <input
           type="text"
           id="dni"
-          placeholder="Ingrese su número de identidad"
+          placeholder="Ingrese su Número de Identidad - Ej. (0110100012345)"
           className="p-2"
           {...register("dni", {
             required: "La identidad es obligatoria",
@@ -318,7 +318,7 @@ export default function InscriptionForm() {
         <input
           type="text"
           id="phoneNumber"
-          placeholder="Ingrese su número de teléfono"
+          placeholder="Ingrese su número de teléfono - Ej. (99557711)"
           className="p-2"
           {...register("phoneNumber", {
             required: "El teléfono es obligatorio",
