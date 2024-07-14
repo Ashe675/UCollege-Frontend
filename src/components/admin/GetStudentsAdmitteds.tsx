@@ -54,7 +54,7 @@ export default function GetStudentsAdmitteds() {
   function handleError(error: unknown) {
     if (isAxiosError(error) && error.response) {
       toast.update(toastId.current!, {
-        render: "Error al descagar el archivo",
+        render: "No hay estudiantes admitidos o el proceso de resultados se encuentra inactivo",
         type: "error",
         isLoading: false,
         autoClose: 3000,

@@ -53,7 +53,7 @@ export default function GetNotesSection() {
   function handleError(error: unknown) {
     if (isAxiosError(error) && error.response) {
       toast.update(toastId.current!, {
-        render: "Error al descagar el archivo",
+        render: "No se encontraron más notas o el proceso de entrega de resultados se encuentra inactivo",
         type: "error",
         isLoading: false,
         autoClose: 3000,
