@@ -6,7 +6,8 @@ export default function Login() {
   return (
     <>
       <div style={{textAlign:"justify"}}>
-        <Hero title="Inscripción" description="Bienvenidos a UCollege">
+      <Hero title="Iniciar Sesión" description="">
+          <h3 style={{color:"white", fontWeight:"bolder"}}>Bienvenidos a UCollege</h3>
           <LoginForm/>
         </Hero>
       </div>

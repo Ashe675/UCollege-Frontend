@@ -1,4 +1,4 @@
-import ListFacultyLogo from '@/components/admission/ListFacultyLogo';
+import { ListFacultyLogo } from '@/components/admission/ListFacultyLogo';
 import ListCardNavigate from '../../components/admission/ListCardNavigate';
 
 export default function InitialView() {
