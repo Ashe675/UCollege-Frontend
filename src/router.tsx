@@ -5,7 +5,7 @@ import Inscripcion from "./views/admission/Inscripcion";
 import Examenes from "./views/admission/Examenes";
 import Resultados from "./views/admission/Resultados";
 import AdminAdmission from "./views/admin/AdminAdmission";
-import Login from "./views/login/login";
+import Login from "./views/auth/login";
 
 export default function Router() {
   return (

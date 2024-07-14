@@ -1,5 +1,5 @@
 import Hero from "@/components/admission/Hero";
-import LoginForm from "@/components/login/loginForm";
+import LoginForm from "@/components/auth/loginForm";
 
 
 export default function Login() {
