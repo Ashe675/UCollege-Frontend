@@ -73,31 +73,6 @@ export function AppSidebar({
             {menuItemsActive && menuItemsActive[1].dropdown.items.length > 0 && (
               <Dropdown dropdown={menuItemsActive[1].dropdown} />
             ) }
-            {/* {role === RoleEnum.STUDENT && (
-              <>
-                {menuItems.STUDENT.itemsPrincipals.map((item) => (
-                  <ItemSidebar
-                    key={item.link}
-                    Icon={item.icon}
-                    link={item.link}
-                    text={item.text}
-                  />
-                ))}
-                <Dropdown dropdown={menuItems.STUDENT.dropdown} />
-              </>
-            )}
-            {role === RoleEnum.ADMIN && (
-              <>
-                {menuItems.ADMIN.itemsPrincipals.map((item) => (
-                  <ItemSidebar
-                    key={item.link}
-                    Icon={item.icon}
-                    link={item.link}
-                    text={item.text}
-                  />
-                ))}
-              </>
-            )} */}
           </div>
         </div>
         <div className=" flex justify-center mb-2">

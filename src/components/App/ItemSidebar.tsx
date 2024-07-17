@@ -11,7 +11,7 @@ type ItemSidebarProps = {
 export default function ItemSidebar({Icon, text, link} : ItemSidebarProps) {
   
   const location = useLocation();
-  const active = location.pathname === link
+  const active = location.pathname === `/myspace/${link}` || location.pathname === link
   
 
   return (

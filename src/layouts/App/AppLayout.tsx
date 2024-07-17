@@ -37,7 +37,7 @@ export default function AppLayout() {
               <div className=" space-x-4 flex items-center relative">
                 <button
                   onClick={handleClick}
-                  className=" bg-secondary p-1 rounded-md shadow-sm left-0 absolute text-white z-30"
+                  className={` bg-secondary p-1 rounded-md shadow-sm left-0  text-white z-30 ${show ? 'fixed left-5' : 'absolute'}`}
                 >
                   <IconMenu2 stroke={2} />
                 </button>
