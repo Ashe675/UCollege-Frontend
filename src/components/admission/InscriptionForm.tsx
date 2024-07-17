@@ -340,7 +340,7 @@ export default function InscriptionForm() {
         <input
           type="email"
           id="email"
-          placeholder="Ingrese su correo personal"
+          placeholder="Ingrese su correo personal (Ej. correo@correo.com)"
           className="p-2"
           {...register("email", {
             required: "El correo personal es obligatorio",

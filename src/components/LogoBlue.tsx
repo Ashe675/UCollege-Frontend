@@ -1,7 +1,7 @@
 
-export default function LogoBlue() {
+export default function LogoBlue({className} : {className? : string}) {
     return (
-      <img src="/LogoBlue.png" alt="Logo" />
+      <img src="/LogoBlue.png" className={className} alt="Logo" />
     )
   }
   

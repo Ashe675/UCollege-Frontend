@@ -2,7 +2,7 @@
 type HeroProps = {
     children? : React.ReactNode
     title : string
-    description : string
+    description? : string
     className? : string
 }
 
