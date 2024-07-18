@@ -1,4 +1,4 @@
-import flowbite from 'flowbite-react/tailwind'
+import flowbite from "flowbite-react/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,6 +8,7 @@ export default {
     flowbite.content(),
   ],
   theme: {
+    plugins: [flowbite.plugin()],
     extend: {
       colors: {
         primary: {
@@ -27,11 +28,8 @@ export default {
         },
       },
       backgroundImage: {
-        primary: "linear-gradient(to right, #17C1E8, #1175EF)",
+        primaryBlue: "linear-gradient(to right, #17C1E8, #1175EF)",
       },
     },
-    plugins: [
-      flowbite.plugin()
-    ],
   },
 };

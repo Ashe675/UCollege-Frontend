@@ -1,11 +1,12 @@
 import CardNavigate from '@/components/admission/CardNavigate';
+import { PublicRoutes } from '@/data/routes';
 import { IconPencil, IconNotes, IconChecklist  } from '@tabler/icons-react';
 
 export default function ListCardNavigate() {
   return (
     <div className="container  mx-auto p-10 px-4 sm:p-10 flex gap-8 flex-wrap">
       <CardNavigate
-        href='inscripcion'
+        href={PublicRoutes.ADMISSION_INSCRIPTION}
         title="Inscripción"
         description="¡Únete a nuestra universidad y construye tu futuro hoy mismo! "
         className=" bg-yellow-300"
@@ -13,7 +14,7 @@ export default function ListCardNavigate() {
         <IconPencil size={24} stroke={2} />
       </CardNavigate>
       <CardNavigate
-        href='examenes'
+        href={PublicRoutes.ADMISSION_EXAMS}
         title="Exámenes"
         description="Consulta tus exámenes aquí y toma el control de tu preparación. ¡Vamos juntos hacia el éxito académico!"
         className=" bg-orange-400"
@@ -21,7 +22,7 @@ export default function ListCardNavigate() {
         <IconNotes size={24} stroke={2} />
       </CardNavigate>
       <CardNavigate
-        href='resultados'
+        href={PublicRoutes.ADMISSION_RESULTS}
         title="Resultados"
         description="Revisa tus resultados aquí y descubre si has sido admitido. ¡Tu camino hacia el éxito comienza ahora!"
         className=" bg-rose-500"

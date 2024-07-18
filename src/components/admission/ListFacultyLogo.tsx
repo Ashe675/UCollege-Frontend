@@ -1,6 +1,6 @@
 import { Carousel } from "flowbite-react";
 
-export function ListFacultyLogo() {
+export default function ListFacultyLogo() {
   const slides = [
     [
       "/Admissions/Ingenieria-color.png",

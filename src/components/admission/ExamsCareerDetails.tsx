@@ -23,8 +23,7 @@ export default function ExamsCareerDetails({
         <ul className=" space-y-1">
           {career.tests.map((test) => (
             <li key={test.code} className=" bg-slate-100  p-2">
-              <span className=" font-bold">{test.code}</span> - Prueba de
-              Aptitudes Académicas
+              <span className=" font-bold">{test.code}</span> - {test.name}
               <div>
                 <span className=" font-bold">Requisito: </span>
                 {test.minScore}

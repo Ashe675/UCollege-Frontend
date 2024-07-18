@@ -54,7 +54,7 @@ export default function GetStudentsAdmitteds() {
   function handleError(error: unknown) {
     if (isAxiosError(error) && error.response) {
       toast.update(toastId.current!, {
-        render: "Error al descagar el archivo",
+        render: "No hay estudiantes admitidos o el proceso de resultados se encuentra inactivo",
         type: "error",
         isLoading: false,
         autoClose: 3000,
@@ -73,8 +73,8 @@ export default function GetStudentsAdmitteds() {
   }
 
   return (
-    <section className="w-full md:max-w-4xl shadow-md p-3 bg-white mx-auto space-y-4">
-      <h2 className="text-xl sm:text-2xl text-slate-700 text-center font-bold">
+    <section className="w-full md:max-w-4xl shadow-md p-3 bg-white mx-auto space-y-4 rounded-sm">
+      <h2 className="text-xl  text-slate-700 text-center font-semibold">
         Obtener Estudiantes Admitidos
       </h2>
       <button
