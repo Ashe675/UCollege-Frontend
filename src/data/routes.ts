@@ -6,6 +6,7 @@ export const PublicRoutes = {
     LOGIN : '/auth/login',
     FORGOT_PASSWORD : '/auth/forgot-password',
     NEW_PASSWORD : '/auth/new-password/:token',
+    SELECT_CAREER : '/auth/seleccionar-carrera'
 }
 
 export const PrivateRoutes = {

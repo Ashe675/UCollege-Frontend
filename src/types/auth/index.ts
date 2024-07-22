@@ -26,7 +26,22 @@ const authSchema = z.object({
     person: z.object({
         firstName: z.string(),
         lastName: z.string()
-    })
+    }),
+    jwtoken : z.string(),
+    user : z.object({
+        id : z.number(),
+        verified : z.boolean()
+    }),
+    options : z.array(z.object({
+        id : z.number(),
+        regionalCenter_Faculty_Career : z.object({
+            id: z.number(),
+            career: z.object({
+                name : z.string()
+            })
+        })
+    })),
+    regionalCenter : z.string()
 })
 
 type Auth = z.infer<typeof authSchema>
@@ -38,6 +53,18 @@ export const userSchema = authSchema.pick({
     institutionalEmail: true,
     person: true
 })
+
+export const loginUserSchema = authSchema.pick({jwtoken : true, user: true})
+export type LoginUser = z.infer<typeof loginUserSchema>
+
+export const optionsCareerStudentSchema = authSchema.pick({
+    options : true,
+    regionalCenter : true
+})
+export type OptionsCareerStudent = z.infer<typeof optionsCareerStudentSchema>
+export type RegionalCenterFacultyCareerId = {
+    optionId : string
+}
 
 type User = z.infer<typeof userSchema>
 export type ForgotPasswordData = Pick<User, 'institutionalEmail'>
