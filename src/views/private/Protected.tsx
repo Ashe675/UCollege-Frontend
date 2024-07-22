@@ -9,6 +9,7 @@ const HomeStudent = lazy(() => import("./student/HomeStudent"));
 const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
+const TeacherView = lazy(() => import('@/views/Teacher/teacherView'));
 
 export default function Protected() {
   return (
@@ -43,6 +44,16 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <AdminAdmission />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route element={<RoleGuard role={RoleEnum.ADMIN} />}>
+          <Route
+            path={PrivateRoutes.TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <TeacherView />
               </Suspense>
             }
           />
