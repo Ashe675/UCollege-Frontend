@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+
 const AdmissionLayout = lazy(
   () => import("./layouts/Admission/AdmissionLayout")
 );
@@ -16,6 +17,7 @@ import AuthGuard from "./guards/AuthGuard";
 const NewPasswordView = lazy(() => import('./views/auth/NewPasswordView'));
 const ForgotPassword = lazy(()=>import("./views/auth/ForgotPassword"));
 const AuthLayout = lazy(() => import("./layouts/auth/AuthLayout"));
+const TeacherView = lazy(() => import('./components/teacher/teacher'));
 
 export default function Router() {
   return (
@@ -36,6 +38,8 @@ export default function Router() {
               </Suspense>
             }
           ></Route>
+          <Route path="/teacher" element={<TeacherView />}>
+          </Route>
           <Route
             path={PublicRoutes.ADMISSION_INSCRIPTION}
             element={

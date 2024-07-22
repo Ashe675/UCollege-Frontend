@@ -1,0 +1,115 @@
+"use client";
+
+import { Button, Label, Modal, TextInput } from "flowbite-react";
+import ErrorMessage from "../ErrorMessage";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { getRegionalCenters } from "@/api/admission/AdmissionApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { RegionalCareers } from "@/types/admission";
+import { toast } from "react-toastify";
+import { RegisterTeacher } from "@/types/teacher";
+
+export function ModalTeacher() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const toastId = useRef<null | number | string>(null)
+
+  const { data } = useQuery({
+    queryKey: ["regionalCenters"],
+    queryFn: getRegionalCenters,
+  });
+
+  const { mutate, isPending } = useMutation({
+    onError : (error) =>{
+      toast.update(toastId.current!, {
+        render: error.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        theme : 'colored'
+      });
+    },
+    onSuccess: (data) => {
+      toast.update(toastId.current!, {
+        render: data,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        theme : 'colored'
+      });
+      reset();
+    }
+  })
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+    reset,
+  } = useForm<RegisterTeacher>();
+
+  const validateImageFile = (file: FileList | null) => {
+    if (!file || !file[0]) {
+      return "La foto del certificado de secundaria es obligatoria";
+    }
+    if (file.length > 1) {
+      return "Solo se puede subir un archivo";
+    }
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file[0].type)) {
+      return "Solo se permiten archivos de tipo imagen (JPEG, PNG, JPG)";
+    }
+    return true;
+  };
+
+  {/*const handleSendTeacher = (formData: RegisterTeacher) => {
+    toastId.current = toast.loading("Agregando Docente...", {
+      position: "top-center",
+    });
+    mutate(formData);
+  };*/}
+
+  return (
+    <>
+      <Button color="purple" style={{marginLeft:"80vw"}} onClick={() => setOpenModal(true)}>Agregar Nuevo Docente</Button>
+      <Modal show={openModal} size="md" popup onClose={() => setOpenModal(false)}>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Agregar Nuevo Docente</h3>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="text" value="Nombre Completo del Docente" />
+              </div>
+              <input
+          type="text"
+          id="name"
+          placeholder="Ingrese sus nombres"
+          className=" p-2"
+          {...register("name", {
+            required: "Los nombres son obligatorios",
+            pattern: {
+              value: /^[A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*(?: [A-ZÀ-Ÿ][a-zA-ZÀ-ÿ]*)?$/,
+              message:
+                "EL campo no puede contener números, ni espacios de más, debe ingresar obligatorio el primer nombre, cada nombre debe empezar por mayúscula",
+            },
+          })}
+        />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="text" value="Número de empleado" />
+              </div>
+              <TextInput id="number" type="text" required />
+            </div>
+            <div className="w-full">
+              <Button>Agregar Docente</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}
