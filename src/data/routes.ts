@@ -6,11 +6,13 @@ export const PublicRoutes = {
     LOGIN : '/auth/login',
     FORGOT_PASSWORD : '/auth/forgot-password',
     NEW_PASSWORD : '/auth/new-password/:token',
+    SELECT_CAREER : '/auth/seleccionar-carrera'
 }
 
 export const PrivateRoutes = {
     PRIVATE : 'myspace',
     CHAT : 'chat',
     ADMIN_ADMISIONES : 'admin/admisiones',
-    TEACHER: 'admin/teacher',
+    TEACHER: 'admin/docentes',
+    ADD_TEACHER: 'admin/docente/agregar-docente',
 }

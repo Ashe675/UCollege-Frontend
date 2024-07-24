@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-
 const AdmissionLayout = lazy(
   () => import("./layouts/Admission/AdmissionLayout")
 );
@@ -14,8 +13,9 @@ import { PrivateRoutes, PublicRoutes } from "./data/routes";
 import Protected from "./views/private/Protected";
 import RoutesWithNotFound from "./utils/RoutesWithNotFound";
 import AuthGuard from "./guards/AuthGuard";
-const NewPasswordView = lazy(() => import('./views/auth/NewPasswordView'));
-const ForgotPassword = lazy(()=>import("./views/auth/ForgotPassword"));
+const SelectCareerView = lazy(() => import("./views/auth/SelectCareerView"));
+const NewPasswordView = lazy(() => import("./views/auth/NewPasswordView"));
+const ForgotPassword = lazy(() => import("./views/auth/ForgotPassword"));
 const AuthLayout = lazy(() => import("./layouts/auth/AuthLayout"));
 
 export default function Router() {
@@ -93,11 +93,19 @@ export default function Router() {
               </Suspense>
             }
           />
+          <Route
+            path={PublicRoutes.SELECT_CAREER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <SelectCareerView />
+              </Suspense>
+            }
+          />
         </Route>
         <Route element={<AuthGuard />}>
           <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Protected />} />
         </Route>
-        <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE} />}/>
+        <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE} />} />
       </RoutesWithNotFound>
     </BrowserRouter>
   );

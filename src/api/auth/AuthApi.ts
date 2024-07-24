@@ -1,14 +1,19 @@
 import api from "@/lib/axios";
-import { ForgotPasswordData, NewPasswordFormData, UserData, UserLoginForm, userSchema } from "@/types/auth";
+import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareerStudentSchema, UserData, UserLoginForm, userSchema } from "@/types/auth";
+import { Teacher, teacherSchema } from "@/types/teacher";
 import { isAxiosError } from "axios";
 
 
 export async function UserLogin(formData : UserLoginForm) {
     try {
         const url = `/auth/login`
-        const {data} = await api.post<string>(url, formData)
-        localStorage.setItem('AUTH_TOKEN',data)
-        return data
+        const {data} = await api.post(url, formData)
+        const result = loginUserSchema.safeParse(data)
+        if(result.success){
+            const {jwtoken, user} = result.data
+            localStorage.setItem('AUTH_TOKEN',jwtoken)
+            return user
+        }
 
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -85,3 +90,38 @@ export async function resetPassword({token, formData } : { token: string, formDa
         throw new Error("El servidor no Responde")
     }
 }
+
+export async function getOptionsCareesStudent() {
+    try {
+        const url = `/auth/student/options-careers`
+        const {data} = await api(url)
+        const result = optionsCareerStudentSchema.safeParse(data)
+        if(result.success){
+            return result.data
+        }
+        
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+}
+
+
+export async function addTeacher(formData : Teacher) {
+    try {
+        const url = `/admin/agregar-docente`
+        const {data} = await api.post(url, formData)
+        const result = teacherSchema.safeParse(data)
+        if(result.success){
+            return result.data
+        }
+
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+} 

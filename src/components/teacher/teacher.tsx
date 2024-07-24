@@ -1,40 +1,45 @@
-import ModalTeacher from "./teacherModal";
 import { Avatar } from "flowbite-react";
-import Hero from "../admission/Hero";
 import {Table, TableHead, TableHeadCell,TableBody,TableRow,TableCell} from "flowbite-react";
+import { Link } from "react-router-dom";
+import { PrivateRoutes } from "@/data/routes";
 
 export default function Teacher(){
     return(
         <>
-            <Hero
-              title="Docentes Ingresados"
-              description="Bienvenido a la Sección de Docentes Ingresados dentro de la plataforma UCollege. Acá podrás ver el listado de los Docentes que han sido ingresar, y agregar nuevos Docentes. Vamos caminando junto al éxito."
-              className=" md:max-w-5xl pb-8"
-            ></Hero>
-            <div className="mr-20 ml-20" style={{marginBottom:"50px"}}>
-              <Table hoverable style={{textAlign:"center"}}>
-                <TableHead>
-                  <TableHeadCell></TableHeadCell>
-                  <TableHeadCell>Nombre Docente</TableHeadCell>
-                  <TableHeadCell>Número de Empleado</TableHeadCell>
-                  <TableHeadCell>Centro Regional</TableHeadCell>
-                  <TableHeadCell>Departamento que pertenece</TableHeadCell>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell><Avatar img="/profile/photo.webp" rounded /></TableCell>
-                    <TableCell>
-                      Jose Cerrato
-                    </TableCell>
-                    <TableCell>1524</TableCell>
-                    <TableCell>Ciudad Universitaria</TableCell>
-                    <TableCell>Ingeniería en Sistemas</TableCell>
-                  </TableRow>
-                  
-                </TableBody>
-              </Table>
-            </div>
-            <ModalTeacher/>
+          <div className="flex justify-end mr-20">
+          <Link className="bg-purple-600 text-white px-2 py-1 rounded-md shadow-md hover:bg-purple-800 transition-colors" style={{border:"3px solid gray"}} to={`/myspace/${PrivateRoutes.ADD_TEACHER}`}>Agregar Nuevo Docente</Link>
+          </div>
+          <div className="mr-20 ml-20" style={{marginTop:"60px"}}>
+            <Table hoverable style={{textAlign:"center"}}>
+              <TableHead className="border border-gray-200">
+                <TableHeadCell >Foto</TableHeadCell>
+                <TableHeadCell >Nombre Docente</TableHeadCell>
+                <TableHeadCell >Número de Empleado</TableHeadCell>
+                <TableHeadCell >Centro Regional</TableHeadCell>
+                <TableHeadCell >Departamento que pertenece</TableHeadCell>
+              </TableHead>
+              <TableBody>
+                <TableRow className="border border-gray-200">
+                  <TableCell ><Avatar img="/profile/photo.webp" rounded /></TableCell>
+                  <TableCell >
+                    Jose Cerrato
+                  </TableCell>
+                  <TableCell >1524</TableCell>
+                  <TableCell >Ciudad Universitaria</TableCell>
+                  <TableCell >Ingeniería en Sistemas</TableCell>
+                </TableRow>
+                <TableRow className="border border-gray-300">
+                  <TableCell ><Avatar img="/profile/photo.webp" rounded /></TableCell>
+                  <TableCell >
+                    Jose Cerrato
+                  </TableCell>
+                  <TableCell >1524</TableCell>
+                  <TableCell >Ciudad Universitaria</TableCell>
+                  <TableCell >Ingeniería en Sistemas</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
         </>
     );
 }
