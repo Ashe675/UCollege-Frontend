@@ -22,7 +22,7 @@ export default function SelectCareerView() {
   if(data)
   return (
     <div className="container mx-auto max-w-xl mt-10 p-4 sm:p-8">
-      <h1 className=" font-black text-white text-4xl sm:text-5xl">¡Bienvenido al Centro Regional {data.regionalCenter}</h1>
+      <h1 className=" font-black text-white text-4xl sm:text-5xl">¡Bienvenido a {data.regionalCenter}</h1>
       
       <p className=" text-white font-light text-xl mt-4">
         Selecciona la carrera a la que deseas <span className=" text-primary font-bold">pertenecer</span>.
