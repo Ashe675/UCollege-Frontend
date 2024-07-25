@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareerStudentSchema, UserData, UserLoginForm, userSchema } from "@/types/auth";
-import { Teacher, teacherSchema } from "@/types/teacher";
+import { Teacher} from "@/types/teacher";
 import { isAxiosError } from "axios";
 
 
@@ -107,21 +107,3 @@ export async function getOptionsCareesStudent() {
         throw new Error("El servidor no Responde")
     }
 }
-
-
-export async function addTeacher(formData : Teacher) {
-    try {
-        const url = `/admin/agregar-docente`
-        const {data} = await api.post(url, formData)
-        const result = teacherSchema.safeParse(data)
-        if(result.success){
-            return result.data
-        }
-
-    } catch (error) {
-        if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
-        }
-        throw new Error("El servidor no Responde")
-    }
-} 
