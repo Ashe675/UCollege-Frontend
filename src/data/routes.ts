@@ -15,4 +15,5 @@ export const PrivateRoutes = {
     ADMIN_ADMISIONES : 'admin/admisiones',
     TEACHER: 'admin/docentes',
     ADD_TEACHER: 'admin/docente/agregar-docente',
+    EDIT_TEACHER: 'admin/docente/editar-docente',
 }

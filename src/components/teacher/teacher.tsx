@@ -71,13 +71,13 @@ export default function Teacher() {
                     >
                       <ul>
                         <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">
-                          <Link to={`/profile/${teacher.id}`}>Ver Perfil</Link>
-                        </li>
-                        <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">
-                          <Link to={`/edit/${teacher.id}`}>Editar Información</Link>
-                        </li>
-                        <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">
-                          <Link to={`/delete/${teacher.id}`}>Eliminar</Link>
+                        <Link
+                            className="bg-purple-600 text-white px-2 py-1 rounded-md shadow-md hover:bg-purple-800 transition-colors"
+                            style={{ border: "3px solid gray" }}
+                            to={`/myspace/${PrivateRoutes.EDIT_TEACHER}`}
+                          >
+                            Ver Perfil de Docente
+                          </Link>
                         </li>
                       </ul>
                     </div>

@@ -5,6 +5,7 @@ import { useRef} from "react";
 import { addTeacherData } from "@/types/teacher";
 import { toast } from "react-toastify";
 import { createNewTeacher, getRole } from "@/api/teacher/TeacherApi";
+import EditTeacherForm from "../admission/EditTeacherForm";
 
 export default function AddTeacherForm() {
   const toastId = useRef<null | number | string>(null)

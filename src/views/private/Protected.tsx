@@ -11,6 +11,7 @@ const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
 const Teacher = lazy(() => import("../../views/teacher/teacherView"));
 const AddTeacherForm = lazy(() => import("@/views/teacher/AddTeacherView"));
+const EditTeacher = lazy(() => import ("@/views/teacher/EditTeacherView"))
 
 export default function Protected() {
   return (
@@ -61,6 +62,14 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <AddTeacherForm />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.EDIT_TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EditTeacher />
               </Suspense>
             }
           />
