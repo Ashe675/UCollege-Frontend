@@ -12,5 +12,6 @@ export const PublicRoutes = {
 export const PrivateRoutes = {
     PRIVATE : 'myspace',
     CHAT : 'chat',
-    ADMIN_ADMISIONES : 'admin/admisiones'
+    ADMIN_ADMISIONES : 'admin/admisiones',
+    ADMIN_DOCENTES : 'admin/docentes'
 }

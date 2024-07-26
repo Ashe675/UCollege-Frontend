@@ -20,7 +20,7 @@ export default function AppLayout() {
   
     return (
       <>
-        <div className=" flex min-h-screen">
+        <div className=" flex min-h-screen overflow-hidden">
           <AppSidebar
             show={show}
             setShow={setShow}
@@ -28,7 +28,7 @@ export default function AppLayout() {
             className="h-screen w-full max-w-[270px] bg-slate-100 shadow-md z-20"
           />
           <div
-            className={` flex flex-col w-full relative  pb-5 transition-all duration-500 ease-in-out ${
+            className={` flex flex-col w-full relative overflow-auto pb-5 transition-all duration-500 ease-in-out ${
               show ? "sm:ml-[270px]" : "sm:ml-0"
             }`}
           >
