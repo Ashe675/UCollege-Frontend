@@ -5,12 +5,13 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const EditTeacherView = lazy(() =>  import('./admin/EditTeacherView'))
+const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
 const TeacherView = lazy(() => import("./admin/TeacherView"));
 const HomeStudent = lazy(() => import("./student/HomeStudent"));
 const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
-
 
 export default function Protected() {
   return (
@@ -56,7 +57,22 @@ export default function Protected() {
               </Suspense>
             }
           />
-
+          <Route
+            path={PrivateRoutes.ADMIN_ADD_TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddTeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_EDIT_TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EditTeacherView />
+              </Suspense>
+            }
+          />
         </Route>
       </Route>
     </RoutesWithNotFound>

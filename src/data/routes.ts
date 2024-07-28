@@ -13,5 +13,7 @@ export const PrivateRoutes = {
     PRIVATE : 'myspace',
     CHAT : 'chat',
     ADMIN_ADMISIONES : 'admin/admisiones',
-    ADMIN_DOCENTES : 'admin/docentes'
+    ADMIN_DOCENTES : 'admin/docentes',
+    ADMIN_ADD_TEACHER : 'admin/docentes/registrar-docente',
+    ADMIN_EDIT_TEACHER : 'admin/docentes/:teacherCode',
 }

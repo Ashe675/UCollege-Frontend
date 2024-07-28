@@ -6,12 +6,14 @@ import { UserAvatar } from "./UserAvatar";
 import { IconMenu2 } from "@tabler/icons-react";
 import {  useState } from "react";
 import { useUserStore } from "@/stores/userStore";
+import { useAppStore } from "@/stores/appStore";
 
 
 
 export default function AppLayout() {
   const user = useUserStore(state => state.user)
-  
+  const title = useAppStore(state => state.title)
+
   const [show, setShow] = useState(true);
   
   const handleClick = () => setShow(!show);
@@ -28,12 +30,12 @@ export default function AppLayout() {
             className="h-screen w-full max-w-[270px] bg-slate-100 shadow-md z-20"
           />
           <div
-            className={` flex flex-col w-full relative overflow-auto pb-5 transition-all duration-500 ease-in-out ${
+            className={` flex flex-col w-full relative overflow-auto max-sm:pb-5 transition-all duration-500 ease-in-out ${
               show ? "sm:ml-[270px]" : "sm:ml-0"
             }`}
           >
             
-            <div className=" w-full flex p-5 text-white font-semibold text-lg justify-between items-center text-[17px]">
+            <div className=" w-full flex p-4 text-white font-semibold text-[16px] justify-between items-center">
               <div className=" space-x-4 flex items-center relative">
                 <button
                   onClick={handleClick}
@@ -41,7 +43,7 @@ export default function AppLayout() {
                 >
                   <IconMenu2 stroke={2} />
                 </button>
-                <span className=" pl-8">INICIO</span>
+                <span className=" pl-8 uppercase">{title}</span>
               </div>
               <div className=" flex gap-2 items-center">
                 <UserAvatar />

@@ -12,7 +12,7 @@ export default function ButtonCustom({
   return (
     <button
       type="button"
-      className={`  w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors ${className}`}
+      className={`  w-full  text-white uppercase font-bold cursor-pointer transition-colors ${className} p-3`}
     >
       {children}
     </button>

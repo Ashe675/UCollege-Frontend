@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Dropdown from "./Dropdown";
 import { useUserStore } from "@/stores/userStore";
 import { menuItems } from "@/data/sidebarItems";
+import { useAppStore } from "@/stores/appStore";
 
 export function AppSidebar({
   className,
@@ -23,6 +24,7 @@ export function AppSidebar({
 }) {
   const queryClient = useQueryClient();
   const deletUser = useUserStore(state => state.deleteUser)
+  const resetTitle = useAppStore(state =>  state.resetTitle)
   const navigate = useNavigate()
 
   function logout () {
@@ -30,6 +32,7 @@ export function AppSidebar({
     queryClient.invalidateQueries({ queryKey: ["user"] });
     queryClient.removeQueries({ queryKey: ["user"] });
     deletUser()
+    resetTitle()
     navigate('/')
   }
 
