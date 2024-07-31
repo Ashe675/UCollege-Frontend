@@ -232,7 +232,7 @@ export default function EditTeacherView() {
               }}
               hidden={!canEdit && !canEditCenter}
             >
-              <ButtonCustom className=" bg-red-500 rounded-md  w-full max-w-[300px] hover:bg-red-600 ">
+              <ButtonCustom className=" bg-red-500 rounded-md  w-full max-w-[340px] hover:bg-red-600 ">
                 Cancelar
               </ButtonCustom>
             </div>

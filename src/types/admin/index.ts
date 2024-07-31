@@ -159,17 +159,17 @@ export type ReginalCenterDepartmentsType = z.infer<typeof RegionalCenterSchema>
 export type Department = z.infer<typeof DepartmentWrapperSchema>
 
 export type UpdateCenterData = {
-    role : {
-        id : number,
-        name : string 
+    role: {
+        id: number,
+        name: string
     },
-    regionalCenter : {
-        id : number,
-        name : string 
+    regionalCenter: {
+        id: number,
+        name: string
     },
-    departament : {
-        id : number,
-        name : string 
+    departament: {
+        id: number,
+        name: string
     }
 }
 
@@ -177,4 +177,51 @@ export type UpdateCenterForm = {
     regionalCenterId: string,
     departamentId: string,
     roleId: string
+}
+
+// Esquema para el objeto anidado processType
+const processTypeSchema = z.object({
+    name: z.string(),
+});
+
+// Esquema principal para los objetos
+const processSchema = z.object({
+    id: z.number(),
+    startDate: z.string(), // Convertir la fecha en un objeto Date
+    finalDate: z.string(), // Convertir la fecha en un objeto Date
+    active: z.boolean(),
+    processTypeId: z.number(),
+    processId: z.number().nullable(),
+    planningId: z.number().nullable(),
+    processType: processTypeSchema,
+});
+
+export type Process = z.infer<typeof processSchema>
+
+export type NewProcessFormData = Pick<Process, 'startDate' | 'finalDate'> & {
+    processTypeId: number
+}
+
+export type Day = {
+    startDate: string;
+    finalDate: string;
+    globalAvarage: number;
+};
+
+export type NewProcessEnrollFormData = {
+    startDate: string;
+    finalDate: string;
+    processTypeId: number;
+    days: Day[];
+};
+
+// Esquema para un array de estos objetos
+export const processesSchema = z.array(processSchema);
+
+export const extendFinalDateProcessSchema = processSchema.pick({ id: true, finalDate: true })
+export type ExtendFinalDatePayload = z.infer<typeof extendFinalDateProcessSchema>
+
+export type ProcessType = {
+    id: number;
+    name: string;
 }

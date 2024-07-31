@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { addTeacherData, teachersListSchema, rolesSchema, editTeacherSchema, regionalCenterDepartments, EditTeacherFormData,  UpdateTeacherData, UpdateCenterForm } from "@/types/admin";
+import { addTeacherData, teachersListSchema, rolesSchema, editTeacherSchema, regionalCenterDepartments, EditTeacherFormData,  UpdateTeacherData, UpdateCenterForm, processesSchema, ExtendFinalDatePayload, NewProcessFormData, NewProcessEnrollFormData } from "@/types/admin";
 import { isAxiosError } from "axios";
 
 export async function createNewTeacher(formData: addTeacherData) {
@@ -159,8 +159,105 @@ export async function getTeacherByCode(code : string) {
 
 export async function deleteTeacher(userId : number) {
     try{
-        const url = `admin//teacher-delete/${userId}`
+        const url = `admin/teacher-delete/${userId}`
         const {data} = await api.delete(url)
+        return data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+//* API PARA LOS PROCESOS
+
+export async function getProcessActives() {
+    try{
+        const url = `/admin/process/active`
+        const {data} = await api(url)
+        const result = processesSchema.safeParse(data)
+        if(result.success) return result.data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function getProcessAll() {
+    try{
+        const url = `/admin/process/all`
+        const {data} = await api(url)
+        const result = processesSchema.safeParse(data)
+        if(result.success) return result.data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function createEnrollProcess(payload : NewProcessEnrollFormData) {
+    try{
+        const url = `/admin/enroll/activate`
+        const {data} = await api.post<string>(url, payload)
+        return data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+
+
+export async function createProcess(payload : NewProcessFormData) {
+    try{
+        const url = `/admin/process`
+        const {data} = await api.post<string>(url, payload)
+        return data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function exdendFinalDateProcess(payload : ExtendFinalDatePayload) {
+    try{
+        const url = `/admin/process/updateFinalDate`
+        const {data} = await api.put<string>(url, payload)
+        return data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function activeProcessById(id : ExtendFinalDatePayload['id']) {
+    try{
+        const url = `/admin/process/activate`
+        const {data} = await api.put<string>(url, {id})
+        return data
+    } catch(error){
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function deactiveProcessById(id : ExtendFinalDatePayload['id']) {
+    try{
+        const url = `/admin/process/deactivate`
+        const {data} = await api.put<string>(url, {id})
         return data
     } catch(error){
         if(isAxiosError(error) && error.response){

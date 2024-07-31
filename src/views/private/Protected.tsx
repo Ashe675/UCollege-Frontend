@@ -5,6 +5,9 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const CalendarProcessView  = lazy(() => import("./admin/CalendarProcessView"));
+const AddProcessView = lazy(() => import('./admin/AddProcessView'));
+const ProcessView = lazy(() => import("./admin/ProcessView"));
 const EditTeacherView = lazy(() =>  import('./admin/EditTeacherView'))
 const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
 const TeacherView = lazy(() => import("./admin/TeacherView"));
@@ -70,6 +73,30 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <EditTeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <ProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_ADD_PROCESS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION_CALENDARIO}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CalendarProcessView />
               </Suspense>
             }
           />

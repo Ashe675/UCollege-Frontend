@@ -1,12 +1,11 @@
 import { getTeachers } from "@/api/admin/AdminApi";
 import TeacherTable from "@/components/admin/TeacherTable";
-import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/spinner/Spinner";
 import { PrivateRoutes } from "@/data/routes";
 import { useAppStore } from "@/stores/appStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 export default function TeacherView() {
   const {
@@ -21,6 +20,8 @@ export default function TeacherView() {
   useEffect(() => {
     setTitle("Docentes");
   }, [setTitle]);
+
+  if (error) return <Navigate to={"/"} />;
 
   return (
     <div className=" w-full h-full bg-slate-100 p-5">
@@ -37,7 +38,6 @@ export default function TeacherView() {
           <Spinner />
         </div>
       )}
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
       {teachers && <TeacherTable teachers={teachers} />}
     </div>
   );

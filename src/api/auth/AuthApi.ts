@@ -30,6 +30,7 @@ export async function getUser() {
         if(result.success){
             return result.data
         }
+        return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

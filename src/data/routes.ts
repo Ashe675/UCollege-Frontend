@@ -16,4 +16,7 @@ export const PrivateRoutes = {
     ADMIN_DOCENTES : 'admin/docentes',
     ADMIN_ADD_TEACHER : 'admin/docentes/registrar-docente',
     ADMIN_EDIT_TEACHER : 'admin/docentes/:teacherCode',
+    ADMIN_CALENDARIZACION : 'admin/calendarizacion',
+    ADMIN_CALENDARIZACION_CALENDARIO : 'admin/calendarizacion/calendario',
+    ADMIN_ADD_PROCESS : 'admin/calendarizacion/nuevo-proceso',
 }

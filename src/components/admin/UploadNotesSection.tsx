@@ -43,7 +43,7 @@ export default function UploadNotesSection() {
   };
 
   return (
-    <section className=" w-full md:max-w-4xl shadow-md p-3 bg-white mx-auto space-y-4 rounded-sm">
+    <section className=" w-full md:max-w-4xl shadow-md p-3 bg-white mx-auto space-y-4 rounded-md lg:min-h-52 py-7">
       <h2 className=" text-xl  text-slate-700 text-center font-semibold">
         Subir Notas de los Examenes de Admisión
       </h2>
