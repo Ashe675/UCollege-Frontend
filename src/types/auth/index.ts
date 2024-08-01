@@ -13,8 +13,8 @@ export const enum RoleEnum {
 
 const authSchema = z.object({
     name: z.string(),
-    email: z.string().email(),
-    institutionalEmail: z.string().email(),
+    email: z.string(),
+    institutionalEmail: z.string(),
     current_password: z.string(),
     password: z.string(),
     password_confirmation: z.string(),
@@ -26,7 +26,23 @@ const authSchema = z.object({
     person: z.object({
         firstName: z.string(),
         lastName: z.string()
-    })
+    }),
+    jwtoken : z.string(),
+    user : z.object({
+        id : z.number(),
+        verified : z.boolean()
+    }),
+    options : z.array(z.object({
+        id : z.number(),
+        regionalCenter_Faculty_Career : z.object({
+            id: z.number(),
+            career: z.object({
+                name : z.string()
+            })
+        })
+    })),
+    regionalCenter : z.string(),
+    avatar : z.string().nullable()
 })
 
 type Auth = z.infer<typeof authSchema>
@@ -36,8 +52,21 @@ export const userSchema = authSchema.pick({
     id: true,
     role: true,
     institutionalEmail: true,
-    person: true
+    person: true,
+    avatar : true
 })
+
+export const loginUserSchema = authSchema.pick({jwtoken : true, user: true})
+export type LoginUser = z.infer<typeof loginUserSchema>
+
+export const optionsCareerStudentSchema = authSchema.pick({
+    options : true,
+    regionalCenter : true
+})
+export type OptionsCareerStudent = z.infer<typeof optionsCareerStudentSchema>
+export type RegionalCenterFacultyCareerId = {
+    optionId : string
+}
 
 type User = z.infer<typeof userSchema>
 export type ForgotPasswordData = Pick<User, 'institutionalEmail'>
@@ -49,5 +78,5 @@ const newPasswordFormDataSchema = authSchema.pick({
 
 export type NewPasswordFormData = z.infer<typeof newPasswordFormDataSchema>
 
-export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person'>
+export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person' | 'avatar'>
 

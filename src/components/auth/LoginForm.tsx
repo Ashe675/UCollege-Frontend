@@ -5,6 +5,7 @@ import { UserLogin } from "@/api/auth/AuthApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { UserLoginForm } from "@/types/auth";
+import { PublicRoutes } from "@/data/routes";
 
 export default function LoginForm() {
   const navigate = useNavigate()
@@ -20,9 +21,10 @@ export default function LoginForm() {
     onError : (error) => {
       toast.error(error.message, { position : 'top-center' })
     },
-    onSuccess : () => {
+    onSuccess : (user) => {
       queryClient.invalidateQueries({queryKey : ['user']});
-      navigate(`/`)
+      if(user && user.verified) navigate(`/`)
+      if(user && !user.verified) navigate(PublicRoutes.SELECT_CAREER, { state : { userId : user.id} })
     }
   })
 
@@ -68,7 +70,7 @@ export default function LoginForm() {
         <input
           id="password"
           type="password"
-          placeholder="Ingrese contreseña"
+          placeholder="Ingrese su contraseña"
           className=" p-2"
           {...register("password", {
             required: "La contraseña es obligatoria",

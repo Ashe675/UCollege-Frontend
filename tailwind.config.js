@@ -30,6 +30,20 @@ export default {
       backgroundImage: {
         primaryBlue: "linear-gradient(to right, #17C1E8, #1175EF)",
       },
+      keyframes: {
+        grow: {
+          "0%": { transform: "scale(0.5)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        shrink: {
+          '0%': { transform: 'scale(1)', opacity: '1' },
+          '100%': { transform: 'scale(0.5)', opacity: '0' },
+        },
+      },
+      animation: {
+        grow: "grow 0.5s ease-in-out forwards",
+        shrink: 'shrink 0.5s ease-in-out forwards',
+      },
     },
   },
 };

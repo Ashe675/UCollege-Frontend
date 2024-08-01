@@ -129,11 +129,6 @@ export const menuItems = {
                 link: PrivateRoutes.ADMIN_ADMISIONES,
             },
             {
-                icon: IconNotes,
-                text: "Matricula",
-                link: "admin/matricula",
-            },
-            {
                 icon: IconUsersGroup,
                 text: "Docentes",
                 link: "admin/docentes",

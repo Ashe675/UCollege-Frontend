@@ -5,6 +5,15 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const CancelClassView = lazy(() => import("./student/CancelClassView"));
+const EnrollAddClass = lazy(() => import("./student/EnrollAddClass"));
+const StudentEnroll = lazy(() => import("./student/StudentEnroll"));
+const CalendarProcessView = lazy(() => import("./admin/CalendarProcessView"));
+const AddProcessView = lazy(() => import("./admin/AddProcessView"));
+const ProcessView = lazy(() => import("./admin/ProcessView"));
+const EditTeacherView = lazy(() => import("./admin/EditTeacherView"));
+const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
+const TeacherView = lazy(() => import("./admin/TeacherView"));
 const HomeStudent = lazy(() => import("./student/HomeStudent"));
 const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
@@ -37,12 +46,86 @@ export default function Protected() {
             </Suspense>
           }
         />
+        <Route element={<RoleGuard role={RoleEnum.STUDENT} />}>
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <StudentEnroll />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_ADD_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EnrollAddClass />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_CANCEL_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CancelClassView />
+              </Suspense>
+            }
+          />
+        </Route>
         <Route element={<RoleGuard role={RoleEnum.ADMIN} />}>
           <Route
             path={PrivateRoutes.ADMIN_ADMISIONES}
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <AdminAdmission />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_DOCENTES}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <TeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_ADD_TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddTeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_EDIT_TEACHER}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EditTeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <ProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_ADD_PROCESS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION_CALENDARIO}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CalendarProcessView />
               </Suspense>
             }
           />

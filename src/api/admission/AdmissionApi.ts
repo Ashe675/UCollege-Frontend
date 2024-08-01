@@ -86,6 +86,29 @@ export async function uploadCSVGrades(file: File) {
     }
 }
 
+// subir estudiantes admitios
+export async function uploadStudentsAdmitteds(file: File) {
+    try {
+        const formData = new FormData();
+        formData.append('estudiantes_admitidos', file);
+
+        const url = '/enroll/student/upload-admitteds'
+        const { data } = await api.post(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        return data
+    } catch (error) {
+
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+}
+
 // mandar emails
 export async function sendEmailsGrades() {
     try {
