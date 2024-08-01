@@ -30,7 +30,7 @@ export default function AppLayout() {
             show ? "sm:ml-[270px]" : "sm:ml-0"
           }`}
         >
-          <div className=" w-full flex p-4 text-white font-semibold text-[16px] justify-between items-center">
+          <div className=" w-full gap-1 flex p-4 bg-primaryBlue text-white font-semibold text-[16px] justify-between items-center">
             <div className=" space-x-4 flex items-center relative">
               <button
                 onClick={handleClick}

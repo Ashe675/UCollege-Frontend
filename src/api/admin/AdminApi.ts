@@ -203,8 +203,8 @@ export async function getProcessAll() {
 export async function createEnrollProcess(payload : NewProcessEnrollFormData) {
     try{
         const url = `/admin/enroll/activate`
-        const {data} = await api.post<string>(url, payload)
-        return data
+        const {data} = await api.post(url, payload)
+        return data.message
     } catch(error){
         if(isAxiosError(error) && error.response){
             throw new Error(error.response.data.error)

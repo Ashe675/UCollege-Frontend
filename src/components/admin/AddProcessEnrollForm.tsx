@@ -33,26 +33,22 @@ export default function AddProcessEnrollForm({
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const {mutate, isPending} = useMutation({
-    mutationFn : createEnrollProcess,
-    onSuccess : (data) => {
-      toast.success(data)
+  const { mutate, isPending } = useMutation({
+    mutationFn: createEnrollProcess,
+    onSuccess: (data) => {
+      toast.success(data);
       queryClient.invalidateQueries({ queryKey: ["process", "active"] });
       queryClient.invalidateQueries({ queryKey: ["process", "all"] });
       setInitialDate(null);
       setFinalDate(null);
       setDays([]);
-      setShowDateForm(false),
-      setError("");
-      setTimeout(() => {
-        navigate(`/myspace/${PrivateRoutes.ADMIN_CALENDARIZACION}`)
-      }, 2000);
+      setShowDateForm(false), setError("");
+      navigate(`/myspace/${PrivateRoutes.ADMIN_CALENDARIZACION}`);
     },
-    onError : (error) => {
-      toast.error(error.message)
-    }
-  })
-
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   useEffect(() => {
     if (process) {
@@ -106,36 +102,38 @@ export default function AddProcessEnrollForm({
         // };
 
         const diffDays =
-        differenceInDays(formattedFinalDate, formattedInitialDate) + 1;
+          differenceInDays(formattedFinalDate, formattedInitialDate) + 1;
 
-        const daysArray = Array(diffDays).fill(null).map((_, index) => {
-          if (index === diffDays-1 &&  index === 0 ) {
-            return {
-              startDate: initialDate,
-              finalDate: finalDate,
-              globalAvarage: 0,
+        const daysArray = Array(diffDays)
+          .fill(null)
+          .map((_, index) => {
+            if (index === diffDays - 1 && index === 0) {
+              return {
+                startDate: initialDate,
+                finalDate: finalDate,
+                globalAvarage: 0,
+              };
+            } else if (index === 0) {
+              return {
+                startDate: initialDate,
+                finalDate: null,
+                globalAvarage: 0,
+              };
+            } else if (index === diffDays - 1) {
+              return {
+                startDate: null,
+                finalDate: finalDate,
+                globalAvarage: 0,
+              };
+            } else {
+              return {
+                startDate: null,
+                finalDate: null,
+                globalAvarage: 0,
+              };
             }
-          }else if (index === 0) {
-            return {
-              startDate: initialDate,
-              finalDate: null,
-              globalAvarage: 0,
-            };
-          } else if (index === diffDays-1) {
-            return {
-              startDate: null,
-              finalDate: finalDate,
-              globalAvarage: 0,
-            }
-          } else{
-            return {
-              startDate: null,
-              finalDate: null,
-              globalAvarage: 0,
-            };
-          }
-        });
-       
+          });
+
         setDays(daysArray);
 
         // console.log("Days", days);
@@ -162,7 +160,7 @@ export default function AddProcessEnrollForm({
 
   const handleFormSubmit = () => {
     const allInputsFilled = days.every(
-      (day) => day.startDate && day.finalDate && !isNaN(day.globalAvarage) 
+      (day) => day.startDate && day.finalDate && !isNaN(day.globalAvarage)
     );
 
     if (!allInputsFilled) {
@@ -170,7 +168,7 @@ export default function AddProcessEnrollForm({
       return;
     }
 
-    const payloadDays : Day[] = []
+    const payloadDays: Day[] = [];
 
     for (let i = 0; i < days.length; i++) {
       const day = days[i];
@@ -178,85 +176,92 @@ export default function AddProcessEnrollForm({
       const dayFinalDate = day.finalDate!;
       const dayGobalAvarage = day.globalAvarage!;
 
-      
-        if (isNaN(dayInitialDate.getTime())) {
-          setError(
-            "Fecha de inicio inválida. Por favor, seleccione una fecha válida" +
-              ` (día ${i + 1}).`
-          );
-          return;
-        }
+      if (isNaN(dayInitialDate.getTime())) {
+        setError(
+          "Fecha de inicio inválida. Por favor, seleccione una fecha válida" +
+            ` (día ${i + 1}).`
+        );
+        return;
+      }
 
-        if (isNaN(dayFinalDate.getTime())) {
-          setError(
-            "Fecha final inválida. Por favor, seleccione una fecha válida" +
-              ` (día ${i + 1}).`
-          );
-          return;
-        }
+      if (isNaN(dayFinalDate.getTime())) {
+        setError(
+          "Fecha final inválida. Por favor, seleccione una fecha válida" +
+            ` (día ${i + 1}).`
+        );
+        return;
+      }
 
-        if (dayInitialDate < initialDate!) {
-          setError(
-            `La fecha inicial no debe pasarse del rango indicado en el proceso (día ${
-              i + 1
-            }).`
-          );
-          return;
-        }
+      if (dayInitialDate < initialDate!) {
+        setError(
+          `La fecha inicial no debe pasarse del rango indicado en el proceso (día ${
+            i + 1
+          }).`
+        );
+        return;
+      }
 
-        if (dayFinalDate > finalDate!) {
-          setError(
-            `La fecha final no debe pasarse del rango indicado en el proceso (día ${
-              i + 1
-            }).`
-          );
-          return;
-        }
+      if (dayFinalDate > finalDate!) {
+        setError(
+          `La fecha final no debe pasarse del rango indicado en el proceso (día ${
+            i + 1
+          }).`
+        );
+        return;
+      }
 
-        if (dayFinalDate < dayInitialDate) {
-          setError(
-            `La fecha final debe ser mayor que la fecha inicial (día ${i + 1}).`
-          );
-          return;
-        }
+      if (dayFinalDate < dayInitialDate) {
+        setError(
+          `La fecha final debe ser mayor que la fecha inicial (día ${i + 1}).`
+        );
+        return;
+      }
 
-        if (
-          isNaN(dayGobalAvarage) ||
-          dayGobalAvarage < 0 ||
-          dayGobalAvarage > 100
-        ) {
-          setError(`Índice no válido (día ${i + 1}).`);
-          return;
-        }
+      if (
+        isNaN(dayGobalAvarage) ||
+        dayGobalAvarage < 0 ||
+        dayGobalAvarage > 100
+      ) {
+        setError(`Índice no válido (día ${i + 1}).`);
+        return;
+      }
 
-        const formattedDayInitialDate = toUTCDate(dayInitialDate);
-        const formattedDayFinalDate = toUTCDate(dayFinalDate);
+      const formattedDayInitialDate = toUTCDate(dayInitialDate);
+      const formattedDayFinalDate = toUTCDate(dayFinalDate);
 
-        payloadDays.push({ startDate : formattedDayInitialDate, finalDate :formattedDayFinalDate, globalAvarage : dayGobalAvarage })
-        // console.log(payloadDays)
-        setError("");
-        
+      payloadDays.push({
+        startDate: formattedDayInitialDate,
+        finalDate: formattedDayFinalDate,
+        globalAvarage: dayGobalAvarage,
+      });
+      // console.log(payloadDays)
+      setError("");
     }
 
-    if(initialDate && finalDate && process){
+    if (initialDate && finalDate && process) {
       const formattedInitialDate = toUTCDate(initialDate);
       const formattedFinalDate = toUTCDate(finalDate);
-      const jsonPayload : NewProcessEnrollFormData = {
-        startDate : formattedInitialDate,
-        finalDate : formattedFinalDate,
-        processTypeId : process.id,
-        days : payloadDays
-      }
+      const jsonPayload: NewProcessEnrollFormData = {
+        startDate: formattedInitialDate,
+        finalDate: formattedFinalDate,
+        processTypeId: process.id,
+        days: payloadDays,
+      };
       // console.log('PAYLOAD FINAL' ,jsonPayload)
       // console.log(jsonPayload)
-      mutate(jsonPayload)
+      mutate(jsonPayload);
       setError("");
-    }else{
+    } else {
       // console.log('ERROR EN ENVIAR BACKEND')
     }
   };
 
-  if(isPending) return <div className=" h-full flex items-center mt-10"><Spinner/></div>
+  if (isPending)
+    return (
+      <div className=" h-full flex items-center mt-10">
+        <Spinner />
+      </div>
+    );
 
   if (process)
     return (

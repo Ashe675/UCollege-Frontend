@@ -5,10 +5,13 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
-const CalendarProcessView  = lazy(() => import("./admin/CalendarProcessView"));
-const AddProcessView = lazy(() => import('./admin/AddProcessView'));
+const CancelClassView = lazy(() => import("./student/CancelClassView"));
+const EnrollAddClass = lazy(() => import("./student/EnrollAddClass"));
+const StudentEnroll = lazy(() => import("./student/StudentEnroll"));
+const CalendarProcessView = lazy(() => import("./admin/CalendarProcessView"));
+const AddProcessView = lazy(() => import("./admin/AddProcessView"));
 const ProcessView = lazy(() => import("./admin/ProcessView"));
-const EditTeacherView = lazy(() =>  import('./admin/EditTeacherView'))
+const EditTeacherView = lazy(() => import("./admin/EditTeacherView"));
 const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
 const TeacherView = lazy(() => import("./admin/TeacherView"));
 const HomeStudent = lazy(() => import("./student/HomeStudent"));
@@ -43,6 +46,32 @@ export default function Protected() {
             </Suspense>
           }
         />
+        <Route element={<RoleGuard role={RoleEnum.STUDENT} />}>
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <StudentEnroll />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_ADD_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EnrollAddClass />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_CANCEL_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CancelClassView />
+              </Suspense>
+            }
+          />
+        </Route>
         <Route element={<RoleGuard role={RoleEnum.ADMIN} />}>
           <Route
             path={PrivateRoutes.ADMIN_ADMISIONES}

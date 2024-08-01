@@ -58,3 +58,17 @@ export function getProcessAttributes(processTypeStr: string) {
         throw new Error(`Invalid process type: ${processTypeStr}`);
     }
 }
+
+export function abbreviateDays(days: string[]): string {
+    const dayAbbreviations: { [key: string]: string } = {
+        LUNES: "Lun",
+        MARTES: "Mar",
+        MIERCOLES: "Mié",
+        JUEVES: "Jue",
+        VIERNES: "Vie",
+        SABADO: "Sáb",
+        DOMINGO: "Dom"
+    };
+
+    return days.map(day => dayAbbreviations[day.toUpperCase()] || day).join(", ");
+}
