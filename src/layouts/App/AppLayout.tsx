@@ -1,5 +1,4 @@
 import { AppSidebar } from "@/components/App/AppSidebar";
-
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { UserAvatar } from "./UserAvatar";
@@ -7,7 +6,7 @@ import { IconMenu2 } from "@tabler/icons-react";
 import { useState } from "react";
 import { useUserStore } from "@/stores/userStore";
 import { useAppStore } from "@/stores/appStore";
-import "react-toastify/ReactToastify.css";
+
 
 export default function AppLayout() {
   const user = useUserStore((state) => state.user);

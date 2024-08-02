@@ -1,5 +1,4 @@
 import AdmissionNav from "@/components/admission/AdmissionNav";
-import "react-toastify/ReactToastify.css";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
