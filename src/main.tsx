@@ -5,8 +5,6 @@ import "./index.css";
 import Router from "./router.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import "react-toastify/ReactToastify.css";
-
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

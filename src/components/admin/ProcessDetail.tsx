@@ -127,7 +127,7 @@ export default function ProcessDetail({ process, setProcessSelected }: ProcessDe
 
   if (isPending || isPendingActivate || isPendingDeactivate)
     return (
-      <div className=" bg-slate-200 border flex flex-col min-h-64 border-dashed space-y-3 border-slate-400 rounded-sm p-3 relative order-1 lg:order-2">
+      <div className=" bg-slate-200 border flex flex-col justify-start max-h-64 border-dashed space-y-3 border-slate-400 rounded-sm p-3 relative order-1 lg:order-2">
         <Spinner />
       </div>
     );
