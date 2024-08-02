@@ -1,7 +1,6 @@
 import GetNotesSection from "@/components/admin/GetNotesSection";
 import UploadNotesSection from "@/components/admin/UploadNotesSection";
 import SendEmailSection from "@/components/admin/SendEmailSection";
-import { ToastContainer } from "react-toastify";
 import GetStudentsAdmitteds from "@/components/admin/GetStudentsAdmitteds";
 import UploadStudentsAdmittedsSection from "@/components/admin/UploadStudentsAdmittedsSection";
 
@@ -15,8 +14,6 @@ export default function AdminAdmission() {
         <GetStudentsAdmitteds />
         <UploadStudentsAdmittedsSection/>
       </div>
-
-      <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
     </div>
   );
 }
