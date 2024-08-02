@@ -17,7 +17,7 @@ export default function EditTeacherForm({
   canEdit : boolean;
   setCanEdit: React.Dispatch<React.SetStateAction<boolean>> 
 }) {
-  const toastId = useRef<null | number | string>(null);
+  const toastIdETF = useRef<null | number | string>(null);
   const initialTeacherData: EditTeacherFormData = {
     names: (initialValues.firstName + " " + (initialValues.middleName ? initialValues.middleName : '') ).trim(),
     lastNames: (initialValues.lastName + " " + (initialValues.secondLastName ? initialValues.secondLastName : '')).trim(),
@@ -34,7 +34,7 @@ export default function EditTeacherForm({
   const { mutate, isPending } = useMutation({
     mutationFn: updateTeacher,
     onError: (error) => {
-      toast.update(toastId.current!, {
+      toast.update(toastIdETF.current!, {
         render: error.message,
         type: "error",
         isLoading: false,
@@ -44,7 +44,7 @@ export default function EditTeacherForm({
       setCanEdit(true)
     },
     onSuccess: (data) => {
-      toast.update(toastId.current!, {
+      toast.update(toastIdETF.current!, {
         render: data,
         type: "success",
         isLoading: false,
@@ -67,7 +67,7 @@ export default function EditTeacherForm({
   } = useForm<EditTeacherFormData>({ defaultValues: initialTeacherData });
 
   const handleSendInscription = (formData: EditTeacherFormData) => {
-    toastId.current = toast.loading("Actualizando Docente...");
+    toastIdETF.current = toast.loading("Actualizando Docente...");
     mutate({formData, teacherCode });
   };
 

@@ -7,6 +7,7 @@ import { IconMenu2 } from "@tabler/icons-react";
 import { useState } from "react";
 import { useUserStore } from "@/stores/userStore";
 import { useAppStore } from "@/stores/appStore";
+import "react-toastify/ReactToastify.css";
 
 export default function AppLayout() {
   const user = useUserStore((state) => state.user);
@@ -51,8 +52,8 @@ export default function AppLayout() {
             <Outlet />
           </div>
         </div>
+        <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
       </div>
-      <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
     </>
   );
 }
