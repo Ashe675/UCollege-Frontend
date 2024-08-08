@@ -91,7 +91,7 @@ export const menuItems = {
                 {
                     icon: IconClipboardList,
                     text: "Periodo",
-                    link:  "jefe/periodo",
+                    link:  PrivateRoutes.DEPARTMENT_HEAD_PERIOD,
                 },
                 {
                     icon: IconNotes,

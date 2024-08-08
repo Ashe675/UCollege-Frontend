@@ -5,6 +5,13 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const DetailNextSectionView = lazy(() => import("./department_head/sections/DetailNextSectionView")) ;
+const AddNextSectionView = lazy(() => import("./department_head/sections/AddNextSectionView"));
+const DetailSectionView = lazy(() => import("./department_head/sections/DetailSectionView")) ;
+const AddSectionView = lazy(() => import("./department_head/sections/AddSectionView"));
+const CurrentPeriodView = lazy(()=> import("./department_head/CurrentPeriodView"));
+const NextPeriodView = lazy(()=> import("./department_head/NextPeriodView")) ;
+const PeriodView = lazy(() => import("./department_head/PeriodView"));
 const CancelClassView = lazy(() => import("./student/CancelClassView"));
 const EnrollAddClass = lazy(() => import("./student/EnrollAddClass"));
 const StudentEnroll = lazy(() => import("./student/StudentEnroll"));
@@ -68,6 +75,64 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <CancelClassView />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route element={<RoleGuard role={RoleEnum.DEPARTMENT_HEAD} />}>
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <PeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CurrentPeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_ADD_SECTION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddSectionView />
+              </Suspense>
+            }
+          />
+           <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION + '/:sectionId'}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <DetailSectionView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <NextPeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_ADD_SECTION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddNextSectionView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION+ '/:sectionId'}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <DetailNextSectionView />
               </Suspense>
             }
           />

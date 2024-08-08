@@ -22,4 +22,11 @@ export const PrivateRoutes = {
     STUDENT_ENROLL : 'estudiante/matricula',
     STUDENT_ENROLL_ADD_CLASS : 'estudiante/matricula/matricular-clase',
     STUDENT_ENROLL_CANCEL_CLASS : 'estudiante/matricula/cancelar-clase',
+    DEPARTMENT_HEAD_PERIOD : 'jefe/periodo-academico/',
+    DEPARTMENT_HEAD_PERIOD_CURRENT : 'jefe/periodo-academico/actual',
+    DEPARTMENT_HEAD_PERIOD_NEXT : 'jefe/periodo-academico/proximo',
+    DEPARTMENT_HEAD_PERIOD_CURRENT_ADD_SECTION : 'jefe/periodo-academico/actual/nueva-seccion',
+    DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION : 'jefe/periodo-academico/actual/seccion',
+    DEPARTMENT_HEAD_PERIOD_NEXT_ADD_SECTION : 'jefe/periodo-academico/proximo/nueva-seccion',
+    DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION : 'jefe/periodo-academico/proximo/seccion',
 }

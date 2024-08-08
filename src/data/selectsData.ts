@@ -21,5 +21,9 @@ export const PROCESS_TYPES = [
     {
         "id": 5,
         "name": "PERIODO ACADÉMICO"
+    },
+    {
+        "id": 6,
+        "name": "CREACIÓN DE SECCIONES"
     }
 ]
