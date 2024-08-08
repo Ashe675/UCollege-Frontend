@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { BuildingsArraySchema, CancelSectionPayload, ClassesArraySchema, ClassSectionForm, DepartmentSchema, DepartmentSchemaWithSections, DetailSectionByIdSchema, IncreaseQuota, NewSectionPayload } from "@/types/department_head";
+import { BuildingsArraySchema, CancelSectionPayload, ClassesArraySchema, ClassSectionForm, dataSchemaStats, DepartmentSchema, DepartmentSchemaWithSections, DetailSectionByIdSchema, IncreaseQuota, NewSectionPayload } from "@/types/department_head";
 import { isAxiosError } from "axios";
 
 // crear una nueva seccion del periodo actual
@@ -222,6 +222,23 @@ export async function getSectionsByDepartmentNexPeriod() {
         const url = '/section/department/next'
         const { data } = await api(url)
         const result = DepartmentSchemaWithSections.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+// los maestros por departamento
+export async function getClassesStats() {
+    try {
+        const url = `/statistics/estadisticas-departamento`
+        const { data } = await api(url)
+        const result = dataSchemaStats.safeParse(data)
         if (result.success) {
             return result.data
         }

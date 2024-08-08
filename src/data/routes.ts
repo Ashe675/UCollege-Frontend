@@ -29,4 +29,5 @@ export const PrivateRoutes = {
     DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION : 'jefe/periodo-academico/actual/seccion',
     DEPARTMENT_HEAD_PERIOD_NEXT_ADD_SECTION : 'jefe/periodo-academico/proximo/nueva-seccion',
     DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION : 'jefe/periodo-academico/proximo/seccion',
+    DEPARTMENT_HEAD_STATS : 'jefe/estadisticas',
 }

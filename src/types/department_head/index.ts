@@ -243,10 +243,26 @@ export const DetailSectionByIdSchema = z.object({
 
 export type SectionDetailById = z.infer<typeof DetailSectionByIdSchema>;
 
-export type IncreaseQuota  = {
-    increment : number
+export type IncreaseQuota = {
+    increment: number
 }
 
-export type CancelSectionPayload  = {
-    justification : string
+export type CancelSectionPayload = {
+    justification: string
 }
+
+
+const classSchemaStats = z.object({
+    className: z.string(),              // Nombre de la clase
+    totalSecciones: z.number().int(),    // Total de secciones (entero)
+    totalEnrollments: z.number().int(),  // Total de inscripciones (entero)
+    totalAprobados: z.number().int(),    // Total de aprobados (entero)
+    totalReprobados: z.number().int(),   // Total de reprobados (entero)
+    porcentajeAprobados: z.number().min(0).max(100), // Porcentaje de aprobados (0-100)
+    porcentajeReprobados: z.number().min(0).max(100), // Porcentaje de reprobados (0-100)
+    promedioNotas: z.number().min(0).max(100),        // Promedio de notas (0-100)
+});
+
+export const dataSchemaStats = z.array(classSchemaStats);
+
+export type  DataClassesStats = z.infer<typeof dataSchemaStats>
