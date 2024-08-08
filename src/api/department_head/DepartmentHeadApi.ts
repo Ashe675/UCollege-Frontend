@@ -155,7 +155,7 @@ export async function getTeachersByDepartment() {
     try {
         const url = '/section/department/teacher'
         const { data } = await api(url)
-      
+
         const result = DepartmentSchema.safeParse(data)
         if (result.success) {
             return result.data
@@ -242,6 +242,20 @@ export async function getClassesStats() {
         if (result.success) {
             return result.data
         }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+// los maestros por departamento
+export async function resetPasswordToTeacher(id: number) {
+    try {
+        const url = `/auth/forgot-password-teacher/${id}`
+        const { data } = await api.post(url)
+        return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

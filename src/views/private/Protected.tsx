@@ -5,6 +5,8 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const TeacherHeadView = lazy(() => import("./department_head/TeacherHeadView"));
+const AcademicHistoryView = lazy(() => import("./department_head/AcademicHistoryView"));
 const StatsView = lazy(() => import("./department_head/StatsView"));
 const DetailNextSectionView = lazy(() => import("./department_head/sections/DetailNextSectionView")) ;
 const AddNextSectionView = lazy(() => import("./department_head/sections/AddNextSectionView"));
@@ -86,6 +88,22 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <PeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_HISTORY}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AcademicHistoryView/>
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_TEACHERS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <TeacherHeadView/>
               </Suspense>
             }
           />

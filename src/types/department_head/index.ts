@@ -265,4 +265,40 @@ const classSchemaStats = z.object({
 
 export const dataSchemaStats = z.array(classSchemaStats);
 
-export type  DataClassesStats = z.infer<typeof dataSchemaStats>
+export type DataClassesStats = z.infer<typeof dataSchemaStats>
+
+
+//buscar historial
+export type SearchHistory = {
+    code: string
+}
+
+const enrollmentSchema = z.object({
+    codigo: z.string(),
+    nombre: z.string(),
+    'uv/ca': z.number(),
+    periodo: z.number(),
+    Nota: z.number(),
+    obs: z.string(),
+});
+
+const yearSchema = z.object({
+    enrollments: z.array(enrollmentSchema),
+    totalAprov: z.number(),
+});
+
+export const studentSchema = z.object({
+    nameStudent: z.string(),
+    lastnameStudent: z.string(),
+    codeIdentification: z.string(),
+    globalAverage: z.number(),
+    avatar: z.array(ImageSchema), // Assuming `avatar` can be any type or empty array
+    regionalCenter: z.string(),
+    career: z.string(),
+    years: z.record(z.string(), yearSchema),
+    SumUVxNota: z.number(),
+    SumUV: z.number(),
+    academicIndex: z.number().nullable(), // Nullable because it can be `null`
+});
+
+export type AcademicHistoryResponse = z.infer<typeof studentSchema>

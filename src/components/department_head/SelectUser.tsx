@@ -88,7 +88,7 @@ export default function SelectUser({
             >
               <CheckIcon className="invisible size-4 group-data-[selected]:visible" />
               <div className=" ml-2 flex w-full gap-5 items-center">
-                <Avatar img={teacher.teacher.images[0].url} size="md" rounded />
+                <Avatar img={teacher.teacher.images[0]?.url ? teacher.teacher.images[0].url : ''} size="md" rounded />
                 <div className="text-sm/6 flex items-center text-slate-600">
                   {teacher.teacher.person.firstName}{" "}
                   {teacher.teacher.person.lastName}
