@@ -13,7 +13,7 @@ export default function SearchSection({ register, errors }: SearchFormProps) {
       <div className=" w-full relative">
         <input
           type="search"
-          className=" px-6 p-2 text-slate-600 w-full rounded-full border-1 border-slate-400 outline-none focus:outline-none"
+          className=" px-6 p-2 text-slate-600 w-full rounded-full border-2 border-slate-400 focus:border-tertiary focus:outline-none"
           placeholder="Ingrese el número de cuenta del estudiante Ej.(20201030923)"
           {...register("code", {
             required: "Tiene que ingresar el número de cuenta.",

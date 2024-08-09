@@ -1,4 +1,4 @@
-import { AreaChart } from "@tremor/react";
+import { AreaChart } from "@tremor/react/dist/components";
 
 const chartdata = [
   {

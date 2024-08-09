@@ -8,7 +8,7 @@ type HistoryAcademicStudentProps = {
 
 export default function HistoryAcademicStudent({data : student} : HistoryAcademicStudentProps) {
     return (
-        <div className="p-4 bg-gray-100 w-full">
+        <div className="p-4 bg-gray-100 w-full rounded-sm">
           <div className="flex items-center gap-4 mb-6 bg-white p-4 rounded-lg shadow-md flex-wrap justify-around">
             <Avatar img={student.avatar[0]?.url ? student.avatar[0].url : '' } rounded size='xl' />
             <div>
