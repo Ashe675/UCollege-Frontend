@@ -1,18 +1,17 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 type Props = {
   onClick: () => void;
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function ResetPasswordToTeacherModal({ onClick }: Props) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const addMember = queryParams.get("reiniciarContraseña");
-  const show = addMember ? true : false;
-
+export default function ResetPasswordToTeacherModal({
+  onClick,
+  show,
+  setShow,
+}: Props) {
   return (
     <>
       <Transition appear show={show} as={Fragment}>
@@ -20,7 +19,7 @@ export default function ResetPasswordToTeacherModal({ onClick }: Props) {
           as="div"
           className="relative z-40"
           onClose={() => {
-            navigate(location.pathname, { replace: true });
+            setShow(false);
           }}
         >
           <Transition.Child

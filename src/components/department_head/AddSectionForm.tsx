@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
-import SelectUser from "./SelectUser";
+// import SelectUser from "./SelectUser";
 import { Classroom, ClassSectionForm } from "@/types/department_head";
 import ButtonSubmit from "../ButtonSubmit";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,6 +15,8 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PrivateRoutes } from "@/data/routes";
+// import SelectSearchUser from "./SelectSearchUser";
+import SelectSearchTeacher from "./SelectSearchTeacher";
 
 const daysOfWeek = [
   { name: "Lunes", value: 1 },
@@ -45,7 +47,7 @@ export default function AddSectionForm() {
   const nextPeriod = location.pathname.includes(`/periodo-academico/proximo`) 
   
 
-  const { mutate, isPending } = useMutation({
+  const {  isPending } = useMutation({
     mutationFn: nextPeriod ? createNewNextSection  : createNewCurrentSection,
     onError: (error) => {
       toast.update(toastId.current!, {
@@ -137,8 +139,9 @@ export default function AddSectionForm() {
         message: "Maestro Invalido",
       });
     }
-    toastId.current = toast.loading("Creando Sección...");
-    mutate(formData);
+    // toastId.current = toast.loading("Creando Sección...");
+    // mutate(formData);
+    console.log(formData.teacherId)
   };
 
   return (
@@ -177,7 +180,7 @@ export default function AddSectionForm() {
             <ErrorMessage>{errors.classId.message}</ErrorMessage>
           )}
         </div>
-        <div className=" space-y-1 flex flex-col">
+        {/* <div className=" space-y-1 flex flex-col">
           <label
             htmlFor="teacherId"
             className=" font-bold block text-center uppercase text-slate-600"
@@ -185,6 +188,30 @@ export default function AddSectionForm() {
             Docente
           </label>
           <SelectUser setValue={setValue} name="teacherId" />
+          {errors.teacherId && (
+            <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
+          )}
+        </div> */}
+        {/* <div className=" space-y-1 flex flex-col">
+          <label
+            htmlFor="teacherId"
+            className=" font-bold block text-center uppercase text-slate-600"
+          >
+            Docente
+          </label>
+          <SelectSearchUser setValue={setValue} name="teacherId" />
+          {errors.teacherId && (
+            <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
+          )}
+        </div> */}
+        <div className=" space-y-1 flex flex-col">
+          <label
+            htmlFor="teacherId"
+            className=" font-bold block text-center uppercase text-slate-600"
+          >
+            Docente
+          </label>
+          <SelectSearchTeacher setValue={setValue} name="teacherId" />
           {errors.teacherId && (
             <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
           )}

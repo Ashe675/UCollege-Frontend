@@ -93,11 +93,11 @@ export const menuItems = {
                     text: "Periodo",
                     link:  PrivateRoutes.DEPARTMENT_HEAD_PERIOD,
                 },
-                // {
-                //     icon: IconNotes,
-                //     text: "Matricula",
-                //     link: "jefe/matricula",
-                // },
+                {
+                    icon: IconNotes,
+                    text: "Matricula",
+                    link: "jefe/matricula",
+                },
                 {
                     icon: IconAddressBook,
                     text: "Historiales",

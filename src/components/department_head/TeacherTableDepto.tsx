@@ -1,26 +1,30 @@
 import { RoleEnum } from "@/types/auth";
 import { TeacherByDepartment } from "@/types/department_head";
 import { getRoleColorClass, getRoleMessage } from "@/utils/dictionaries";
-import { Avatar } from "flowbite-react";
+import { Avatar } from "flowbite-react/components/Avatar";
 import ButtonCustomWithClick from "../ButtonCustomWithClick";
 import { IconKeyFilled } from "@tabler/icons-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ResetPasswordToTeacherModal from "./ResetPasswordToTeacherModal";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { resetPasswordToTeacher } from "@/api/department_head/DepartmentHeadApi";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import { PrivateRoutes } from "@/data/routes";
 
 type TeacherTableDeptoProps = {
   teachers: TeacherByDepartment;
+  page: number;
 };
 
 export default function TeacherTableDepto({
   teachers,
+  page,
 }: TeacherTableDeptoProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [idTeacher, setIdTeacher] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const toastId = useRef<null | number | string>(null);
 
@@ -52,7 +56,7 @@ export default function TeacherTableDepto({
     if (id) {
       setIdTeacher(id);
       console.log(id);
-      navigate(location.pathname + `?reiniciarContraseña=true`);
+      setShowModal(true);
     }
   };
 
@@ -60,7 +64,7 @@ export default function TeacherTableDepto({
     if (idTeacher) {
       toastId.current = toast.loading("Enviando Email...");
       mutate(idTeacher);
-      navigate(location.pathname, { replace: true });
+      setShowModal(false);
     }
   };
 
@@ -68,8 +72,12 @@ export default function TeacherTableDepto({
     <>
       {teachers.teachers.length ? (
         <div className=" overflow-x-auto shadow-md  mt-4 rounded-sm">
-          <ResetPasswordToTeacherModal onClick={handleClickModal} />
-          <table className=" bg-white table-auto min-w-max w-full">
+          <ResetPasswordToTeacherModal
+            onClick={handleClickModal}
+            show={showModal}
+            setShow={setShowModal}
+          />
+          <table className=" bg-white table-auto min-w-max w-full rounded-md">
             <thead className=" text-slate-500 uppercase text-sm">
               <tr className=" border-b border-slate-200">
                 <th className=" p-3">Foto</th>
@@ -112,7 +120,6 @@ export default function TeacherTableDepto({
                     <ButtonCustomWithClick
                       onClick={() => {
                         handleClick(teacher.id);
-                        console.log(teacher.id);
                       }}
                       className=" bg-blue-600 text-sm text-white p-2 rounded-md shadow-md hover:bg-blue-700 flex justify-center gap-2 max-w-60 mx-auto items-center"
                     >
@@ -123,6 +130,28 @@ export default function TeacherTableDepto({
                 </tr>
               ))}
             </tbody>
+            <tfoot className=" ">
+              <tr>
+                <td colSpan={5} className="p-4">
+                  <Pagination
+                  shape="rounded"
+                    page={page}
+                    count={10}
+                    className=" w-full flex justify-center"
+                    renderItem={(item) => (
+                      <PaginationItem
+                      
+                        component={Link}
+                        to={`/myspace/${
+                          PrivateRoutes.DEPARTMENT_HEAD_TEACHERS
+                        }${item.page === 1 ? "" : `?page=${item.page}`}`}
+                        {...item}
+                      />
+                    )}
+                  />
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       ) : (

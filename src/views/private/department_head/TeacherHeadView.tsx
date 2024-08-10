@@ -6,10 +6,14 @@ import { useAppStore } from "@/stores/appStore";
 import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useLocation } from 'react-router-dom';
+
 export default function TeacherHeadView() {
   const user = useUserStore((state) => state.user);
+  const location = useLocation()
   
-
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get("page") || "1", 10);
 
   const {
     data: teachers,
@@ -32,7 +36,7 @@ export default function TeacherHeadView() {
           <Spinner />
         </div>
       )}
-      {teachers && <TeacherTableDepto teachers={teachers} />}
+      {teachers && <TeacherTableDepto teachers={teachers} page={page}  />}
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </div>
   );
