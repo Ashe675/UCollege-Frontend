@@ -2,7 +2,7 @@ import { getSectionById } from "@/api/department_head/DepartmentHeadApi";
 import Spinner from "@/components/spinner/Spinner";
 import { PrivateRoutes } from "@/data/routes";
 import { useAppStore } from "@/stores/appStore";
-import { IconCirclePlusFilled, IconSquareXFilled } from "@tabler/icons-react";
+import { IconEdit, IconSquareXFilled } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -105,7 +105,7 @@ export default function DetailNextSectionView() {
                     }}
                     className=" bg-sky-500 p-3 rounded-md text-white uppercase font-bold hover:bg-sky-600 cursor-pointer transition-colors  text-sm flex items-center justify-center mt-7 gap-2"
                   >
-                    <IconCirclePlusFilled stroke={3} />
+                    <IconEdit stroke={2} />
                   </button>
                 </div>
                 <div className=" flex gap-3 justify-between">

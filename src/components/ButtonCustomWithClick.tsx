@@ -4,17 +4,20 @@ type ButtonCustomWithClickProps = {
   className?: string;
   children: ReactNode;
   onClick?: (...args: unknown[]) => void;
+  disabled? : boolean
 };
 
 export default function ButtonCustomWithClick({
   children,
   className,
-  onClick
+  onClick,
+  disabled
 }: ButtonCustomWithClickProps) {
   return (
     <button
+      disabled = {disabled }
       type="button"
-      className={`  w-full   uppercase font-bold cursor-pointer transition-colors ${className}`}
+      className={`  w-full   uppercase font-bold ${disabled ? ' cursor-default' : ' cursor-pointer '} transition-colors ${className}`}
       onClick={onClick}
     >
       {children}

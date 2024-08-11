@@ -32,6 +32,7 @@ export default function SelectSearchTeacher({
 
   const user = useUserStore((state) => state.user);
   const initialValue = initialState ? initialState : null;
+  
   const [selected, setSelected] = useState<Pick<
     TeacherDepto,
     "id" | "person"
@@ -46,7 +47,7 @@ export default function SelectSearchTeacher({
 
   useEffect(() => {
     if (selected) {
-      setValue(name, Number(selected));
+      setValue(name, selected.id);
     }
   }, [selected, setValue, name]);
 
@@ -68,8 +69,6 @@ export default function SelectSearchTeacher({
               .includes(query.toLowerCase())
           );
         });
-
-        console.log(filteredPeople)
 
   return (
     <div>
@@ -99,10 +98,10 @@ export default function SelectSearchTeacher({
           transition
           className={clsx(
             "w-[var(--button-width)] rounded-xl border border-white/5 p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
-            "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 bg-slate-200 min-w-64"
+            "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 bg-slate-200 min-w-64 sm:min-w-[360px]  "
           )}
-        >
-          {filteredPeople.map((person) => (
+        >  
+          {filteredPeople.length ? filteredPeople.map((person) => (
             <ComboboxOption
               key={person.teacher.id}
               value={person.teacher}
@@ -125,8 +124,13 @@ export default function SelectSearchTeacher({
                 </div>
               </div>
             </ComboboxOption>
-          ))}
+          )) : (
+            <div className="text-sm/6 flex items-center text-slate-600 p-2">
+                  No se encontró resultados.
+            </div>
+          )}
         </ComboboxOptions>
+   
       </Combobox>
     </div>
   );

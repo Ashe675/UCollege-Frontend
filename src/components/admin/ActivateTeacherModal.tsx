@@ -1,29 +1,25 @@
-import { deactivateTeacher } from "@/api/admin/AdminApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { activateTeacher } from "@/api/admin/AdminApi";
 import { Dialog, Transition } from "@headlessui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-type DeleteTeacherModalProps = {
-  openModal: boolean;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+type Props = {
+  onClick?: () => void;
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
   userId: number;
 };
 
-export function DeleteTeacherModal({
-  openModal,
-  setOpenModal,
-  userId,
-}: DeleteTeacherModalProps) {
+export default function ActivateTeacherModal({ show, setShow, userId }: Props) {
   const toastId = useRef<null | number | string>(null);
   const queryClient = useQueryClient();
   const params = useParams();
   const teacherCode = params.teacherCode!;
 
   const { mutate } = useMutation({
-    mutationFn: deactivateTeacher,
+    mutationFn: activateTeacher,
     onSuccess: (data) => {
       toast.update(toastId.current!, {
         render: data.message,
@@ -47,19 +43,19 @@ export function DeleteTeacherModal({
   });
 
   const handleClick = () => {
-    toastId.current = toast.loading("Desactivando Docente...");
+    toastId.current = toast.loading("Activando Docente...");
     mutate(userId);
-    setOpenModal(false);
+    setShow(false);
   };
 
   return (
-<>
-      <Transition appear show={openModal} as={Fragment}>
+    <>
+      <Transition appear show={show} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-40"
           onClose={() => {
-            setOpenModal(false);
+            setShow(false);
           }}
         >
           <Transition.Child
@@ -91,20 +87,20 @@ export function DeleteTeacherModal({
                       as="h3"
                       className="font-bold text-slate-700 text-2xl  my-5"
                     >
-                      ¿Está seguro de desactivar a este docente?
+                      ¿Está seguro de activar a este docente?
                     </Dialog.Title>
                   </div>
                   <div className=" gap-2 flex-wrap flex">
                   <input
                     type="button"
                     onClick={handleClick}
-                    value="Desactivar"
-                    className=" bg-red-500 w-full p-3 rounded-md text-white uppercase font-bold hover:bg-red-600 cursor-pointer transition-colors mt-3"
+                    value="Activar"
+                    className=" bg-green-500 w-full p-3 rounded-md text-white uppercase font-bold hover:bg-green-600 cursor-pointer transition-colors mt-3"
                   />
                   <input
                     type="button"
                     value={"Cancelar"}
-                    onClick={() => setOpenModal(false)}
+                    onClick={() => setShow(false)}
                     className=" bg-slate-500 w-full p-3 rounded-md text-white uppercase font-bold hover:bg-slate-600 cursor-pointer transition-colors mt-3"
                   />
                   </div>

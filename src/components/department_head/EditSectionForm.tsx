@@ -12,10 +12,10 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import SelectUser from "./SelectUser";
 import ErrorMessage from "../ErrorMessage";
 import { toast } from "react-toastify";
 import { useLocation, useParams } from "react-router-dom";
+import SelectSearchTeacher from "./SelectSearchTeacher";
 
 type EditSectionFormProps = {
   initialValues: ClassSectionForm;
@@ -55,7 +55,6 @@ export default function EditSectionForm({
   const location = useLocation();
 
   const nextPeriod = location.pathname.includes(`/periodo-academico/proximo`);
-  
 
   const { mutate, isPending } = useMutation({
     mutationFn: nextPeriod ? updateNextSectionById : updateSectionById,
@@ -73,7 +72,7 @@ export default function EditSectionForm({
       queryClient.invalidateQueries({
         queryKey: ["sections", "department", "future", user.id],
       });
-      queryClient.removeQueries({
+      queryClient.invalidateQueries({
         queryKey: ["section", "detail", sectionId],
       });
       setEdit(false);
@@ -102,6 +101,9 @@ export default function EditSectionForm({
     }
     toastId.current = toast.loading("Actualizando Sección...");
     mutate({ payload: formData, id: Number(sectionId) });
+    queryClient.invalidateQueries({
+      queryKey: ["section", "detail", sectionId],
+    });
   };
 
   useEffect(() => {
@@ -149,12 +151,13 @@ export default function EditSectionForm({
           >
             Docente
           </label>
-          <SelectUser
+          <SelectSearchTeacher
             setValue={setValue}
             name="teacherId"
             initialState={teacher}
             disable={edit}
           />
+
           {errors.teacherId && (
             <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
           )}

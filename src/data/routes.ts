@@ -32,4 +32,5 @@ export const PrivateRoutes = {
     DEPARTMENT_HEAD_STATS : 'jefe/estadisticas',
     DEPARTMENT_HEAD_HISTORY: 'jefe/historiales-academicos',
     DEPARTMENT_HEAD_TEACHERS: 'jefe/docentes',
+    DEPARTMENT_HEAD_ENROLLMENT: 'jefe/matricula',
 }

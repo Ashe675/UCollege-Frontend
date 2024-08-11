@@ -4,26 +4,39 @@ import { useAppStore } from "@/stores/appStore";
 import { useUserStore } from "@/stores/userStore";
 import { IconArrowBackUp, IconCirclePlusFilled } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/spinner/Spinner";
 import SectionCardInfo from "@/components/department_head/SectionCardInfo";
 
-
 export default function NextPeriodView() {
   const setTitle = useAppStore((state) => state.setTitle);
   const user = useUserStore((state) => state.user);
+  const [filterQuery, setFilterQuery] = useState("");
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["sections", "department", "next", user.id],
     queryFn: getSectionsByDepartmentNexPeriod,
-    retry : false
+    retry: false,
   });
 
   useEffect(() => {
     setTitle("Periodo - Próximo");
   }, [setTitle]);
+
+  const itemsFiltered =
+    filterQuery === ""
+      ? data?.sectionsWithDetails
+      : data?.sectionsWithDetails.filter((item) => {
+          return (
+            (item.teacher.person.firstName + " " + item.teacher.person.lastName)
+              .toLowerCase()
+              .includes(filterQuery.toLowerCase()) ||
+            item.class.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
+            item.code.toLowerCase().includes(filterQuery.toLowerCase())
+          );
+        });
 
   return (
     <div className=" p-5">
@@ -44,9 +57,19 @@ export default function NextPeriodView() {
         </Link>
       </div>
       <section className=" mt-8">
-        <h2 className="font-bold text-xl text-slate-600 mb-5 uppercase">
-          Secciones Para el Próximo Periodo
-        </h2>
+        <div className=" flex justify-between gap-4 mb-4 items-center flex-wrap">
+          <h2 className="font-bold text-xl text-slate-600  uppercase w-[390px]">
+            Secciones Para el Próximo Periodo
+          </h2>
+          <div className=" flex-1 min-w-72">
+            <input
+              type="text"
+              className=" w-full p-2 rounded-md focus-visible:outline-slate-300 text-slate-600"
+              onChange={(evt) => setFilterQuery(evt.target.value)}
+              placeholder="Filtrar por nombre de la clase, nombre del docente, código de sección."
+            />
+          </div>
+        </div>
         {error && <ErrorMessage>{error.message}</ErrorMessage>}
         {isLoading && (
           <div className=" mt-10">
@@ -55,12 +78,25 @@ export default function NextPeriodView() {
         )}
 
         {data &&
+          itemsFiltered &&
           (data.sectionsWithDetails.length ? (
-            <div className=" grid grid-cols-1 lg:grid-cols-2 gap-7 lg:px-4">
-              {data.sectionsWithDetails.map((section) => (
-                <SectionCardInfo section={section} key={section.id} next={true}/>
-              ))}
-            </div>
+            <>
+              {itemsFiltered.length ? (
+                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-7 lg:px-4">
+                  {itemsFiltered.map((section) => (
+                    <SectionCardInfo
+                      section={section}
+                      key={section.id}
+                      next={true}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className=" text-slate-500 text-center mt-10">
+                  No se encontraron resultados.
+                </div>
+              )}
+            </>
           ) : (
             <div className=" text-slate-500">No hay Secciones Creadas</div>
           ))}
@@ -68,4 +104,3 @@ export default function NextPeriodView() {
     </div>
   );
 }
-

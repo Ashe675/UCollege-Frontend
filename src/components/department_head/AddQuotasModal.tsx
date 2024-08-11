@@ -36,12 +36,11 @@ export default function AddQuotasModal({ sectionId }: AddQuotasModalProps) {
       queryClient.invalidateQueries({
         queryKey: ["sections", "department", "future", user.id],
       });
-      queryClient.invalidateQueries({
-        queryKey: ["section", "detail", sectionId],
-      });
       queryClient.removeQueries({
         queryKey: ["section", "detail", sectionId],
       });
+     
+
     },
     onError: (error) => {
       toast.update(toastId.current!, {
@@ -66,14 +65,14 @@ export default function AddQuotasModal({ sectionId }: AddQuotasModalProps) {
   } = useForm<IncreaseQuota>();
 
   const validateQuota = (quota: number) => {
-    if (isNaN(quota) || quota <= 0 || quota >= 50) {
+    if (isNaN(quota) || quota <= -50 || quota >= 50) {
       return "Campo Inválido";
     }
     return true;
   };
 
   const onSubmit = (formData: IncreaseQuota) => {
-    toastId.current = toast.loading("Aumentando Cupos de la Sección...");
+    toastId.current = toast.loading("Actualizando Cupos de la Sección...");
     mutate({ id: sectionId, payload: formData });
     navigate(location.pathname, { replace: true });
     reset()
@@ -86,7 +85,8 @@ export default function AddQuotasModal({ sectionId }: AddQuotasModalProps) {
           as="div"
           className="relative z-40"
           onClose={() => {
-            navigate(location.pathname, { replace: true });
+            navigate(location.pathname, { replace: true })
+            reset()
           }}
         >
           <Transition.Child
@@ -118,7 +118,7 @@ export default function AddQuotasModal({ sectionId }: AddQuotasModalProps) {
                       as="h3"
                       className="font-bold text-slate-700 text-2xl  my-5"
                     >
-                      Ingrese la cantidad de cupos que desea aumentar
+                      Ingrese la cantidad de cupos que desea aumentar o reducir <span className=" text-slate-500 font-semibold">(Ej. -3 para reducir)</span>.
                     </Dialog.Title>
                     <form
                       id="increaseQuotaForm"
@@ -129,7 +129,7 @@ export default function AddQuotasModal({ sectionId }: AddQuotasModalProps) {
                       <input
                         type="number"
                         id="quota"
-                        min={1}
+                        min={"-50"}
                         max={50}
                         className=" p-2 text-slate-600 w-full  border border-slate-300 rounded-md py-3 text-md font-bold"
                         {...register("increment", {

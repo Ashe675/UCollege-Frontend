@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const EnrollStudentsView = lazy(() => import("./department_head/EnrollStudentsView"));
 const TeacherHeadView = lazy(() => import("./department_head/TeacherHeadView"));
 const AcademicHistoryView = lazy(() => import("./department_head/AcademicHistoryView"));
 const StatsView = lazy(() => import("./department_head/StatsView"));
@@ -88,6 +89,14 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <PeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_ENROLLMENT}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EnrollStudentsView />
               </Suspense>
             }
           />

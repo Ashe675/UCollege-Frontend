@@ -47,7 +47,7 @@ export default function AddSectionForm() {
   const nextPeriod = location.pathname.includes(`/periodo-academico/proximo`) 
   
 
-  const {  isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: nextPeriod ? createNewNextSection  : createNewCurrentSection,
     onError: (error) => {
       toast.update(toastId.current!, {
@@ -139,9 +139,8 @@ export default function AddSectionForm() {
         message: "Maestro Invalido",
       });
     }
-    // toastId.current = toast.loading("Creando Sección...");
-    // mutate(formData);
-    console.log(formData.teacherId)
+    toastId.current = toast.loading("Creando Sección...");
+    mutate(formData);
   };
 
   return (
@@ -180,30 +179,6 @@ export default function AddSectionForm() {
             <ErrorMessage>{errors.classId.message}</ErrorMessage>
           )}
         </div>
-        {/* <div className=" space-y-1 flex flex-col">
-          <label
-            htmlFor="teacherId"
-            className=" font-bold block text-center uppercase text-slate-600"
-          >
-            Docente
-          </label>
-          <SelectUser setValue={setValue} name="teacherId" />
-          {errors.teacherId && (
-            <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
-          )}
-        </div> */}
-        {/* <div className=" space-y-1 flex flex-col">
-          <label
-            htmlFor="teacherId"
-            className=" font-bold block text-center uppercase text-slate-600"
-          >
-            Docente
-          </label>
-          <SelectSearchUser setValue={setValue} name="teacherId" />
-          {errors.teacherId && (
-            <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
-          )}
-        </div> */}
         <div className=" space-y-1 flex flex-col">
           <label
             htmlFor="teacherId"

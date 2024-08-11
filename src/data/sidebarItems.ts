@@ -96,22 +96,22 @@ export const menuItems = {
                 {
                     icon: IconNotes,
                     text: "Matricula",
-                    link: "jefe/matricula",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_ENROLLMENT,
                 },
                 {
                     icon: IconAddressBook,
                     text: "Historiales",
-                    link: "jefe/historiales-academicos",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_HISTORY
                 },
                 {
                     icon: IconCalendarUser ,
                     text: "Docentes",
-                    link: "jefe/docentes",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_TEACHERS,
                 },
                 {
                     icon: IconChartBar ,
                     text: "Estadísticas",
-                    link: "jefe/estadisticas",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_STATS,
                 },
             ],
         }
