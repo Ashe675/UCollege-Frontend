@@ -5,16 +5,31 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
-const EnrollStudentsView = lazy(() => import("./department_head/EnrollStudentsView"));
+const SectionSpaceView = lazy(() => import("./SectionSpaceView"));
+const EnrollStudentsView = lazy(
+  () => import("./department_head/EnrollStudentsView")
+);
 const TeacherHeadView = lazy(() => import("./department_head/TeacherHeadView"));
-const AcademicHistoryView = lazy(() => import("./department_head/AcademicHistoryView"));
+const AcademicHistoryView = lazy(
+  () => import("./department_head/AcademicHistoryView")
+);
 const StatsView = lazy(() => import("./department_head/StatsView"));
-const DetailNextSectionView = lazy(() => import("./department_head/sections/DetailNextSectionView")) ;
-const AddNextSectionView = lazy(() => import("./department_head/sections/AddNextSectionView"));
-const DetailSectionView = lazy(() => import("./department_head/sections/DetailSectionView")) ;
-const AddSectionView = lazy(() => import("./department_head/sections/AddSectionView"));
-const CurrentPeriodView = lazy(()=> import("./department_head/CurrentPeriodView"));
-const NextPeriodView = lazy(()=> import("./department_head/NextPeriodView")) ;
+const DetailNextSectionView = lazy(
+  () => import("./department_head/sections/DetailNextSectionView")
+);
+const AddNextSectionView = lazy(
+  () => import("./department_head/sections/AddNextSectionView")
+);
+const DetailSectionView = lazy(
+  () => import("./department_head/sections/DetailSectionView")
+);
+const AddSectionView = lazy(
+  () => import("./department_head/sections/AddSectionView")
+);
+const CurrentPeriodView = lazy(
+  () => import("./department_head/CurrentPeriodView")
+);
+const NextPeriodView = lazy(() => import("./department_head/NextPeriodView"));
 const PeriodView = lazy(() => import("./department_head/PeriodView"));
 const CancelClassView = lazy(() => import("./student/CancelClassView"));
 const EnrollAddClass = lazy(() => import("./student/EnrollAddClass"));
@@ -25,7 +40,7 @@ const ProcessView = lazy(() => import("./admin/ProcessView"));
 const EditTeacherView = lazy(() => import("./admin/EditTeacherView"));
 const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
 const TeacherView = lazy(() => import("./admin/TeacherView"));
-const HomeStudent = lazy(() => import("./student/HomeStudent"));
+const Home = lazy(() => import("./Home"));
 const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
@@ -45,11 +60,28 @@ export default function Protected() {
           index
           element={
             <Suspense fallback={<SpinnerFull />}>
-              <HomeStudent />
+              <Home />
             </Suspense>
           }
         />
         <Route
+          path="/"
+          index
+          element={
+            <Suspense fallback={<SpinnerFull />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path={PrivateRoutes.SECTION + "/:sectionId"}
+          element={
+            <Suspense fallback={<SpinnerFull />}>
+              <SectionSpaceView />
+            </Suspense>
+          }
+        />
+         <Route
           path={PrivateRoutes.CHAT}
           element={
             <Suspense fallback={<SpinnerFull />}>
@@ -104,7 +136,7 @@ export default function Protected() {
             path={PrivateRoutes.DEPARTMENT_HEAD_HISTORY}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <AcademicHistoryView/>
+                <AcademicHistoryView />
               </Suspense>
             }
           />
@@ -112,7 +144,7 @@ export default function Protected() {
             path={PrivateRoutes.DEPARTMENT_HEAD_TEACHERS}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <TeacherHeadView/>
+                <TeacherHeadView />
               </Suspense>
             }
           />
@@ -120,7 +152,7 @@ export default function Protected() {
             path={PrivateRoutes.DEPARTMENT_HEAD_STATS}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <StatsView/>
+                <StatsView />
               </Suspense>
             }
           />
@@ -140,8 +172,11 @@ export default function Protected() {
               </Suspense>
             }
           />
-           <Route
-            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION + '/:sectionId'}
+          <Route
+            path={
+              PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION +
+              "/:sectionId"
+            }
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <DetailSectionView />
@@ -165,7 +200,10 @@ export default function Protected() {
             }
           />
           <Route
-            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION+ '/:sectionId'}
+            path={
+              PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION +
+              "/:sectionId"
+            }
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <DetailNextSectionView />

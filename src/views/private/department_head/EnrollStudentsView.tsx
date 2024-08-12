@@ -23,7 +23,7 @@ export default function EnrollStudentsView() {
   return (
     <div className=" w-full h-full bg-slate-100 p-5">
       <h2 className=" text-xl font-bold capitalize text-slate-600 text-center">
-        Estudiantes Matriculados En En el periodo actual
+        Estudiantes Matriculados En el periodo actual
       </h2>
       {isLoading && (
         <div className=" flex mt-32 items-center justify-center">

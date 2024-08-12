@@ -1,5 +1,6 @@
 import api from "@/lib/axios";
 import { classesSchema, sectionEnrollmentsSchema } from "@/types/student";
+import { SectionHomeArraySchema } from "@/types/teacher";
 import { isAxiosError } from "axios";
 
 //* MATRICULA
@@ -30,6 +31,22 @@ export async function getClassesEnrollments() {
         const url = '/enroll-student/student/enroll'
         const { data } = await api(url)
         const result = sectionEnrollmentsSchema.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function getSectionsHomeStudent() {
+    try {
+        const url = '/section/student/'
+        const { data } = await api(url)
+        const result = SectionHomeArraySchema.safeParse(data)
         if (result.success) {
             return result.data
         }

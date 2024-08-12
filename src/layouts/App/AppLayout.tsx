@@ -26,7 +26,7 @@ export default function AppLayout() {
           className="h-screen w-full max-w-[270px] bg-slate-100 shadow-md z-20"
         />
         <div
-          className={` flex flex-col w-full relative overflow-auto max-sm:pb-5 transition-all duration-500 ease-in-out ${
+          className={` flex flex-col w-full min-h-screen  relative  transition-all duration-500 ease-in-out ${
             show ? "sm:ml-[270px]" : "sm:ml-0"
           }`}
         >
