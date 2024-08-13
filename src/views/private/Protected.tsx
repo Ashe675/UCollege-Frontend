@@ -5,13 +5,30 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const TeacherHeadView = lazy(() => import("./department_head/TeacherHeadView"));
+const AcademicHistoryView = lazy(() => import("./department_head/AcademicHistoryView"));
+const StatsView = lazy(() => import("./department_head/StatsView"));
+const DetailNextSectionView = lazy(() => import("./department_head/sections/DetailNextSectionView")) ;
+const AddNextSectionView = lazy(() => import("./department_head/sections/AddNextSectionView"));
+const DetailSectionView = lazy(() => import("./department_head/sections/DetailSectionView")) ;
+const AddSectionView = lazy(() => import("./department_head/sections/AddSectionView"));
+const CurrentPeriodView = lazy(()=> import("./department_head/CurrentPeriodView"));
+const NextPeriodView = lazy(()=> import("./department_head/NextPeriodView")) ;
+const PeriodView = lazy(() => import("./department_head/PeriodView"));
+const CancelClassView = lazy(() => import("./student/CancelClassView"));
+const EnrollAddClass = lazy(() => import("./student/EnrollAddClass"));
+const StudentEnroll = lazy(() => import("./student/StudentEnroll"));
+const CalendarProcessView = lazy(() => import("./admin/CalendarProcessView"));
+const AddProcessView = lazy(() => import("./admin/AddProcessView"));
+const ProcessView = lazy(() => import("./admin/ProcessView"));
+const EditTeacherView = lazy(() => import("./admin/EditTeacherView"));
+const AddTeacherView = lazy(() => import("./admin/AddTeacherView"));
+const TeacherView = lazy(() => import("./admin/TeacherView"));
 const HomeStudent = lazy(() => import("./student/HomeStudent"));
 const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
-const Teacher = lazy(() => import("../../views/teacher/teacherView"));
-const AddTeacherForm = lazy(() => import("@/views/teacher/AddTeacherView"));
-const EditTeacher = lazy(() => import ("@/views/teacher/EditTeacherView"))
+const Profile = lazy(() => import("./ProfileView"));
 
 export default function Protected() {
   return (
@@ -40,6 +57,122 @@ export default function Protected() {
             </Suspense>
           }
         />
+        <Route
+          path={PrivateRoutes.PROFILE}
+          element={
+            <Suspense fallback={<SpinnerFull />}>
+              <Profile />
+            </Suspense>
+          }
+        />
+        <Route element={<RoleGuard role={RoleEnum.STUDENT} />}>
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <StudentEnroll />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_ADD_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <EnrollAddClass />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_ENROLL_CANCEL_CLASS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CancelClassView />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route element={<RoleGuard role={RoleEnum.DEPARTMENT_HEAD} />}>
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <PeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_HISTORY}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AcademicHistoryView/>
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_TEACHERS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <TeacherHeadView/>
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_STATS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <StatsView/>
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CurrentPeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_ADD_SECTION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddSectionView />
+              </Suspense>
+            }
+          />
+           <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION + '/:sectionId'}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <DetailSectionView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <NextPeriodView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_ADD_SECTION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddNextSectionView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION+ '/:sectionId'}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <DetailNextSectionView />
+              </Suspense>
+            }
+          />
+        </Route>
         <Route element={<RoleGuard role={RoleEnum.ADMIN} />}>
           <Route
             path={PrivateRoutes.ADMIN_ADMISIONES}
@@ -50,26 +183,50 @@ export default function Protected() {
             }
           />
           <Route
-            path={PrivateRoutes.TEACHER}
+            path={PrivateRoutes.ADMIN_DOCENTES}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <Teacher />
+                <TeacherView />
               </Suspense>
             }
           />
           <Route
-            path={PrivateRoutes.ADD_TEACHER}
+            path={PrivateRoutes.ADMIN_ADD_TEACHER}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <AddTeacherForm />
+                <AddTeacherView />
               </Suspense>
             }
           />
           <Route
-            path={PrivateRoutes.EDIT_TEACHER}
+            path={PrivateRoutes.ADMIN_EDIT_TEACHER}
             element={
               <Suspense fallback={<SpinnerFull />}>
-                <EditTeacher />
+                <EditTeacherView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <ProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_ADD_PROCESS}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AddProcessView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.ADMIN_CALENDARIZACION_CALENDARIO}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <CalendarProcessView />
               </Suspense>
             }
           />

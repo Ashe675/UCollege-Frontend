@@ -70,7 +70,7 @@ export default function LoginForm() {
         <input
           id="password"
           type="password"
-          placeholder="Ingrese contreseña"
+          placeholder="Ingrese su contraseña"
           className=" p-2"
           {...register("password", {
             required: "La contraseña es obligatoria",

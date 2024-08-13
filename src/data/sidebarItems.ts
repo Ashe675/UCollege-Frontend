@@ -38,7 +38,7 @@ export const menuItems = {
             {
                 icon: IconUserFilled,
                 text: "Mi Perfil",
-                link: "perfil",
+                link: PrivateRoutes.PROFILE,
             },
         ],
         dropdown: {
@@ -91,7 +91,7 @@ export const menuItems = {
                 {
                     icon: IconClipboardList,
                     text: "Periodo",
-                    link:  "jefe/periodo",
+                    link:  PrivateRoutes.DEPARTMENT_HEAD_PERIOD,
                 },
                 {
                     icon: IconNotes,
@@ -127,11 +127,6 @@ export const menuItems = {
                 icon: IconWriting,
                 text: "Admisiones",
                 link: PrivateRoutes.ADMIN_ADMISIONES,
-            },
-            {
-                icon: IconNotes,
-                text: "Matricula",
-                link: "admin/matricula",
             },
             {
                 icon: IconUsersGroup,

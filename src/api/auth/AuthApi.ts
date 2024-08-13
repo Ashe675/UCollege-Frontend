@@ -1,6 +1,5 @@
 import api from "@/lib/axios";
 import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareerStudentSchema, UserData, UserLoginForm, userSchema } from "@/types/auth";
-import { Teacher} from "@/types/teacher";
 import { isAxiosError } from "axios";
 
 
@@ -31,6 +30,7 @@ export async function getUser() {
         if(result.success){
             return result.data
         }
+        return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

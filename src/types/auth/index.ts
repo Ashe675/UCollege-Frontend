@@ -13,8 +13,8 @@ export const enum RoleEnum {
 
 const authSchema = z.object({
     name: z.string(),
-    email: z.string().email(),
-    institutionalEmail: z.string().email(),
+    email: z.string(),
+    institutionalEmail: z.string(),
     current_password: z.string(),
     password: z.string(),
     password_confirmation: z.string(),
@@ -41,7 +41,8 @@ const authSchema = z.object({
             })
         })
     })),
-    regionalCenter : z.string()
+    regionalCenter : z.string(),
+    avatar : z.string().nullable()
 })
 
 type Auth = z.infer<typeof authSchema>
@@ -51,7 +52,8 @@ export const userSchema = authSchema.pick({
     id: true,
     role: true,
     institutionalEmail: true,
-    person: true
+    person: true,
+    avatar : true
 })
 
 export const loginUserSchema = authSchema.pick({jwtoken : true, user: true})
@@ -76,5 +78,5 @@ const newPasswordFormDataSchema = authSchema.pick({
 
 export type NewPasswordFormData = z.infer<typeof newPasswordFormDataSchema>
 
-export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person'>
+export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person' | 'avatar'>
 

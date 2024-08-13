@@ -17,7 +17,8 @@ const initialValues = {
     person: {
         firstName: '',
         lastName: ''
-    }
+    },
+    avatar : null
 }
 
 export const useUserStore = create<UserStore>()(devtools((set) => ({
