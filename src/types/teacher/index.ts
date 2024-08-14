@@ -115,12 +115,21 @@ const PersonSchema = z.object({
     secondLastName: z.string().nullable(),
 });
 
+export enum ObservationEnum {
+    APR = "APR",// Aprobado
+    REP = "REP", // Reprobado
+    ABD = "ABD", // Abandonado
+    NSP = "NSP"// No se presentó
+}
+
 const StudentSchema = z.object({
     id: z.number(),
     identificationCode: z.string(),
     institutionalEmail: z.string(),
     avatar: z.string().nullable(),
     person: PersonSchema,
+    grade : z.number().nullable(),
+    OBS : z.enum([ObservationEnum.APR, ObservationEnum.REP, ObservationEnum.ABD, ObservationEnum.NSP]).nullable(),
 });
 
 export type StudentSectionMember = z.infer<typeof StudentSchema>
@@ -148,6 +157,8 @@ export type TeacherSectionMember = z.infer<typeof TeacherSchema>
 export const SectionSpaceSchema = z.object({
     id: z.number(),
     code: z.string(),
+    isSubmitGradeActive : z.boolean(),
+    allNotesUpload : z.boolean(),
     capacity: z.number(),
     IH: z.number(),
     FH: z.number(),
@@ -176,12 +187,7 @@ export type SectionSpace = z.infer<typeof SectionSpaceSchema>
 export type SectionHome = z.infer<typeof SectionSchema>
 export const SectionHomeArraySchema = z.array(SectionSchema);
 
-export enum ObservationEnum {
-    APR,// Aprobado
-    REP, // Reprobado
-    ABD, // Abandonado
-    NSP // No se presentó
-}
+
 
 export type UploadGradeForStudentForm = {
     grade: number,

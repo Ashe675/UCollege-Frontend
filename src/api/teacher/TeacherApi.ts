@@ -138,3 +138,31 @@ export async function uploadGradeForStudent({ identificationCode, sectionId, for
         throw new Error("El Servidor no responde")
     }
 }
+
+
+
+
+export async function sendEmailsWithGrades( sectionId :  number ) {
+    try {
+        if (isNaN(+sectionId)) {
+            throw new Error("Sección no válida")
+        }
+        const payload = {
+            sectionId : Number(sectionId),
+        }
+
+        const url = "/teacher/complete-grade-entry"
+        const { data } = await api.post(url, payload)
+
+        return data
+
+    } catch (error) {
+        if (isAxiosError(error) && error.response?.data.error) {
+            throw new Error(error.response.data.error)
+        }
+        if (isAxiosError(error) && error.response?.data.errors) {
+            throw new Error(error.response.data.errors[0].msg)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}

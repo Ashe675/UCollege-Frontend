@@ -19,7 +19,7 @@ export default function TabStudentsSection({
 
   return (
     <div className=" h-full flex flex-col pb-2">
-      <section className=" p-3 bg-white rounded-md shadow-sm grid grid-cols-1 md:grid-cols-2 gap-x-3">
+      <section className=" p-3 bg-white rounded-md shadow-md grid grid-cols-1 md:grid-cols-2 gap-x-3">
         <div className=" flex justify-around flex-col">
           <InfoSectionTab title="Clase" info={section.class.name} />
           <InfoSectionTab title="Sección" info={section.code} />
@@ -90,7 +90,7 @@ export default function TabStudentsSection({
           )}
         </div>
       )}
-      <section className=" flex w-full h-full mt-2 shadow-sm rounded-md">
+      <section className=" flex w-full h-full mt-2 shadow-md rounded-md">
         {!showWaitingList && (
           <MembersSectionTable
             teacher={section.teacher}

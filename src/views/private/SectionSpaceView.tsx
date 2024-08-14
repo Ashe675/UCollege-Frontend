@@ -11,7 +11,7 @@ export default function SectionSpaceView() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["space", "section", sectionId],
     queryFn: () => getSectionSpaceById(sectionId),
-    retry: false,
+    retry: 2,
   });
 
   if (error) return <Navigate to={"/404"} />;

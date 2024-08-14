@@ -58,7 +58,9 @@ export default function TabsSection({ section }: TabsSectionProps) {
         >
           <TabStudentsSection section={section} />
         </TabPanel>
-        <TabPanel>
+        <TabPanel className={
+            "data-[selected]:flex data-[selected]:flex-col data-[selected]:min-h-full "
+          }>
           <GradesSection section={section} />
         </TabPanel>
       </TabPanels>

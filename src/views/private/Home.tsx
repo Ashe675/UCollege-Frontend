@@ -1,6 +1,7 @@
 import { getSectionsHomeStudent } from "@/api/student/StudentApi";
 import { getSectionsHomeForTeacher } from "@/api/teacher/TeacherApi";
 import CardSectionHome from "@/components/CardSectionHome";
+import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/spinner/Spinner";
 import { useAppStore } from "@/stores/appStore";
 import { useUserStore } from "@/stores/userStore";
@@ -24,7 +25,7 @@ export default function Home() {
     retry: false,
   });
 
-  if (error) console.log(error.message);
+  if (error) return  <div className=" p-5 pt-16 bg-primaryBlue h-full  relative sm:px-7"><ErrorMessage>{error.message}</ErrorMessage></div>
 
   return (
     <>
@@ -39,11 +40,6 @@ export default function Home() {
             {data.map((sect) => (
               <CardSectionHome key={sect.id} section={sect} />
             ))}
-          </div>
-        )}
-        {error?.message === 'No hay un proceso de PERIODO ACADÉMICO activo' && (
-          <div className="">
-            <h3>No hay clases</h3>
           </div>
         )}
       </div>

@@ -1,4 +1,5 @@
 import { RoleEnum } from "@/types/auth";
+import { ObservationEnum } from "@/types/teacher";
 import { IconPencil, IconChartBar, IconSchool, IconTool, IconX, IconCalendarEvent, Icon, IconBookUpload } from '@tabler/icons-react';
 
 const RoleMessages: { [key in RoleEnum]: string } = {
@@ -24,8 +25,6 @@ export const getRoleMessage = (role: RoleEnum): string => {
 export const getRoleColorClass = (role: RoleEnum): string => {
     return RoleColors[role] || 'bg-gray-300'; // Clase por defecto
 };
-
-
 
 // Enum de tipos de procesos
 enum ProcessType {
@@ -72,3 +71,26 @@ export function abbreviateDays(days: string[]): string {
 
     return days.map(day => dayAbbreviations[day.toUpperCase()] || day).join(", ");
 }
+
+const ObsColors: { [key in ObservationEnum]: string } = {
+    [ObservationEnum.APR]: ' bg-green-500 ',
+    [ObservationEnum.REP]: ' bg-red-500',
+    [ObservationEnum.ABD]: ' bg-slate-400',
+    [ObservationEnum.NSP]: 'bg-slate-400',
+   
+};
+
+export const getOBSColor = (obs: ObservationEnum): string => {
+    return ObsColors[obs] || 'bg-gray-300'; // Clase por defecto
+};
+
+const ObsMessage: { [key in ObservationEnum]: string } = {
+    [ObservationEnum.APR]: 'APROBADO',
+    [ObservationEnum.REP]: 'REPROBADO',
+    [ObservationEnum.ABD]: 'ABANDONÓ',
+    [ObservationEnum.NSP]: 'NO SE PRESENTÓ',
+};
+
+export const getOBSMessage = (obs: ObservationEnum): string => {
+    return ObsMessage[obs] || 'N/A'; // Clase por defecto
+};
