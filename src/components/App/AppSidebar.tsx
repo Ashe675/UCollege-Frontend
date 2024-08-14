@@ -41,13 +41,13 @@ export function AppSidebar({
   return (
     <>
       <div
-        className={`fixed z-[15] bg-black/60 w-full sm:invisible h-screen ${
+        className={`fixed z-[40] bg-black/60 w-full sm:invisible h-screen ${
           show ? "visible" : "invisible"
         }`}
         onClick={() => setShow(false)}
       ></div>
       <div
-        className={` ${className} p-4 flex fixed  flex-col justify-between transition-all duration-500 text-gray-500 font-semibold ease-in-out ${
+        className={` ${className} p-4 flex fixed z-50  flex-col justify-between transition-all duration-500 text-gray-500 font-semibold ease-in-out ${
           !show ? " -left-full" : "left-0 "
         } `}
       >
