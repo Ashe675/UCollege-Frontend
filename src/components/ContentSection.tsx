@@ -175,24 +175,24 @@ export default function ContentSection({ section }: ContentSectionProps) {
         setShow={setShowModalUpload}
         show={showModalUpload}
       />
-      <div className="  ">
-        <h1 className=" text-tertiary text-center font-bold text-2xl lg:text-3xl">
-          {section.class.name}-
+      <div className=" flex w-full justify-center gap-3 text-center items-center">
+        <h1 className=" text-tertiary text-center font-bold text-2xl lg:text-3xl text-pretty flex-grow">
+          {section.class.name} - {' '}
           {section.code.split("-")[1]}
         </h1>
 
         {user.role.name !== RoleEnum.STUDENT &&
           user.role.name !== RoleEnum.ADMIN && (
-            <>
+            <div className=" flex space-x-2">
               {disabled ? (
                 <button
                   onClick={handleClick}
-                  className=" bg-blue-500 p-2 rounded-md relative max-sm:w-full sm:absolute right-0 top-2 hover:bg-blue-600"
+                  className=" bg-blue-500 p-2 rounded-md relative  hover:bg-blue-600"
                 >
                   <IconEdit className=" text-white " />
                 </button>
               ) : (
-                <div className="relative sm:absolute max-sm:w-full flex justify-between right-0 top-2 space-x-2">
+                <>
                   <button
                     onClick={handleClick}
                     className=" bg-red-600 p-2 rounded-md max-sm:w-full  hover:bg-red-700"
@@ -205,9 +205,9 @@ export default function ContentSection({ section }: ContentSectionProps) {
                   >
                     <IconCheck stroke={2} className=" text-white " />
                   </button>
-                </div>
+                </>
               )}
-            </>
+            </div>
           )}
       </div>
       {disabled ? (

@@ -118,11 +118,32 @@ const PersonSchema = z.object({
 const StudentSchema = z.object({
     id: z.number(),
     identificationCode: z.string(),
-    institutionalEmail: z.string().email(),
+    institutionalEmail: z.string(),
     avatar: z.string().nullable(),
     person: PersonSchema,
 });
 
+export type StudentSectionMember = z.infer<typeof StudentSchema>
+
+const ImageSchema = z.object({
+    idImage: z.number(),
+    publicId: z.string(),
+    url: z.string(),
+    userId: z.number(),
+    avatar: z.boolean(),
+    createdAt: z.string(),
+});
+
+
+const TeacherSchema = z.object({
+    id: z.number(),
+    identificationCode: z.string(),
+    institutionalEmail: z.string(),
+    person: PersonSchema,
+    images: z.array(ImageSchema),
+});
+
+export type TeacherSectionMember = z.infer<typeof TeacherSchema>
 
 export const SectionSpaceSchema = z.object({
     id: z.number(),
@@ -147,9 +168,22 @@ export const SectionSpaceSchema = z.object({
     waitingListStudents: z.array(StudentSchema),
     quotasAvailability: z.number(),
     factulty: FacultySchema,
+    teacher: TeacherSchema
 });
 
 
 export type SectionSpace = z.infer<typeof SectionSpaceSchema>
 export type SectionHome = z.infer<typeof SectionSchema>
 export const SectionHomeArraySchema = z.array(SectionSchema);
+
+export enum ObservationEnum {
+    APR,// Aprobado
+    REP, // Reprobado
+    ABD, // Abandonado
+    NSP // No se presentó
+}
+
+export type UploadGradeForStudentForm = {
+    grade: number,
+    obs: ObservationEnum
+}
