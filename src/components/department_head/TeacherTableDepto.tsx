@@ -4,7 +4,7 @@ import { getRoleColorClass, getRoleMessage } from "@/utils/dictionaries";
 import { Avatar } from "flowbite-react/components/Avatar";
 import ButtonCustomWithClick from "../ButtonCustomWithClick";
 import { IconKeyFilled } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ResetPasswordToTeacherModal from "./ResetPasswordToTeacherModal";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -57,9 +57,14 @@ export default function TeacherTableDepto({
   const handleClick = (id: number) => {
     if (id) {
       setIdTeacher(id);
-      console.log(id);
       setShowModal(true);
     }
+  };
+
+  const navigate = useNavigate()
+
+  const handleClickRow = (id: number) => {
+    navigate(`/myspace/${PrivateRoutes.PROFILE}/${id}`)
   };
 
   const handleClickModal = () => {
@@ -91,8 +96,8 @@ export default function TeacherTableDepto({
             </thead>
             <tbody className=" divide-y divide-slate-200 text-slate-500 font-normal">
               {teachers.teachers.map(({ teacher }) => (
-                <tr className=" " key={teacher.id}>
-                  <td className=" p-3 ">
+                <tr  key={teacher.id} >
+                  <td className=" hover:bg-slate-100 cursor-pointer p-3 " title="Ver Perfil" onClick={ () => handleClickRow(teacher.id)}>
                     <Avatar rounded img={teacher.images[0]?.url} />
                   </td>
                   <td className=" p-3 ">

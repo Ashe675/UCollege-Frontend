@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const ProfileView = lazy(() => import("./ProfileView"));
 const SectionSpaceView = lazy(() => import("./SectionSpaceView"));
 const EnrollStudentsView = lazy(
   () => import("./department_head/EnrollStudentsView")
@@ -65,11 +66,10 @@ export default function Protected() {
           }
         />
         <Route
-          path="/"
-          index
+          path={PrivateRoutes.PROFILE + "/:userId"}
           element={
             <Suspense fallback={<SpinnerFull />}>
-              <Home />
+              <ProfileView />
             </Suspense>
           }
         />
@@ -81,7 +81,7 @@ export default function Protected() {
             </Suspense>
           }
         />
-         <Route
+        <Route
           path={PrivateRoutes.CHAT}
           element={
             <Suspense fallback={<SpinnerFull />}>

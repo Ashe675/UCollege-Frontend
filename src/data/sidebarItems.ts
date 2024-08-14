@@ -21,11 +21,12 @@ const teacherItems = [{
     text: "Chat",
     link: PrivateRoutes.CHAT,
 },
-{
-    icon: IconGraphFilled,
-    text: "Calificaciones",
-    link: "docente/calificaciones",
-},]
+// {
+//     icon: IconGraphFilled,
+//     text: "Calificaciones",
+//     link: "docente/calificaciones",
+// },
+]
 
 export const menuItems = {
     USER: {
@@ -38,7 +39,7 @@ export const menuItems = {
             {
                 icon: IconUserFilled,
                 text: "Mi Perfil",
-                link: "perfil",
+                link: PrivateRoutes.PROFILE,
             },
         ],
         dropdown: {

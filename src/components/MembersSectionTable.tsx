@@ -5,9 +5,11 @@ import Table from "@mui/material/Table";
 
 import TableContainer from "@mui/material/TableContainer";
 
-import TablePagination from "@mui/material/TablePagination";
+import TablePagination from "@mui/material/TablePagination/TablePagination";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PrivateRoutes } from "@/data/routes";
 
 type MembersSectionTableProps = {
   students: StudentSectionMember[];
@@ -18,9 +20,10 @@ export default function MembersSectionTable({
   students,
   teacher,
 }: MembersSectionTableProps) {
+  const navigate = useNavigate()
   
   const handleClick = (id: number) => {
-    console.log(id);
+    navigate(`/myspace/${PrivateRoutes.PROFILE}/${id}`)
   };
 
   const [page, setPage] = useState(0);

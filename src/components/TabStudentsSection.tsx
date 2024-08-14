@@ -135,7 +135,7 @@ export default function TabStudentsSection({
           </>
         )}
 
-        {!showWaitingList && !!section.matriculados.length && (
+        {!showWaitingList && !!section.matriculados.length && isTeacher(user.role.name) && (
           <button
             className="bg-green-500 p-2 rounded-sm hover:bg-green-600 font-bold text-white uppercase text-sm disabled:bg-slate-400 disabled:cursor-default"
             onClick={handleGetEnrollments}

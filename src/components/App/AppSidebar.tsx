@@ -41,7 +41,7 @@ export function AppSidebar({
   return (
     <>
       <div
-        className={`fixed z-10 bg-black/60 w-full sm:invisible h-screen ${
+        className={`fixed z-[15] bg-black/60 w-full sm:invisible h-screen ${
           show ? "visible" : "invisible"
         }`}
         onClick={() => setShow(false)}
