@@ -142,13 +142,13 @@ export async function uploadGradeForStudent({ identificationCode, sectionId, for
 
 
 
-export async function sendEmailsWithGrades( sectionId :  number ) {
+export async function sendEmailsWithGrades(sectionId: number) {
     try {
         if (isNaN(+sectionId)) {
             throw new Error("Sección no válida")
         }
         const payload = {
-            sectionId : Number(sectionId),
+            sectionId: Number(sectionId),
         }
 
         const url = "/teacher/complete-grade-entry"
@@ -166,3 +166,19 @@ export async function sendEmailsWithGrades( sectionId :  number ) {
         throw new Error("El Servidor no responde")
     }
 }
+
+
+export async function getStudentsEnrollmentsExcel(sectionId: number) {
+    try {
+        const url = `/section/download/${sectionId}`
+        const { data } = await api(url, {responseType : 'blob'})
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+

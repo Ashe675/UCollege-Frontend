@@ -51,7 +51,8 @@ export default function GradesSection({ section }: GradesSectionProps) {
 
           {!isPending &&
             section.allNotesUpload &&
-            section.isSubmitGradeActive && (
+            section.isSubmitGradeActive &&
+            !!section.matriculados.length && (
               <div className=" w-full rounded-md justify-center flex">
                 <ButtonCustomWithClick
                   onClick={handleSendEmails}

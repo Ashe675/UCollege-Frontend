@@ -3,9 +3,11 @@ import InfoSectionTab from "./InfoSectionTab";
 import { abbreviateDays } from "@/utils/dictionaries";
 import { convertTo12HourFormat } from "@/utils/date";
 import MembersSectionTable from "./MembersSectionTable";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useUserStore } from "@/stores/userStore";
 import { isTeacher } from "@/utils/user";
+import { getStudentsEnrollmentsExcel } from "@/api/teacher/TeacherApi";
+import { toast } from "react-toastify";
 
 type TabStudentsSectionProps = {
   section: SectionSpace;
@@ -16,6 +18,47 @@ export default function TabStudentsSection({
 }: TabStudentsSectionProps) {
   const [showWaitingList, setShowWaitingList] = useState(false);
   const user = useUserStore((state) => state.user);
+
+  const toastId = useRef<null | number | string>(null);
+  const [buttonDeactive, setButtonDeactive] = useState(false);
+
+  // Función para descargar el archivo CSV
+  function downloadEXCEL(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(downloadUrl);
+  }
+
+  async function handleGetEnrollments() {
+    try {
+      toastId.current = toast.loading("Descargando archivo...");
+      setButtonDeactive(true);
+      const data = await getStudentsEnrollmentsExcel(section.id);
+      downloadEXCEL(data, `Estudiantes_Matriculados_Seccion_${section.code}`);
+      toast.update(toastId.current!, {
+        render: "¡Archivo descargado correctamente!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      setButtonDeactive(false);
+    } catch (error) {
+      toast.update(toastId.current!, {
+        render: (error as Error).message,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        theme: "colored",
+      });
+      setButtonDeactive(false);
+    }
+  }
 
   return (
     <div className=" h-full flex flex-col pb-2">
@@ -70,27 +113,39 @@ export default function TabStudentsSection({
           />
         </div>
       </section>
-      {isTeacher(user.role.name) && !!section.waitingListStudents.length && (
-        <div className=" w-full gap-4 flex py-3">
-          {showWaitingList && (
-            <button
-              className="bg-cyan-500 p-2 rounded-md hover:bg-cyan-600 font-bold text-white uppercase text-sm"
-              onClick={() => setShowWaitingList(false)}
-            >
-              Ver Matriculados
-            </button>
-          )}
-          {!showWaitingList && (
-            <button
-              className="bg-yellow-500 p-2 rounded-md hover:bg-yellow-600 font-bold text-white uppercase text-sm"
-              onClick={() => setShowWaitingList(true)}
-            >
-              Ver Lista de Espera
-            </button>
-          )}
-        </div>
-      )}
-      <section className=" flex w-full h-full mt-2 shadow-md rounded-md">
+      <div className=" w-full gap-4 flex py-2 pt-3">
+        {isTeacher(user.role.name) && !!section.waitingListStudents.length && (
+          <>
+            {showWaitingList && (
+              <button
+                className="bg-cyan-500 p-2 rounded-sm hover:bg-cyan-600 font-bold text-white uppercase text-sm"
+                onClick={() => setShowWaitingList(false)}
+              >
+                Ver Matriculados
+              </button>
+            )}
+            {!showWaitingList && (
+              <button
+                className="bg-orange-500 p-2 rounded-sm hover:bg-orange-600 font-bold text-white uppercase text-sm"
+                onClick={() => setShowWaitingList(true)}
+              >
+                Ver Lista de Espera
+              </button>
+            )}
+          </>
+        )}
+
+        {!showWaitingList && !!section.matriculados.length && (
+          <button
+            className="bg-green-500 p-2 rounded-sm hover:bg-green-600 font-bold text-white uppercase text-sm disabled:bg-slate-400 disabled:cursor-default"
+            onClick={handleGetEnrollments}
+            disabled={buttonDeactive}
+          >
+            Descargar Listado Estudiantes
+          </button>
+        )}
+      </div>
+      <section className=" flex w-full h-full mt-1 shadow-md rounded-md">
         {!showWaitingList && (
           <MembersSectionTable
             teacher={section.teacher}
