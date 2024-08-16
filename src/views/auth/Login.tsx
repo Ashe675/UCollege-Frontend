@@ -5,16 +5,18 @@ import { useUserStore } from "@/stores/userStore";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PublicRoutes } from "@/data/routes";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 export default function Login() {
   const deleteUser = useUserStore((state) => state.deleteUser);
-  
+  const queryClient = useQueryClient()
 
   useEffect(() => {
+    queryClient.invalidateQueries()
     deleteUser();
     localStorage.removeItem("AUTH_TOKEN");
-  }, [deleteUser]);
+  }, [deleteUser, queryClient]);
 
   return (
     <div className=" bg-secondary pt-2 pb-8">

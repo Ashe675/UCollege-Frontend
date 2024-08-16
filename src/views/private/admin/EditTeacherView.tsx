@@ -7,18 +7,31 @@ import { IconSquareXFilled } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import ButtonCustom from "../../../components/ButtonCustom";
 import EditCenterForm from "@/components/admin/EditCenterForm";
 import { getRoleMessage } from "@/utils/dictionaries";
-import { DeleteTeacherModal } from '../../../components/admin/DeleteTeacherModal';
+import { DeleteTeacherModal } from "../../../components/admin/DeleteTeacherModal";
+import ActivateTeacherModal from "@/components/admin/ActivateTeacherModal";
+import ChangeRoleTeacherModal from "@/components/admin/ChangeRoleTeacherModal";
 
 export default function EditTeacherView() {
+  const location = useLocation();
+  // Accede al state usando location.state
+  const { page } = location.state || {};
+
   const params = useParams();
   const teacherCode = params.teacherCode!;
   const [canEdit, setCanEdit] = useState(false);
   const [canEditCenter, setcanEditCenter] = useState(false);
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalActive, setOpenModalActive] = useState(false);
+  const [openModalRole, setOpenModalRole] = useState(false);
 
   const { data: roles } = useQuery({
     queryKey: ["roles"],
@@ -47,7 +60,11 @@ export default function EditTeacherView() {
   const handleToggle = () => {
     setIsGrown(!isGrown);
     setTimeout(() => {
-      navigate(`/myspace/${PrivateRoutes.ADMIN_DOCENTES}`);
+      navigate(
+        `/myspace/${PrivateRoutes.ADMIN_DOCENTES}${
+          page && (page == 1 ? "" : `?page=${page}`)
+        }`
+      );
     }, 500);
   };
 
@@ -187,16 +204,25 @@ export default function EditTeacherView() {
           </div>
           <div className=" flex justify-around p-3 flex-wrap gap-3">
             <div
-              className=" w-full max-w-[340px]"
+              className=" w-full max-w-[260px]"
               onClick={() => setcanEditCenter(true)}
               hidden={canEdit || canEditCenter}
             >
               <ButtonCustom className=" bg-teal-500 rounded-md w-full hover:bg-teal-600 ">
-                Cambiar Cargo o Centro Regional
+                Cambiar Centro Regional
               </ButtonCustom>
             </div>
             <div
-              className=" w-full max-w-[340px]"
+              className=" w-full max-w-[260px]"
+              onClick={() => setOpenModalRole(true)}
+              hidden={canEdit || canEditCenter}
+            >
+              <ButtonCustom className=" bg-blue-500 rounded-md w-full hover:bg-blue-600 ">
+                Cambiar Rol
+              </ButtonCustom>
+            </div>
+            <div
+              className=" w-full max-w-[260px]"
               onClick={() => setCanEdit(true)}
               hidden={canEdit || canEditCenter}
             >
@@ -204,41 +230,75 @@ export default function EditTeacherView() {
                 Editar
               </ButtonCustom>
             </div>
-            <div
-              className=" w-full max-w-[340px]"
-              onClick={() => {
-                console.log('ddd')
-                setOpenModal(true)
-              }}
-              hidden={canEdit || canEditCenter}
-            >
-              <ButtonCustom className=" bg-red-500 rounded-md  w-full hover:bg-red-600 ">
-                Eliminar
-              </ButtonCustom>
-            </div>
+
+            {data.active ? (
+              <div
+                className=" w-full max-w-[260px]"
+                onClick={() => {
+                  setOpenModal(true);
+                }}
+                hidden={canEdit || canEditCenter}
+              >
+                <ButtonCustom className=" bg-red-500 rounded-md  w-full hover:bg-red-600 ">
+                  Desactivar
+                </ButtonCustom>
+              </div>
+            ) : (
+              <div
+                className=" w-full max-w-[260px]"
+                onClick={() => {
+                  setOpenModalActive(true);
+                }}
+                hidden={canEdit || canEditCenter}
+              >
+                <ButtonCustom className=" bg-sky-500 rounded-md  w-full hover:bg-sky-600 ">
+                  Activar
+                </ButtonCustom>
+              </div>
+            )}
+
             <input
               hidden={!canEdit && !canEditCenter}
               type="submit"
-              form={canEdit ? "formEditTeacher" : canEditCenter ? 'formEditCenterTeacher' : ''}
+              form={
+                canEdit
+                  ? "formEditTeacher"
+                  : canEditCenter
+                  ? "formEditCenterTeacher"
+                  : ""
+              }
               value="Guardar Cambios"
-              className="bg-green-500 max-w-[340px] w-full p-3 text-white uppercase font-bold hover:bg-green-400 cursor-pointer transition-colors rounded-md"
+              className="bg-green-500 max-w-[260px] w-full p-3 text-white uppercase font-bold hover:bg-green-400 cursor-pointer transition-colors rounded-md"
             />
             <div
-              className=" w-full max-w-[340px]"
+              className=" w-full max-w-[260px]"
               onClick={() => {
                 setCanEdit(false);
                 setcanEditCenter(false);
-                
               }}
               hidden={!canEdit && !canEditCenter}
             >
-              <ButtonCustom className=" bg-red-500 rounded-md  w-full max-w-[340px] hover:bg-red-600 ">
+              <ButtonCustom className=" bg-red-500 rounded-md  w-full max-w-[260px] hover:bg-red-600 ">
                 Cancelar
               </ButtonCustom>
             </div>
           </div>
         </div>
-        <DeleteTeacherModal openModal = {openModal} setOpenModal = {setOpenModal} userId={data.user_id}/>
+        <DeleteTeacherModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          userId={data.user_id}
+        />
+        <ActivateTeacherModal
+          show={openModalActive}
+          setShow={setOpenModalActive}
+          userId={data.user_id}
+        />
+        <ChangeRoleTeacherModal
+          roles={roles}
+          show={openModalRole}
+          setShow={setOpenModalRole}
+        />
       </div>
     );
 }

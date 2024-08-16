@@ -1,5 +1,6 @@
 import z from 'zod';
 import { RoleEnum } from '../auth';
+import { paginationEnrollmentSchema } from '../department_head';
 
 export type addTeacherData = {
     names: string,
@@ -82,6 +83,7 @@ const teacherSchema = z.object({
     role: z.enum([RoleEnum.ADMIN, RoleEnum.COORDINATOR, RoleEnum.DEPARTMENT_HEAD, RoleEnum.TEACHER]), // Rol debe ser uno de los valores enumerados
     dni: z.string(), // DNI debe tener exactamente 13 caracteres
     identificationCode: z.string(), // Código de identificación debe tener exactamente 15 caracteres .length()
+    active : z.boolean()
 });
 
 const regionalCenterFacultyCareerSchema = z.object({
@@ -112,6 +114,12 @@ const imageSchema = z.object({
     createdAt: z.string().datetime(),
 });
 
+export const teachersListSchemaPagination = z.object({
+    teachers : z.array(teacherSchema),
+    pagination : paginationEnrollmentSchema
+});
+
+
 export const editTeacherSchema = z.object({
     user_id: z.number().int(), // Validar que sea un número entero
     images: z.array(imageSchema).optional(), // Arreglo de imágenes (puede ser vacío o contener objetos)
@@ -125,7 +133,8 @@ export const editTeacherSchema = z.object({
     dni: z.string(), // Validar que sea una cadena de dígitos
     identificationCode: z.string().length(15), // Validar que sea una cadena de exactamente 15 caracteres
     phoneNumber: z.string(),
-    email: z.string().email()
+    email: z.string().email(),
+    active : z.boolean()
 });
 
 export type EditTeacherData = z.infer<typeof editTeacherSchema>
@@ -177,6 +186,10 @@ export type UpdateCenterForm = {
     regionalCenterId: string,
     departamentId: string,
     roleId: string
+}
+
+export type UpdateRoleForm = {
+    roleName: string
 }
 
 // Esquema para el objeto anidado processType

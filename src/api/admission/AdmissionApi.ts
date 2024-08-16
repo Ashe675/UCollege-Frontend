@@ -1,5 +1,6 @@
 import api from "@/lib/axios";
 import { InscriptionData, inscriptionSchema, RegionalCentersSchema, resultDetailSchema } from "@/types/admission";
+import { studentSchema } from "@/types/department_head";
 import { isAxiosError } from "axios";
 
 // obtener los centros regionales
@@ -149,6 +150,25 @@ export async function getResultById(dni: string) {
         const { data } = await api(url)
 
         const result = resultDetailSchema.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+}
+
+// obtener información de los resultados por id
+export async function getAcademicHistoryByCode(code: string) {
+    try {
+        const url = `/department-head/student-history/${code}`
+        const { data } = await api(url)
+
+        const result = studentSchema.safeParse(data)
         if (result.success) {
             return result.data
         }
