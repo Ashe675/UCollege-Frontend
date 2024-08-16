@@ -28,7 +28,7 @@ export default function ProfileView() {
 
   if (isLoading)
     return (
-      <div className=" w-full h-full flex items-center bg-primaryBlue">
+      <div className=" w-full h-full  flex items-center bg-primaryBlue">
         <Spinner />
       </div>
     );
@@ -36,7 +36,7 @@ export default function ProfileView() {
   if (profile)
     return (
       <>
-        <div className=" w-full min-h-full z-30 relative pb-16">
+        <div className=" w-full min-h-full z-[15] relative pb-16">
           <HeroProfile
             fullName={getFullName(profile.firstName, profile.lastName)}
             isTheSameUser={isTheSameUser(user.id, profile.userId)}

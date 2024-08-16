@@ -149,17 +149,17 @@ export const menuItems = {
                 {
                     icon: IconClipboardData,
                     text: "Carga Académica",
-                    link: "coordinador/carga-academica",
+                    link: PrivateRoutes.COORDINATOR_ACADEMIC,
                 },
                 {
                     icon: IconMailForward,
                     text: "Solicitudes",
-                    link: "coordinador/solicitudes",
+                    link: PrivateRoutes.COORDINATOR_REQUEST,
                 },
                 {
                     icon: IconAddressBook,
                     text: "Historiales",
-                    link: "coordinador/historiales-academicos",
+                    link: PrivateRoutes.COORDINATOR_HISTORY,
                 },
             ],
         }

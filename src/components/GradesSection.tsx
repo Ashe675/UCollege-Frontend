@@ -44,13 +44,20 @@ export default function GradesSection({ section }: GradesSectionProps) {
               <GradeStudentTable
                 students={section.matriculados}
                 sectionId={section.id}
-                isAvailable={!section.isSubmitGradeActive}
+                isAvailable={
+                  !section.isSubmitGradeActive || section.allNotesNotificated
+                }
               />
             </div>
           )}
-
+          {section.allNotesNotificated && (
+            <div className=" text-slate-600">
+              La notas ya fueron notificadas a los estudiantes.
+            </div>
+          )}
           {!isPending &&
             section.allNotesUpload &&
+            !section.allNotesNotificated &&
             section.isSubmitGradeActive &&
             !!section.matriculados.length && (
               <div className=" w-full rounded-md justify-center flex">

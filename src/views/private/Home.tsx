@@ -22,7 +22,7 @@ export default function Home() {
       user.role.name == "STUDENT"
         ? getSectionsHomeStudent
         : getSectionsHomeForTeacher,
-    retry: false,
+    retry: 2,
   });
 
   if (error) return  <div className=" p-5 pt-16 bg-primaryBlue h-full  relative sm:px-7"><ErrorMessage>{error.message}</ErrorMessage></div>

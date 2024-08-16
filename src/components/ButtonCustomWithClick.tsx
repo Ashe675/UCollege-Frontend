@@ -17,7 +17,7 @@ export default function ButtonCustomWithClick({
     <button
       disabled = {disabled }
       type="button"
-      className={`  w-full   uppercase font-bold ${disabled ? ' cursor-default' : ' cursor-pointer '} transition-colors ${className}`}
+      className={`  w-full   uppercase font-bold ${disabled ? ' cursor-default' : ' cursor-pointer '} transition-colors ${className} disabled:bg-gray-400`}
       onClick={onClick}
     >
       {children}

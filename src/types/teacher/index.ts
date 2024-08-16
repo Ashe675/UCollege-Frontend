@@ -179,7 +179,8 @@ export const SectionSpaceSchema = z.object({
     waitingListStudents: z.array(StudentSchema),
     quotasAvailability: z.number(),
     factulty: FacultySchema,
-    teacher: TeacherSchema
+    teacher: TeacherSchema,
+    allNotesNotificated : z.boolean()
 });
 
 

@@ -5,6 +5,8 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const AcademicView = lazy(() => import("../coordinator/AcademicView"));
+const RequestView = lazy(() => import("../coordinator/RequestView"));
 const ProfileView = lazy(() => import("./ProfileView"));
 const SectionSpaceView = lazy(() => import("./SectionSpaceView"));
 const EnrollStudentsView = lazy(
@@ -115,6 +117,34 @@ export default function Protected() {
             }
           />
         </Route>
+        // * COORDINADOR
+        <Route element={<RoleGuard role={RoleEnum.COORDINATOR} />}>
+          <Route
+            path={PrivateRoutes.COORDINATOR_HISTORY}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AcademicHistoryView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.COORDINATOR_ACADEMIC}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <AcademicView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.COORDINATOR_REQUEST}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <RequestView />
+              </Suspense>
+            }
+          />
+        </Route>
+        // * JEFE DEPARTAMENTO
         <Route element={<RoleGuard role={RoleEnum.DEPARTMENT_HEAD} />}>
           <Route
             path={PrivateRoutes.DEPARTMENT_HEAD_PERIOD}

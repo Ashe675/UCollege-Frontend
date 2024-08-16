@@ -1,6 +1,6 @@
 import { RoleEnum } from "@/types/auth";
 import { ObservationEnum } from "@/types/teacher";
-import { IconPencil, IconChartBar, IconSchool, IconTool, IconX, IconCalendarEvent, Icon, IconBookUpload } from '@tabler/icons-react';
+import { IconPencil, IconChartBar, IconSchool, IconTool, IconX, IconCalendarEvent, Icon, IconBookUpload, IconCoin } from '@tabler/icons-react';
 
 const RoleMessages: { [key in RoleEnum]: string } = {
     [RoleEnum.DEPARTMENT_HEAD]: 'Jefe de Departamento',
@@ -34,7 +34,8 @@ enum ProcessType {
     ENTREGA_NOTAS = "ENTREGA DE NOTAS",
     PERIODO_ACADEMICO = "PERIODO ACADÉMICO",
     CREACION_SECCIONES = "CREACIÓN DE SECCIONES",
-    CANCELACIONES_EXCEPCIONALES = "CANCELACIONES EXCEPCIONALES",
+    CANCELACIONES_EXCEPCIONALES = "CANCELACIÓN EXCEPCIONAL",
+    PAGO_REPOSICION = "PAGO REPOSICIÓN",
 }
 
 // Mapeo de colores e íconos
@@ -45,7 +46,8 @@ const processTypeAttributes: { [key in ProcessType]: { color: string, icon: Icon
     [ProcessType.ENTREGA_NOTAS]: { color: "red", icon: IconBookUpload },
     [ProcessType.PERIODO_ACADEMICO]: { color: "cyan", icon: IconCalendarEvent },
     [ProcessType.CREACION_SECCIONES]: { color: "teal", icon: IconTool },
-    [ProcessType.CANCELACIONES_EXCEPCIONALES]: { color: "brown", icon: IconX }
+    [ProcessType.CANCELACIONES_EXCEPCIONALES]: { color: "purple", icon: IconX },
+    [ProcessType.PAGO_REPOSICION]: { color: "indigo", icon: IconCoin }
 };
 
 // Función para obtener el color e ícono de un tipo de proceso
@@ -77,7 +79,7 @@ const ObsColors: { [key in ObservationEnum]: string } = {
     [ObservationEnum.REP]: ' bg-red-500',
     [ObservationEnum.ABD]: ' bg-slate-400',
     [ObservationEnum.NSP]: 'bg-slate-400',
-   
+
 };
 
 export const getOBSColor = (obs: ObservationEnum): string => {
@@ -94,3 +96,23 @@ const ObsMessage: { [key in ObservationEnum]: string } = {
 export const getOBSMessage = (obs: ObservationEnum): string => {
     return ObsMessage[obs] || 'N/A'; // Clase por defecto
 };
+
+
+export enum Estado {
+    PENDIENTE = "PENDIENTE",
+    APROBADA = "APROBADA",
+    RECHAZADA = "RECHAZADA"
+}
+
+export function getStatusColor(state: Estado): string {
+    switch (state) {
+        case Estado.PENDIENTE:
+            return "bg-yellow-500"; // Color amarillo para pendiente
+        case Estado.APROBADA:
+            return "bg-green-500"; // Color verde para aprobado
+        case Estado.RECHAZADA:
+            return "bg-red-500"; // Color rojo para rechazado
+        default:
+            return "bg-gray-500"; // Color gris por defecto si el estado no es reconocido
+    }
+}
