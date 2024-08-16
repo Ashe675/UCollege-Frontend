@@ -86,7 +86,6 @@ export default function GradeStudentTable({
                 .map((student) => {
                   return (
                     <tr
-                      title="Ver Perfil"
                       role="checkbox"
                       className=""
                       tabIndex={-1}
@@ -103,7 +102,7 @@ export default function GradeStudentTable({
                       </td>
                       <td className=" p-3">{student.identificationCode}</td>
                       <td className=" p-3 ">
-                        {student.grade ? student.grade : "N/A"}
+                        {student.grade !== null ? student.grade : "N/A"}
                       </td>
                       <td className=" p-3">
                         <span

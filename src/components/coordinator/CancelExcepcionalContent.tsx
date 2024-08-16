@@ -33,6 +33,7 @@ export default function CancelExcepcionalContent() {
         theme: "colored",
       });
       setRequestSelected(undefined);
+      queryClient.invalidateQueries({queryKey : ["requests", "cancel",  "section"]})
     },
     onError: (error) => {
       toast.update(toastId.current!, {

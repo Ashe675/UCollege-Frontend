@@ -24,7 +24,9 @@ export default function TabStudentsSection({
 
   // Función para descargar el archivo CSV
   function downloadEXCEL(data: Blob, filename: string) {
-    const blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const blob = new Blob([data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
     const downloadUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = downloadUrl;
@@ -114,6 +116,17 @@ export default function TabStudentsSection({
         </div>
       </section>
       <div className=" w-full gap-4 flex py-2 pt-3">
+        {!showWaitingList &&
+          !!section.matriculados.length &&
+          isTeacher(user.role.name) && (
+            <button
+              className="bg-green-500 p-2 rounded-sm hover:bg-green-600 font-bold text-white uppercase text-sm disabled:bg-slate-400 disabled:cursor-default"
+              onClick={handleGetEnrollments}
+              disabled={buttonDeactive}
+            >
+              Descargar Listado Estudiantes
+            </button>
+          )}
         {isTeacher(user.role.name) && !!section.waitingListStudents.length && (
           <>
             {showWaitingList && (
@@ -133,16 +146,6 @@ export default function TabStudentsSection({
               </button>
             )}
           </>
-        )}
-
-        {!showWaitingList && !!section.matriculados.length && isTeacher(user.role.name) && (
-          <button
-            className="bg-green-500 p-2 rounded-sm hover:bg-green-600 font-bold text-white uppercase text-sm disabled:bg-slate-400 disabled:cursor-default"
-            onClick={handleGetEnrollments}
-            disabled={buttonDeactive}
-          >
-            Descargar Listado Estudiantes
-          </button>
         )}
       </div>
       <section className=" flex w-full h-full mt-1 shadow-md rounded-md">

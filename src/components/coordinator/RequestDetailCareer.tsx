@@ -1,5 +1,5 @@
 import { RequestChangeCareer } from "@/types/coordinator";
-import { Estado, getStatusColor } from "@/utils/dictionaries";
+import { Estado, getStatusColor, getStatusMessage } from "@/utils/dictionaries";
 import { IconFileSearch } from "@tabler/icons-react";
 import ButtonCustomWithClick from "../ButtonCustomWithClick";
 
@@ -21,11 +21,13 @@ export default function RequestDetailCareer({
   return (
     <div className=" bg-white p-3 w-full shadow-md rounded-md space-y-3 text-slate-600 relative ">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-2 space-y-2">
-        <span
-          className={` size-5 shadow-sm absolute -top-1 -right-1 rounded-full ${getStatusColor(
-            request.estado as Estado
-          )}`}
-        ></span>
+      <span
+        className={` p-1 px-2 text-xs text-white font-semibold shadow-sm absolute -top-2 -right-1 rounded-full ${getStatusColor(
+          request.estado as Estado
+        )}`}
+      >
+        {getStatusMessage(request.estado as Estado)}
+      </span>
         <div className=" w-full space-y-2">
           <div className=" p-2 flex w-full justify-between pr-5 bg-slate-200 rounded-md font-semibold">
             Estudiante : <span>{request.studentName}</span>

@@ -304,7 +304,7 @@ export const studentSchema = z.object({
     nameStudent: z.string(),
     lastnameStudent: z.string(),
     codeIdentification: z.string(),
-    globalAverage: z.number(),
+    globalAverage: z.number().nullable(),
     avatar: z.array(ImageSchema), // Assuming `avatar` can be any type or empty array
     regionalCenter: z.string(),
     career: z.string(),

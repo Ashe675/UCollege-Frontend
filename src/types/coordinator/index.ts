@@ -14,7 +14,7 @@ const solicitudSchema = z.object({
     id: z.number(), // ID de la solicitud
     date: z.string().datetime(), // Fecha en formato ISO
     justificacion: z.string(), // Justificación de la cancelación
-    estado: z.enum(["PENDIENTE", "APROBADO", "RECHAZADO"]), // Estado de la solicitud
+    estado: z.enum(["PENDIENTE", "APROBADA", "RECHAZADA"]), // Estado de la solicitud
     studentName: z.string(), // Nombre del estudiante
     studentId: z.number(), // ID del estudiante
     identificationCode: z.string(), // Código de identificación del estudiante

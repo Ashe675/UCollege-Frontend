@@ -86,6 +86,18 @@ export const getOBSColor = (obs: ObservationEnum): string => {
     return ObsColors[obs] || 'bg-gray-300'; // Clase por defecto
 };
 
+const ObsTextColors: { [key in ObservationEnum]: string } = {
+    [ObservationEnum.APR]: ' text-green-500 ',
+    [ObservationEnum.REP]: ' text-red-500',
+    [ObservationEnum.ABD]: ' text-slate-400',
+    [ObservationEnum.NSP]: 'text-slate-400',
+
+};
+
+export const getTextOBSColor = (obs: ObservationEnum): string => {
+    return ObsTextColors[obs] || 'text-gray-300'; // Clase por defecto
+};
+
 const ObsMessage: { [key in ObservationEnum]: string } = {
     [ObservationEnum.APR]: 'APROBADO',
     [ObservationEnum.REP]: 'REPROBADO',
@@ -114,5 +126,18 @@ export function getStatusColor(state: Estado): string {
             return "bg-red-500"; // Color rojo para rechazado
         default:
             return "bg-gray-500"; // Color gris por defecto si el estado no es reconocido
+    }
+}
+
+export function getStatusMessage(state: Estado): string {
+    switch (state) {
+        case Estado.PENDIENTE:
+            return "PENDIENTE"; 
+        case Estado.APROBADA:
+            return "APROBADA";
+        case Estado.RECHAZADA:
+            return "RECHAZADA";
+        default:
+            return "N/A"; 
     }
 }

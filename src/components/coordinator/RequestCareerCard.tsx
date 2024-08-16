@@ -1,10 +1,12 @@
-import {  RequestChangeCareer } from "@/types/coordinator";
-import { Estado, getStatusColor } from "@/utils/dictionaries";
+import { RequestChangeCareer } from "@/types/coordinator";
+import { Estado, getStatusColor, getStatusMessage } from "@/utils/dictionaries";
 import { Dispatch } from "react";
 
 type RequestCardProps = {
-  request: RequestChangeCareer ;
-  setSetRequestSelected: Dispatch<React.SetStateAction<RequestChangeCareer | undefined>>;
+  request: RequestChangeCareer;
+  setSetRequestSelected: Dispatch<
+    React.SetStateAction<RequestChangeCareer | undefined>
+  >;
 };
 
 export default function RequestCareerCard({
@@ -21,10 +23,12 @@ export default function RequestCareerCard({
       onClick={handleClick}
     >
       <span
-        className={` size-5 shadow-sm absolute -top-1 -right-1 rounded-full ${getStatusColor(
+        className={` p-1 px-2 text-xs text-white font-semibold shadow-sm absolute -top-2 -right-1 rounded-full ${getStatusColor(
           request.estado as Estado
         )}`}
-      ></span>
+      >
+        {getStatusMessage(request.estado as Estado)}
+      </span>
       <div className=" p-2 flex w-full justify-between pr-5 bg-slate-200 rounded-md font-semibold">
         Estudiante : <span>{request.studentName}</span>
       </div>

@@ -33,6 +33,7 @@ export default function ChangeCareerContent() {
         theme: "colored",
       });
       setRequestSelected(undefined);
+      queryClient.invalidateQueries({queryKey : ["requests", "change", "career"]})
     },
     onError: (error) => {
       toast.update(toastId.current!, {

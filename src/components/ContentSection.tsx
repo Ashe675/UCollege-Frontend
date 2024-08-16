@@ -177,8 +177,7 @@ export default function ContentSection({ section }: ContentSectionProps) {
       />
       <div className=" flex w-full justify-center gap-3 text-center items-center">
         <h1 className=" text-tertiary text-center font-bold text-2xl lg:text-3xl text-pretty flex-grow">
-          {section.class.name} - {' '}
-          {section.code.split("-")[1]}
+          {section.class.name} - {section.code.split("-")[1]}
         </h1>
 
         {user.role.name !== RoleEnum.STUDENT &&
