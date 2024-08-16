@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { IconMoodSadDizzy } from '@tabler/icons-react';
 import LogoWhite from "@/components/LogoWhite";
-import { useAppStore } from "@/stores/appStore";
+// import { useAppStore } from "@/stores/appStore";
 
 export default function NotFound() {
-  const resetTitle = useAppStore(state =>  state.resetTitle)
-  resetTitle()
+  // const resetTitle = useAppStore(state =>  state.resetTitle)
+  // resetTitle()
 
   return (
     <div className=" container mx-auto max-w-xl flex justify-center min-h-screen flex-col text-center relative">

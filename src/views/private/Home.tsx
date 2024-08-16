@@ -1,12 +1,14 @@
-import { getClassesEnrollments } from "@/api/student/StudentApi";
+import { getSectionsHomeStudent } from "@/api/student/StudentApi";
+import { getSectionsHomeForTeacher } from "@/api/teacher/TeacherApi";
 import CardSectionHome from "@/components/CardSectionHome";
+import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/spinner/Spinner";
 import { useAppStore } from "@/stores/appStore";
 import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export default function HomeStudent() {
+export default function Home() {
   const setTitle = useAppStore((state) => state.setTitle);
   const user = useUserStore((state) => state.user);
 
@@ -15,27 +17,28 @@ export default function HomeStudent() {
   }, [setTitle]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["sectionsEnrollments", user.id],
-    queryFn: getClassesEnrollments,
-    retry: false,
+    queryKey: ["sectionsHome", user.id],
+    queryFn:
+      user.role.name == "STUDENT"
+        ? getSectionsHomeStudent
+        : getSectionsHomeForTeacher,
+    retry: 2,
   });
 
-  if (data) console.log(data);
-
-  if (error) console.log(error.message);
+  if (error) return  <div className=" p-5 pt-16 bg-primaryBlue h-full  relative sm:px-7"><ErrorMessage>{error.message}</ErrorMessage></div>
 
   return (
     <>
-      <div className=" p-3 pt-20 bg-primaryBlue h-full  relative ">
+      <div className=" p-5 pt-16 bg-primaryBlue h-full  relative sm:px-7">
         {isLoading && (
           <div className="  w-full h-1/2 flex items-center justify-center mt-20 ">
             <Spinner />
           </div>
         )}
         {data && !error && (
-          <div className=" grid gap-5 grid-cols-1 lg:grid-cols-2 ">
+          <div className=" grid gap-7 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
             {data.map((sect) => (
-              <CardSectionHome section={sect} />
+              <CardSectionHome key={sect.id} section={sect} />
             ))}
           </div>
         )}
