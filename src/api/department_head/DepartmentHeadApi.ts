@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { BuildingsArraySchema, CancelSectionPayload, ClassesArraySchema, ClassSectionForm, dataSchemaStats, DepartmentSchema, DepartmentSchemaWithSections, DetailSectionByIdSchema, IncreaseQuota, NewSectionPayload } from "@/types/department_head";
+import { BuildingsArraySchema, CancelSectionPayload, ClassesArraySchema, ClassSectionForm, dataSchemaStats, DepartmentSchema, DepartmentSchemaPage, DepartmentSchemaWithSections, DetailSectionByIdSchema, enrollmentsByDepartmentResponseSchema, IncreaseQuota, NewSectionPayload } from "@/types/department_head";
 import { isAxiosError } from "axios";
 
 // crear una nueva seccion del periodo actual
@@ -90,7 +90,9 @@ export async function cancelSectionById({ id, payload }: { id: number, payload: 
 export async function increaseQuotaBySectionId({ id, payload }: { id: number, payload: IncreaseQuota }) {
     try {
         const url = `/section/capacity/${id}`
-        const { data } = await api.put(url, payload)
+        const newIncrement = Number(payload.increment)
+        const newPayload : IncreaseQuota = {increment : newIncrement }
+        const { data } = await api.put(url, newPayload)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -155,8 +157,45 @@ export async function getTeachersByDepartment() {
     try {
         const url = '/section/department/teacher'
         const { data } = await api(url)
-      
+
         const result = DepartmentSchema.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+// los maestros por departamento
+export async function getTeachersByDepartmentPage({page, limit} : { page : number, limit: number }) {
+    try {
+        const url = `/section/department/teacher-page/?page=${page}&limit=${limit}`
+        const { data } = await api(url)
+
+        const result = DepartmentSchemaPage.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+
+// los estudiante por departamento
+export async function getStudentsEnrollmentsByDepartmentPage({page, limit} : { page : number, limit: number }) {
+    try {
+        const url = `/section/enrollments/current/?page=${page}&limit=${limit}`
+        const { data } = await api(url)
+
+        const result = enrollmentsByDepartmentResponseSchema.safeParse(data)
         if (result.success) {
             return result.data
         }
@@ -242,6 +281,20 @@ export async function getClassesStats() {
         if (result.success) {
             return result.data
         }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+// los maestros por departamento
+export async function resetPasswordToTeacher(id: number) {
+    try {
+        const url = `/auth/forgot-password-teacher/${id}`
+        const { data } = await api.post(url)
+        return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

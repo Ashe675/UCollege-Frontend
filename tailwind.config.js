@@ -1,7 +1,8 @@
 import colors from "tailwindcss/colors";
 import flowbite from "flowbite-react/tailwind";
-import headlessui from "@headlessui/tailwindcss";
-import forms from "@tailwindcss/forms";
+// import headlessui from "@headlessui/tailwindcss";
+// import forms from "@tailwindcss/forms";
+/** @type {import('tailwindcss').Config} */
 
 export default {
   content: [
@@ -11,6 +12,8 @@ export default {
     // Path to Tremor module
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode : 'class',
+  // plugins: [flowbite.plugin(), headlessui, forms],
   theme: {
     transparent: "transparent",
     current: "currentColor",
@@ -37,7 +40,7 @@ export default {
           },
           content: {
             subtle: colors.gray[400],
-            
+            DEFAULT: colors.gray[500],
             emphasis: colors.gray[700],
             strong: colors.gray[900],
             inverted: colors.white,
@@ -64,7 +67,7 @@ export default {
           },
           content: {
             subtle: colors.gray[600],
-            
+            DEFAULT: colors.gray[500],
             emphasis: colors.gray[200],
             strong: colors.gray[50],
             inverted: colors.gray[950],
@@ -158,6 +161,5 @@ export default {
       pattern:
         /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
     },
-  ],
-  plugins: [flowbite.plugin(), headlessui, forms],
+  ]
 };

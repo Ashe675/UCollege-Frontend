@@ -39,7 +39,18 @@ export const DepartmentSchema = z.object({
     teachers: z.array(TeacherContainerSchema),
 });
 
+
+// Esquema para el departamento
+export const DepartmentSchemaPage = z.object({
+    departmentname: z.string(),
+    teachers: z.array(TeacherContainerSchema),
+    page: z.number(),
+    totalPages: z.number()
+});
+
+
 export type TeacherByDepartment = z.infer<typeof DepartmentSchema>
+export type TeacherByDepartmentPage = z.infer<typeof DepartmentSchemaPage>
 
 
 
@@ -135,6 +146,7 @@ const ClassroomSchemaSections = z.object({
     building: BuildingSchemaSections,
 });
 
+
 const SectionWithDetailsSchema = z.object({
     id: z.number().int(),
     code: z.string(),
@@ -153,6 +165,7 @@ const SectionWithDetailsSchema = z.object({
     teacher: TeacherSchemaSections,
     quotasAvailability: z.number(), // Asumiendo que los "matriculados" y "waitingList" son arrays de objetos desconocidos
     waitingListCount: z.number(),
+    class : ClassSchema,
 });
 
 export const DepartmentSchemaWithSections = z.object({
@@ -265,4 +278,68 @@ const classSchemaStats = z.object({
 
 export const dataSchemaStats = z.array(classSchemaStats);
 
-export type  DataClassesStats = z.infer<typeof dataSchemaStats>
+export type DataClassesStats = z.infer<typeof dataSchemaStats>
+
+
+//buscar historial
+export type SearchHistory = {
+    code: string
+}
+
+const enrollmentSchema = z.object({
+    codigo: z.string(),
+    nombre: z.string(),
+    'uv/ca': z.number(),
+    periodo: z.number(),
+    Nota: z.number(),
+    obs: z.string(),
+});
+
+const yearSchema = z.object({
+    enrollments: z.array(enrollmentSchema),
+    totalAprov: z.number(),
+});
+
+export const studentSchema = z.object({
+    nameStudent: z.string(),
+    lastnameStudent: z.string(),
+    codeIdentification: z.string(),
+    globalAverage: z.number().nullable(),
+    avatar: z.array(ImageSchema), // Assuming `avatar` can be any type or empty array
+    regionalCenter: z.string(),
+    career: z.string(),
+    years: z.record(z.string(), yearSchema),
+    SumUVxNota: z.number(),
+    SumUV: z.number(),
+    academicIndex: z.number().nullable(), // Nullable because it can be `null`
+});
+
+export type AcademicHistoryResponse = z.infer<typeof studentSchema>
+
+
+const enrollmentByDepartmentSchema = z.object({
+    studentId: z.number(),
+    userId: z.number(),
+    dni: z.string(),
+    firstName: z.string(),
+    middleName: z.string().nullable(),
+    lastName: z.string(),
+    secondLastName: z.string().nullable(),
+    institutionalEmail: z.string().email(),
+    identificationCode: z.string(),
+    avatar: z.string().nullable(),
+});
+
+export type EnrollmentsStudentsDepto = z.infer<typeof enrollmentByDepartmentSchema>
+
+export const paginationEnrollmentSchema = z.object({
+    totalItems: z.number(),
+    currentPage: z.number(),
+    totalPages: z.number(),
+    itemsPerPage: z.number(),
+});
+
+export const enrollmentsByDepartmentResponseSchema = z.object({
+    enrollments: z.array(enrollmentByDepartmentSchema),
+    pagination: paginationEnrollmentSchema,
+});

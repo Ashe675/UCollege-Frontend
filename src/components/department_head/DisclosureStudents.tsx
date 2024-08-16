@@ -23,7 +23,7 @@ export default function DisclosureStudents({students, title} : DisclosureStudent
         <DisclosurePanel
         as="ul"
           transition
-          className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0  p-2"
+          className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0  p-2 space-y-2"
         >
           {students.length ? students.map(student => (
             <li key={student.id} className=" flex justify-between items-center text-slate-700 font-semibold bg-white p-2 rounded-md">

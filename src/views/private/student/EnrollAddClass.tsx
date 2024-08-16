@@ -72,7 +72,7 @@ export default function EnrollAddClass() {
             </div>
           )}
           {data && !error && (
-            <div className=" p-2 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className=" p-2 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
               {data.map((clas) => (
                 <ClassCard
                   key={clas.id}
@@ -91,7 +91,7 @@ export default function EnrollAddClass() {
             <span className=" text-tertiary">{selectedClass.name}</span>
           </h2>
           {selectedClass.sections && (
-            <div className=" p-2 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className=" p-2 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-7">
               {selectedClass.sections.map((sect) => (
                 <SectionCard
                   key={sect.id}

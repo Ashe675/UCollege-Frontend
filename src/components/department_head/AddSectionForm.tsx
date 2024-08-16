@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
-import SelectUser from "./SelectUser";
+// import SelectUser from "./SelectUser";
 import { Classroom, ClassSectionForm } from "@/types/department_head";
 import ButtonSubmit from "../ButtonSubmit";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,6 +15,8 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PrivateRoutes } from "@/data/routes";
+// import SelectSearchUser from "./SelectSearchUser";
+import SelectSearchTeacher from "./SelectSearchTeacher";
 
 const daysOfWeek = [
   { name: "Lunes", value: 1 },
@@ -184,7 +186,7 @@ export default function AddSectionForm() {
           >
             Docente
           </label>
-          <SelectUser setValue={setValue} name="teacherId" />
+          <SelectSearchTeacher setValue={setValue} name="teacherId" />
           {errors.teacherId && (
             <ErrorMessage>{errors.teacherId.message}</ErrorMessage>
           )}

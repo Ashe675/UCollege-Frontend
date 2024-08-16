@@ -12,6 +12,8 @@ export const PublicRoutes = {
 export const PrivateRoutes = {
     PRIVATE : 'myspace',
     CHAT : 'chat',
+    PROFILE : 'perfil',
+    SECTION : 'virtual/seccion',
     ADMIN_ADMISIONES : 'admin/admisiones',
     ADMIN_DOCENTES : 'admin/docentes',
     ADMIN_ADD_TEACHER : 'admin/docentes/registrar-docente',
@@ -22,6 +24,9 @@ export const PrivateRoutes = {
     STUDENT_ENROLL : 'estudiante/matricula',
     STUDENT_ENROLL_ADD_CLASS : 'estudiante/matricula/matricular-clase',
     STUDENT_ENROLL_CANCEL_CLASS : 'estudiante/matricula/cancelar-clase',
+    COORDINATOR_HISTORY: 'coordinator/historiales-academicos',
+    COORDINATOR_REQUEST: 'coordinator/solicitudes',
+    COORDINATOR_ACADEMIC: 'coordinator/carga-academica',
     DEPARTMENT_HEAD_PERIOD : 'jefe/periodo-academico/',
     DEPARTMENT_HEAD_PERIOD_CURRENT : 'jefe/periodo-academico/actual',
     DEPARTMENT_HEAD_PERIOD_NEXT : 'jefe/periodo-academico/proximo',
@@ -30,4 +35,7 @@ export const PrivateRoutes = {
     DEPARTMENT_HEAD_PERIOD_NEXT_ADD_SECTION : 'jefe/periodo-academico/proximo/nueva-seccion',
     DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION : 'jefe/periodo-academico/proximo/seccion',
     DEPARTMENT_HEAD_STATS : 'jefe/estadisticas',
+    DEPARTMENT_HEAD_HISTORY: 'jefe/historiales-academicos',
+    DEPARTMENT_HEAD_TEACHERS: 'jefe/docentes',
+    DEPARTMENT_HEAD_ENROLLMENT: 'jefe/matricula',
 }

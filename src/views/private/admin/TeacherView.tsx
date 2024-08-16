@@ -1,21 +1,26 @@
-import { getTeachers } from "@/api/admin/AdminApi";
+import { getTeachersPagination } from "@/api/admin/AdminApi";
 import TeacherTable from "@/components/admin/TeacherTable";
 import Spinner from "@/components/spinner/Spinner";
 import { PrivateRoutes } from "@/data/routes";
 import { useAppStore } from "@/stores/appStore";
+import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 export default function TeacherView() {
-  const {
-    data: teachers,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["teachers"],
-    queryFn: getTeachers,
+  const location = useLocation();
+  const user = useUserStore((state) => state.user);
+
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get("page") || "1", 10);
+  const limit = 8;
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["teachers", page, user.id],
+    queryFn: () => getTeachersPagination({ page, limit }),
   });
+
   const setTitle = useAppStore((state) => state.setTitle);
   useEffect(() => {
     setTitle("Docentes");
@@ -38,7 +43,13 @@ export default function TeacherView() {
           <Spinner />
         </div>
       )}
-      {teachers && <TeacherTable teachers={teachers} />}
+      {data && (
+        <TeacherTable
+          teachers={data.teachers}
+          count={data.pagination.totalPages}
+          page={page}
+        />
+      )}
     </div>
   );
 }

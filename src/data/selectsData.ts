@@ -25,5 +25,13 @@ export const PROCESS_TYPES = [
     {
         "id": 6,
         "name": "CREACIÓN DE SECCIONES"
+    },
+    {
+        "id": 7,
+        "name": "CANCELACIÓN EXCEPCIONAL"
+    },
+    {
+        "id": 8,
+        "name": "PAGO REPOSICIÓN"
     }
 ]

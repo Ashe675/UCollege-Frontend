@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@tabler/icons-react";
 import { useAppStore } from "@/stores/appStore";
+import { useUserStore } from "@/stores/userStore";
 
 
 type ItemSidebarProps = {
@@ -11,10 +12,10 @@ type ItemSidebarProps = {
 
 export default function ItemSidebar({Icon, text, link} : ItemSidebarProps) {
   const setTitle = useAppStore(state => state.setTitle)
-
+  const user = useUserStore(state => state.user)
   const location = useLocation();
   
-  const active = location.pathname.includes(`/myspace/${link}`) || location.pathname === link 
+  const active = link === 'perfil' ? location.pathname.includes(`/myspace/${link}/${user.id}`) : location.pathname.includes(`/myspace/${link}`) || location.pathname === link 
   
   const handleClick = () => {
     setTitle(text)
@@ -22,7 +23,7 @@ export default function ItemSidebar({Icon, text, link} : ItemSidebarProps) {
 
   return (
     <Link
-      to={link}
+      to={link === 'perfil' ? link + `/${user.id}` : link}
       onClick={handleClick}
       className={` text-[16px] transition-colors w-full flex gap-4 p-2 rounded-md hover:text-primary items-center group ${active && 'text-primary bg-white shadow-lg' } `}
       

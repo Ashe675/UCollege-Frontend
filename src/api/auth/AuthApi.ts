@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareerStudentSchema, UserData, UserLoginForm, userSchema } from "@/types/auth";
+import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareerStudentSchema, profileSchema, UserData, UserLoginForm, userSchema } from "@/types/auth";
 import { isAxiosError } from "axios";
 
 
@@ -96,6 +96,24 @@ export async function getOptionsCareesStudent() {
         const url = `/auth/student/options-careers`
         const {data} = await api(url)
         const result = optionsCareerStudentSchema.safeParse(data)
+        if(result.success){
+            return result.data
+        }
+        
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+}
+
+
+export async function getProfile(userId : number) {
+    try {
+        const url = `/user/get-profile/${userId}`
+        const {data} = await api(url)
+        const result = profileSchema.safeParse(data)
         if(result.success){
             return result.data
         }
