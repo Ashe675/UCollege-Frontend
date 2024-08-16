@@ -50,7 +50,12 @@ export default function GradesSection({ section }: GradesSectionProps) {
               />
             </div>
           )}
-          {section.allNotesNotificated && (
+          {!section.isSubmitGradeActive && (
+            <div className=" text-slate-600">
+              No hay proceso de entrega de notas activo.
+            </div>
+          )}
+          {section.allNotesNotificated && section.isSubmitGradeActive && !!section.matriculados.length && (
             <div className=" text-slate-600">
               La notas ya fueron notificadas a los estudiantes.
             </div>
