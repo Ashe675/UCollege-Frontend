@@ -23,7 +23,7 @@ export const useSocketStore = create<SocketStore>()(devtools((set) => {
         isConnected: false,
         conversations: {},
         connect: () => {
-            socket = io('http://localhost:4000', {
+            socket = io(import.meta.env.VITE_SOCKET_API_URL, {
                 auth: {
                     token: `Bearer ${token}`
                 }
