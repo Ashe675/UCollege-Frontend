@@ -11,6 +11,7 @@ type Props = {
   show: boolean;
   file: File;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreviewVideo: React.Dispatch<React.SetStateAction<File | null>>
 };
 
 export default function UploadVideoModal({
@@ -18,6 +19,7 @@ export default function UploadVideoModal({
   file,
   show,
   setShow,
+  setPreviewVideo
 }: Props) {
   const queryClient = useQueryClient();
 
@@ -29,6 +31,7 @@ export default function UploadVideoModal({
         queryKey: ["space", "section", sectionId.toString()],
       });
       setShow(false)
+      setPreviewVideo(null)
     },
   });
 

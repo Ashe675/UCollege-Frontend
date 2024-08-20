@@ -3,23 +3,46 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { UserAvatar } from "./UserAvatar";
 import { IconMenu2 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "@/stores/userStore";
 import { useAppStore } from "@/stores/appStore";
 import { PrivateRoutes } from "@/data/routes";
-
+import { useSocketStore } from "@/stores/socketStore";
 
 export default function AppLayout() {
   const user = useUserStore((state) => state.user);
   const title = useAppStore((state) => state.title);
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {connect, disconnect, socket } = useSocketStore();
+
+  useEffect(() => {
+    connect();
+    return () => disconnect();
+  }, [connect, disconnect, user]);
+
+  useEffect(() => {
+    if(socket && user.id){
+      socket.on("connect", () =>{
+        socket.emit("connectedUser", user.id.toString())
+      })
+      socket.on("disconnect", () =>{
+        socket.emit("disconnectedUser", user.id.toString())
+      })
+      
+      return () => {
+        socket.off("connect", () => {});
+        socket.off("disconnect", () => {});
+      }
+    }
+  }, [socket, user.id])
 
   const [show, setShow] = useState(true);
 
   const handleClickAvatar = () => {
-    navigate(PrivateRoutes.PROFILE + `/${user.id}`)
-  }
+    navigate(PrivateRoutes.PROFILE + `/${user.id}`);
+  };
 
   const handleClick = () => setShow(!show);
 
@@ -34,10 +57,16 @@ export default function AppLayout() {
         />
         <div
           className={` flex flex-col w-full min-h-screen  relative  transition-all duration-500 ease-in-out ${
-            show ? "sm:ml-[270px]" : "sm:ml-0"
-          }`}
+            location.pathname.includes("perfil") ? "bg-primaryBlue" : ""
+          } ${show ? "sm:ml-[270px]" : "sm:ml-0"}`}
         >
-          <div className={` w-full gap-1 flex p-4 ${location.pathname.includes('perfil') ? 'bg-transparent z-5' : 'bg-primaryBlue' } text-white font-semibold text-[16px] justify-between items-center`}>
+          <div
+            className={` w-full gap-1 flex p-4 ${
+              location.pathname.includes("perfil")
+                ? "bg-transparent z-5"
+                : "bg-primaryBlue"
+            } text-white font-semibold text-[16px] justify-between items-center`}
+          >
             <div className=" space-x-4 flex items-center relative">
               <button
                 onClick={handleClick}
@@ -49,7 +78,10 @@ export default function AppLayout() {
               </button>
               <span className=" pl-8 uppercase">{title}</span>
             </div>
-            <div className=" flex gap-2 items-center cursor-pointer z-10" onClick={handleClickAvatar}>
+            <div
+              className=" flex gap-2 items-center cursor-pointer z-10"
+              onClick={handleClickAvatar}
+            >
               <UserAvatar />
               {user.person.firstName} {user.person.lastName}
             </div>

@@ -1,4 +1,6 @@
 import { toZonedTime, format, fromZonedTime } from 'date-fns-tz';
+import { es } from 'date-fns/locale';
+import { Message } from "@/types/chat";
 
 const timeZone = 'America/Tegucigalpa';
 
@@ -25,3 +27,20 @@ export function convertTo12HourFormat(hour : number) {
 
     return formattedHour.toUpperCase(); // Retornar en mayúsculas si prefieres AM/PM
 }
+
+
+export function groupMessagesByDate(messages: Message[]) {
+  return messages.reduce((acc, message) => {
+    const date = format(new Date(message.createdAt), 'PPPP', { locale: es }); // Formato de la fecha en español
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(message);
+    return acc;
+  }, {} as Record<string, Message[]>);
+}
+
+
+export function formatLatinaHour(date: string | Date) {
+    return format(new Date(date), "p"); // "p" muestra la hora en formato 12 horas, e.g., 3:30 PM
+  }

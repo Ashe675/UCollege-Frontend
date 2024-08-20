@@ -5,8 +5,8 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
-const AcademicView = lazy(() => import("../coordinator/AcademicView"));
-const RequestView = lazy(() => import("../coordinator/RequestView"));
+const AcademicView = lazy(() => import("./coordinator/AcademicView"));
+const RequestView = lazy(() => import("./coordinator/RequestView"));
 const ProfileView = lazy(() => import("./ProfileView"));
 const SectionSpaceView = lazy(() => import("./SectionSpaceView"));
 const EnrollStudentsView = lazy(
@@ -84,7 +84,7 @@ export default function Protected() {
           }
         />
         <Route
-          path={PrivateRoutes.CHAT}
+          path={PrivateRoutes.CHAT + "/:conversationId?"}
           element={
             <Suspense fallback={<SpinnerFull />}>
               <Chat />
