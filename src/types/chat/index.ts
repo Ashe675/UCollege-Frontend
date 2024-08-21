@@ -100,7 +100,9 @@ const UserMessageSchema = z.object({
     person: z.object({
         firstName: z.string(),
         lastName: z.string()
-    })
+    }),
+    isOnline: z.boolean(),
+    lastOnline: z.string().nullable()
 });
 
 const ConversationMessageSchema = z.object({

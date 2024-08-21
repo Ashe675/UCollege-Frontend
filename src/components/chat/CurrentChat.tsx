@@ -62,19 +62,14 @@ export default function CurrentChat() {
     [numberOfOnlineUsers, conversation]
   );
 
-//   console.log(showOnlineGroups)
-//   console.log(numberOfOnlineUsers)
+  //   console.log(showOnlineGroups)
+  //   console.log(numberOfOnlineUsers)
 
   useEffect(() => {
     setLastOnlineMember(
       member?.user?.lastOnline ? member?.user?.lastOnline : ""
     );
   }, [member, conversation]);
-
-  const showOnlineChat = useMemo(() => {
-    return !conversation?.isGroup && numberOfOnlineUsers > 1 ? true : false;
-  }, [conversation, numberOfOnlineUsers]);
-
 
   useEffect(() => {
     if (!messageRefEnd?.current || !messageList?.length) return;
@@ -106,7 +101,6 @@ export default function CurrentChat() {
       });
 
       socket.on("userStatusChanged", ({ userId, isOnline, lastOnline }) => {
-        
         if (
           conversation &&
           conversation.members.some((member) => member.userId == userId)
@@ -114,6 +108,9 @@ export default function CurrentChat() {
           setNumberOfOnlineUsers((prev) => (isOnline ? prev + 1 : prev - 1));
           setLastOnlineMember(isOnline ? undefined : lastOnline);
           queryClient.invalidateQueries({ queryKey: ["contacts"] });
+          queryClient.invalidateQueries({
+            queryKey: ["current", "conversation", conversation?.id],
+          });
           queryClient.invalidateQueries({ queryKey: ["conversations"] });
         }
       });
@@ -135,6 +132,9 @@ export default function CurrentChat() {
 
   useEffect(() => {
     setMessageList(data);
+    if (data?.length) {
+      setLastOnlineMember(data[0].sender.user.lastOnline);
+    }
   }, [data]);
 
   const onDrop = useCallback(
@@ -260,7 +260,13 @@ export default function CurrentChat() {
                       : members[0].user.images[0]?.url
                   }
                   size={"md"}
-                  status={!isGroup ? (lastOnlineMember ? "offline" : "online") : undefined}
+                  status={
+                    !isGroup
+                      ? lastOnlineMember
+                        ? "offline"
+                        : "online"
+                      : undefined
+                  }
                   statusPosition="bottom-right"
                 />
               </div>
@@ -284,7 +290,7 @@ export default function CurrentChat() {
                 </div>
                 {!isGroup && (
                   <div className=" text-xs font-semibold text-slate-400 truncate">
-                    {!showOnlineChat && lastOnlineMember
+                    {lastOnlineMember
                       ? `Última vez ${formatLatinaDateTime(lastOnlineMember)}`
                       : "Activo ahora"}
                   </div>
