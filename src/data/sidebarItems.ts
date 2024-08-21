@@ -71,7 +71,7 @@ export const menuItems = {
                 {
                     icon: IconMailForward,
                     text: "Solicitudes",
-                    link: "estudiante/solicitudes",
+                    link: PrivateRoutes.APPLICATION,
                 },
             ],
         },

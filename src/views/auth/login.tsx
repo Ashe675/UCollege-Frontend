@@ -1,4 +1,4 @@
-import LoginForm from "../../components/auth/LoginForm";
+import LoginForm from "@/components/auth/loginForm";
 import Hero from "../../components/admission/Hero";
 import { IconUserCircle } from "@tabler/icons-react";
 import { useUserStore } from "@/stores/userStore";

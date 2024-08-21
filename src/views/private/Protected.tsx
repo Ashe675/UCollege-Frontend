@@ -29,6 +29,7 @@ const AppLayout = lazy(() => import("@/layouts/App/AppLayout"));
 const Chat = lazy(() => import("./Chat"));
 const AdminAdmission = lazy(() => import("./admin/AdminAdmission"));
 const Profile = lazy(() => import("./ProfileView"));
+const Application = lazy(() => import("./student/solicitud/ApplicationView"));
 
 export default function Protected() {
   return (
@@ -87,6 +88,14 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <CancelClassView />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.APPLICATION}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <Application />
               </Suspense>
             }
           />

@@ -33,4 +33,5 @@ export const PrivateRoutes = {
     DEPARTMENT_HEAD_STATS : 'jefe/estadisticas',
     DEPARTMENT_HEAD_HISTORY: 'jefe/historiales-academicos',
     DEPARTMENT_HEAD_TEACHERS: 'jefe/docentes',
+    APPLICATION: "estudiante/solicitud"
 }
