@@ -27,22 +27,22 @@ const authSchema = z.object({
         firstName: z.string(),
         lastName: z.string()
     }),
-    jwtoken : z.string(),
-    user : z.object({
-        id : z.number(),
-        verified : z.boolean()
+    jwtoken: z.string(),
+    user: z.object({
+        id: z.number(),
+        verified: z.boolean()
     }),
-    options : z.array(z.object({
-        id : z.number(),
-        regionalCenter_Faculty_Career : z.object({
+    options: z.array(z.object({
+        id: z.number(),
+        regionalCenter_Faculty_Career: z.object({
             id: z.number(),
             career: z.object({
-                name : z.string()
+                name: z.string()
             })
         })
     })),
-    regionalCenter : z.string(),
-    avatar : z.string().nullable()
+    regionalCenter: z.string(),
+    avatar: z.string().nullable()
 })
 
 type Auth = z.infer<typeof authSchema>
@@ -53,27 +53,27 @@ export const userSchema = authSchema.pick({
     role: true,
     institutionalEmail: true,
     person: true,
-    avatar : true
+    avatar: true
 })
 
-export const loginUserSchema = authSchema.pick({jwtoken : true, user: true})
+export const loginUserSchema = authSchema.pick({ jwtoken: true, user: true })
 export type LoginUser = z.infer<typeof loginUserSchema>
 
 export const optionsCareerStudentSchema = authSchema.pick({
-    options : true,
-    regionalCenter : true
+    options: true,
+    regionalCenter: true
 })
 export type OptionsCareerStudent = z.infer<typeof optionsCareerStudentSchema>
 export type RegionalCenterFacultyCareerId = {
-    optionId : string
+    optionId: string
 }
 
 type User = z.infer<typeof userSchema>
 export type ForgotPasswordData = Pick<User, 'institutionalEmail'>
 
 const newPasswordFormDataSchema = authSchema.pick({
-    password : true,
-    password_confirmation : true
+    password: true,
+    password_confirmation: true
 })
 
 export type NewPasswordFormData = z.infer<typeof newPasswordFormDataSchema>
@@ -84,16 +84,18 @@ export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person
 const imageSchema = z.object({
     id: z.number(),
     url: z.string(),
-  });
-  
-  // Esquema para 'carrers'
-  const carrerSchema = z.object({
+});
+
+export type ImageData = z.infer<typeof imageSchema>
+
+// Esquema para 'carrers'
+const carrerSchema = z.object({
     id: z.number(),
     name: z.string(),
-  });
-  
-  // Esquema para el objeto principal
- export const profileSchema = z.object({
+});
+
+// Esquema para el objeto principal
+export const profileSchema = z.object({
     userId: z.number(),
     dni: z.string(),
     firstName: z.string(),
@@ -106,9 +108,9 @@ const imageSchema = z.object({
     institutionalEmail: z.string(),
     regionalCenter: z.string(),
     avatar: z.string().nullable(),
-    role : z.string(),
+    role: z.string(),
     depto: z.string().nullable(),
     active: z.boolean(),
     carrers: z.array(carrerSchema), // Es un array de objetos 'carrer'
     images: z.array(imageSchema), // Es un array de objetos 'image'
-  });
+});

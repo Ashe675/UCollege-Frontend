@@ -90,3 +90,24 @@ export async function enrollStudentBySectionId(sectionId: number) {
         throw new Error("El Servidor no responde")
     }
 }
+
+export async function postNewImage({avatar, image}:{ avatar : boolean, image : File }) {
+    try {
+        const url = `/student/upload/image`
+        
+        const avatarString = avatar ? "true" : "false" 
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("avatar", avatarString)
+        const { data } = await api.post(url, formData)
+        return data.message
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}

@@ -14,10 +14,10 @@ export default function MessagesList({
   const groupedMessages = groupMessagesByDate(messages);
 
   return (
-    <div className=" p-3 w-full  flex-1 flex flex-col  space-y-4 ">
+    <div className=" p-3 w-full  flex-1 flex flex-col  ">
       {Object.entries(groupedMessages).map(([date, msgs]) => (
         <div key={date}>
-          <div className="text-center text-slate-500 my-2">{date}</div>
+          <div className="text-center text-slate-500">{date}</div>
           <div className=" space-y-4">
             {msgs.map((msg) => (
               <MessageCard
