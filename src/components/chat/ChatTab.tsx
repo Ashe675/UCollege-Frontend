@@ -5,7 +5,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import RequestSection from "./RequestSection";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import ContactsSection from "./ContactsSection";
 import { getContacts, getConversations, getRequests } from "@/api/chat/ChatApi";
@@ -18,6 +18,7 @@ export default function ChatTab() {
   const [countFriendRequest, setCountFriendRequest] = useState(0);
   const [newMessageInConversation, setNewMessageInConversation] =
     useState<Message[]>();
+  const queryClient = useQueryClient()
 
 
   const {
@@ -75,12 +76,13 @@ export default function ChatTab() {
           const filteredMsgs = prev?.filter(
             (msg) => msg.conversationId !== newMSG.conversationId
           );
-          if(filteredMsgs?.length){
+          queryClient.invalidateQueries({queryKey : ['conversations']})
+          if (filteredMsgs?.length) {
             return [...filteredMsgs, newMSG];
-          }else{
-            return [newMSG]
+          } else {
+            return [newMSG];
           }
-          
+         
         });
       });
 
@@ -94,7 +96,7 @@ export default function ChatTab() {
         });
       };
     }
-  }, [socket, contacts]);
+  }, [socket, contacts, queryClient]);
 
   useEffect(() => {
     if (friendRequests?.friendRequestReceived.length !== undefined) {
@@ -133,12 +135,12 @@ export default function ChatTab() {
           className={`data-[selected]:flex data-[selected]:flex-col data-[selected]:min-h-full`}
         >
           <ChatListSection
-          setNewMessageInConversation ={setNewMessageInConversation}
+            setNewMessageInConversation={setNewMessageInConversation}
             data={convers}
             contacts={contacts}
             error={errorConversations}
             isLoading={loadingConversations}
-            newMessageInConversation = {newMessageInConversation}
+            newMessageInConversation={newMessageInConversation}
           />
         </TabPanel>
         <TabPanel

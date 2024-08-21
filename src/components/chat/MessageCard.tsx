@@ -2,9 +2,14 @@ import { useUserStore } from "@/stores/userStore";
 import { Message } from "@/types/chat";
 import { formatLatinaHour } from "@/utils/date";
 import { getFullName } from "@/utils/user";
-import { IconChecks, IconFileDownload } from "@tabler/icons-react";
+import {
+  IconChecks,
+  IconDownload,
+  IconFileDownload,
+} from "@tabler/icons-react";
 import { Avatar } from "flowbite-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import ModalCustom from "../ModalCustom";
 
 type MessageCardProps = {
   msg: Message;
@@ -12,6 +17,12 @@ type MessageCardProps = {
 
 export default function MessageCard({ msg }: MessageCardProps) {
   const user = useUserStore((state) => state.user);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   const isTheSameUser = useMemo(
     () => msg.sender.userId === user.id,
     [msg.sender.userId, user.id]
@@ -23,6 +34,7 @@ export default function MessageCard({ msg }: MessageCardProps) {
     "/upload/",
     "/upload/fl_attachment/"
   );
+
   const avatar = useMemo(() => msg.sender?.user?.images[0]?.url, [msg]);
 
   return (
@@ -33,6 +45,25 @@ export default function MessageCard({ msg }: MessageCardProps) {
           : " pr-8 lg:pr-36 justify-start"
       } `}
     >
+      {isModalOpen && isImage && msg.fileUrl && (
+        <ModalCustom show={isModalOpen} setShow={setIsModalOpen}>
+          <div>
+            <img
+              src={msg.fileUrl}
+              alt={msg?.fileName ? msg.fileName : ""}
+              className="max-h-[600px] "
+            />
+            <a
+              href={downloadUrl}
+              download
+              className=" p-2 w-full bg-green-500 text-white font-bold flex gap-2 items-center justify-center rounded-md my-2"
+            >
+              <IconDownload stroke={2} />
+              Download
+            </a>
+          </div>
+        </ModalCustom>
+      )}
       {!isTheSameUser && (
         <Avatar img={avatar} rounded size={"sm"} className=" mb-2" />
       )}
@@ -40,7 +71,8 @@ export default function MessageCard({ msg }: MessageCardProps) {
         {isImage && msg.fileUrl ? (
           <img
             src={msg.fileUrl}
-            className=" max-h-40 rounded-xl shadow-md md:max-h-52"
+            onClick={toggleModal}
+            className=" max-h-40 rounded-xl shadow-md md:max-h-52 cursor-pointer"
           />
         ) : isFile ? (
           <a href={downloadUrl!} download>
@@ -74,8 +106,11 @@ export default function MessageCard({ msg }: MessageCardProps) {
             isTheSameUser ? "text-right justify-end" : "text-left justify-start"
           } text-slate-500`}
         >
-         
-          {formatLatinaHour(msg.createdAt)} <span>{msg.conversation.isGroup && getFullName(msg.sender.user.person.firstName)}</span> 
+          {formatLatinaHour(msg.createdAt)}{" "}
+          <span>
+            {msg.conversation.isGroup &&
+              getFullName(msg.sender.user.person.firstName)}
+          </span>
           {isTheSameUser && <IconChecks stroke={1} size={16} />}
         </span>
       </div>

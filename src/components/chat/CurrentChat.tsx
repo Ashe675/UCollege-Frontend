@@ -62,8 +62,8 @@ export default function CurrentChat() {
     [numberOfOnlineUsers, conversation]
   );
 
-  console.log(showOnlineGroups)
-  console.log(numberOfOnlineUsers)
+//   console.log(showOnlineGroups)
+//   console.log(numberOfOnlineUsers)
 
   useEffect(() => {
     setLastOnlineMember(

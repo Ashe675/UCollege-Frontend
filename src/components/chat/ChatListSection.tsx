@@ -7,6 +7,7 @@ import ConversationCard from "./ConversationCard";
 import { Dispatch, useEffect, useMemo, useState } from "react";
 import { getFullName } from "@/utils/user";
 import Skeleton from "@mui/material/Skeleton";
+import { useSocketStore } from "@/stores/socketStore";
 
 type ChatListSectionProps = {
   data: Conversation[] | undefined;
@@ -30,6 +31,7 @@ export default function ChatListSection({
   const [query, setQuery] = useState("");
 
   const [chats, setChats] = useState<Conversation[] | undefined>(data);
+  const { socket } = useSocketStore();
 
   const conversationsFiltered = useMemo(() => {
     return query === ""
@@ -62,19 +64,30 @@ export default function ChatListSection({
   }, [data]);
 
   useEffect(() => {
-    if (newMessageInConversation?.length) {
-      const conversationId = newMessageInConversation[0].conversationId;
-      const newConversation = chats?.find(
-        (conver) => conver.id === conversationId
-      );
+    if (socket) {
+      socket.on("newMessageInConversation", (newMSG: Message) => {
+        const conversationId = newMSG?.conversationId;
+        const newConversation = chats?.find(
+          (conver) => conver.id === conversationId
+        );
 
-      if (newConversation && chats) {
-        const updatedChats = chats.filter((chat) => chat.id !== conversationId);
-        setChats([newConversation, ...updatedChats]);
-      }
+        if (newConversation && chats) {
+          const updatedChats = chats.filter(
+            (chat) => chat.id !== conversationId
+          );
+          setChats([newConversation, ...updatedChats]);
+        }
+      });
+      return () => {
+        socket.off("newMessageInConversation", () => {
+          setNewMessageInConversation([]);
+        });
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newMessageInConversation]);
+  }, [socket, newMessageInConversation]);
+
+ 
 
   return (
     <>
