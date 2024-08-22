@@ -6,10 +6,11 @@ type ModalCustomProps = {
     setShow : React.Dispatch<React.SetStateAction<boolean>>;
     title? : ReactNode
     className? : string
-    children : ReactNode
+    children : ReactNode,
+    isPending ? : boolean
 }
 
-export default function ModalCustom({show, setShow, title, className, children} : ModalCustomProps) {
+export default function ModalCustom({show, setShow, title, className, children, isPending} : ModalCustomProps) {
 
   return (
     <>
@@ -18,7 +19,9 @@ export default function ModalCustom({show, setShow, title, className, children} 
           as="div"
           className="relative z-40"
           onClose={() => {
-            setShow(false)
+            if(!isPending){
+              setShow(false)
+            }
           }}
         >
           <Transition.Child

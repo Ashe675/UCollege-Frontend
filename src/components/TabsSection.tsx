@@ -5,12 +5,17 @@ import ContentSection from "./ContentSection";
 import { Link } from "react-router-dom";
 import TabStudentsSection from "./TabStudentsSection";
 import GradesSection from "./GradesSection";
+import { useUserStore } from "@/stores/userStore";
+
+import { isTeacher } from "@/utils/user";
 
 type TabsSectionProps = {
   section: SectionSpace;
 };
 
 export default function TabsSection({ section }: TabsSectionProps) {
+  const user = useUserStore((state) => state.user);
+
   return (
     <TabGroup className="w-full h-full flex flex-col relative ">
       <TabList className=" rounded-md w-full flex justify-between h-10">
@@ -40,10 +45,12 @@ export default function TabsSection({ section }: TabsSectionProps) {
             </svg>
             <span className=" hidden md:inline">Miembros</span>
           </Tab>
-          <Tab className="rounded-md p-2 text-sm/6 font-bold text-white focus:outline-none data-[selected]:bg-tertiary data-[hover]:bg-tertiary/50 w-full data-[selected]:data-[hover]:bg-tertiary/90 data-[focus]:outline-1 data-[focus]:outline-white flex gap-2 uppercase text-center justify-center">
-            <IconGraphFilled className=" text-white" />
-            <span className=" hidden md:inline">Calificaciones</span>
-          </Tab>
+          {isTeacher(user.role.name) && (
+            <Tab className="rounded-md p-2 text-sm/6 font-bold text-white focus:outline-none data-[selected]:bg-tertiary data-[hover]:bg-tertiary/50 w-full data-[selected]:data-[hover]:bg-tertiary/90 data-[focus]:outline-1 data-[focus]:outline-white flex gap-2 uppercase text-center justify-center">
+              <IconGraphFilled className=" text-white" />
+              <span className=" hidden md:inline">Calificaciones</span>
+            </Tab>
+          )}
         </div>
       </TabList>
 
@@ -58,9 +65,11 @@ export default function TabsSection({ section }: TabsSectionProps) {
         >
           <TabStudentsSection section={section} />
         </TabPanel>
-        <TabPanel className={
+        <TabPanel
+          className={
             "data-[selected]:flex data-[selected]:flex-col data-[selected]:min-h-full "
-          }>
+          }
+        >
           <GradesSection section={section} />
         </TabPanel>
       </TabPanels>

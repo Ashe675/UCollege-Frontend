@@ -159,3 +159,27 @@ export async function getSectionsWithGrades() {
         throw new Error("El Servidor no responde")
     }
 }
+
+export async function gradeToTeacher({grade, sectionId}:{ sectionId : number, grade : number }) {
+    try {
+        const url = `/student/value-teacher/`
+        
+        const payload = {
+            grade : Number(grade),
+            sectionId : Number(sectionId)
+        }
+        const { data } = await api.post(url, payload)
+        return data.message
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            if (isAxiosError(error) && error.response.data?.errors) {
+                throw new Error(error.response.data.errors[0].msg)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
