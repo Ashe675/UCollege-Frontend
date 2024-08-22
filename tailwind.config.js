@@ -116,7 +116,6 @@ export default {
       },
       backgroundImage: {
         primaryBlue: "linear-gradient(to right, #17C1E8, #1175EF)",
-        secondaryDark: "radial-gradient(circle at center, #2A385B  80%, #28395A 100%)",
       },
       keyframes: {
         grow: {

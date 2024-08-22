@@ -1,4 +1,4 @@
-import { getTeachersByDepartment } from "@/api/department_head/DepartmentHeadApi";
+import { getTeachersByDepartmentPage } from "@/api/department_head/DepartmentHeadApi";
 import TeacherTableDepto from "@/components/department_head/TeacherTableDepto";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/spinner/Spinner";
@@ -14,14 +14,14 @@ export default function TeacherHeadView() {
   
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get("page") || "1", 10);
-
+  const limit = 8
   const {
     data: teachers,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["teachers", "Deptos", user.id],
-    queryFn: getTeachersByDepartment,
+    queryKey: ["teachers", "Deptos", user.id, page],
+    queryFn: () => getTeachersByDepartmentPage({page,limit}),
   });
 
   const setTitle = useAppStore((state) => state.setTitle);
@@ -36,7 +36,7 @@ export default function TeacherHeadView() {
           <Spinner />
         </div>
       )}
-      {teachers && <TeacherTableDepto teachers={teachers} page={page}  />}
+      {teachers && <TeacherTableDepto teachers={teachers} page={page} count={teachers.totalPages} />}
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </div>
   );

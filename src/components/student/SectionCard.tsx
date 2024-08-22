@@ -66,7 +66,7 @@ export default function SectionCard({
 
   if (isPending || isPendingEnroll)
     return (
-      <div className="  w-full h-full flex items-center justify-center mt-20 ">
+      <div className="  w-full h-full flex items-center justify-center  ">
         <Spinner />
       </div>
     );

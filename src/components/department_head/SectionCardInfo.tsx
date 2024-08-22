@@ -7,18 +7,28 @@ import { PrivateRoutes } from "@/data/routes";
 
 type SectionCardInfoProps = {
   section: SectionWithDetails;
-  next : boolean
+  next: boolean;
 };
 
-export default function SectionCardInfo({ section, next }: SectionCardInfoProps) {
+export default function SectionCardInfo({
+  section,
+  next,
+}: SectionCardInfoProps) {
   return (
     <Link
-      to={next ? `/myspace/${PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION}/${section.id}` : `/myspace/${PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION}/${section.id}`}
+      to={
+        next
+          ? `/myspace/${PrivateRoutes.DEPARTMENT_HEAD_PERIOD_NEXT_VIEW_SECTION}/${section.id}`
+          : `/myspace/${PrivateRoutes.DEPARTMENT_HEAD_PERIOD_CURRENT_VIEW_SECTION}/${section.id}`
+      }
       className={`  ${
         section.quotasAvailability === 0 ? "bg-slate-300" : "bg-white"
       } shadow-md rounded-md w-full p-3 transition-all  hover:scale-105 cursor-pointer `}
     >
-      <h3 className=" font-bold text-slate-600 text-lg uppercase ">
+      <h3 className="bg-teal-500 uppercase text-white text-md font-bold p-2 mb-2 rounded-md">
+        {section.class.name}
+      </h3>
+      <h3 className=" font-bold text-slate-600 text-md uppercase ">
         <span className=" bg-teal-500 text-white p-1 px-2 rounded-md">
           {section.code}
         </span>
@@ -49,6 +59,9 @@ export default function SectionCardInfo({ section, next }: SectionCardInfoProps)
         <InfoRowSection label="Aula">{section.classroom.code}</InfoRowSection>
         <InfoRowSection label="Cupos">
           {section.quotasAvailability}
+        </InfoRowSection>
+        <InfoRowSection label="Matriculados">
+          {section.capacity - section.quotasAvailability }
         </InfoRowSection>
         <InfoRowSection label="Lista de espera">
           {section.waitingListCount}

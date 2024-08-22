@@ -70,10 +70,10 @@ export default function SectionCardEnrolled({
             {abbreviateDays(section.days)}
           </InfoRowSection>
           <InfoRowSection label="Hora Inicial">
-            {convertTo12HourFormat(section.HF)}
+            {convertTo12HourFormat(section.HI)}
           </InfoRowSection>
           <InfoRowSection label="Hora Final">
-            {convertTo12HourFormat(section.HI)}
+            {convertTo12HourFormat(section.HF)}
           </InfoRowSection>
 
           <div className=" space-y-2">

@@ -1,10 +1,10 @@
 import { RoleEnum } from "@/types/auth";
-import { TeacherByDepartment } from "@/types/department_head";
+import { TeacherByDepartmentPage } from "@/types/department_head";
 import { getRoleColorClass, getRoleMessage } from "@/utils/dictionaries";
 import { Avatar } from "flowbite-react/components/Avatar";
 import ButtonCustomWithClick from "../ButtonCustomWithClick";
 import { IconKeyFilled } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ResetPasswordToTeacherModal from "./ResetPasswordToTeacherModal";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -15,13 +15,15 @@ import PaginationItem from "@mui/material/PaginationItem";
 import { PrivateRoutes } from "@/data/routes";
 
 type TeacherTableDeptoProps = {
-  teachers: TeacherByDepartment;
+  teachers: TeacherByDepartmentPage;
   page: number;
+  count: number;
 };
 
 export default function TeacherTableDepto({
   teachers,
   page,
+  count,
 }: TeacherTableDeptoProps) {
   const [idTeacher, setIdTeacher] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -55,9 +57,14 @@ export default function TeacherTableDepto({
   const handleClick = (id: number) => {
     if (id) {
       setIdTeacher(id);
-      console.log(id);
       setShowModal(true);
     }
+  };
+
+  const navigate = useNavigate()
+
+  const handleClickRow = (id: number) => {
+    navigate(`/myspace/${PrivateRoutes.PROFILE}/${id}`)
   };
 
   const handleClickModal = () => {
@@ -89,8 +96,8 @@ export default function TeacherTableDepto({
             </thead>
             <tbody className=" divide-y divide-slate-200 text-slate-500 font-normal">
               {teachers.teachers.map(({ teacher }) => (
-                <tr className=" " key={teacher.id}>
-                  <td className=" p-3 ">
+                <tr  key={teacher.id} >
+                  <td className=" hover:bg-slate-100 cursor-pointer p-3 " title="Ver Perfil" onClick={ () => handleClickRow(teacher.id)}>
                     <Avatar rounded img={teacher.images[0]?.url} />
                   </td>
                   <td className=" p-3 ">
@@ -118,10 +125,11 @@ export default function TeacherTableDepto({
                   </td>
                   <td className=" p-3 ">
                     <ButtonCustomWithClick
+                      disabled={teacher.roleId === 2}
                       onClick={() => {
                         handleClick(teacher.id);
                       }}
-                      className=" bg-blue-600 text-sm text-white p-2 rounded-md shadow-md hover:bg-blue-700 flex justify-center gap-2 max-w-60 mx-auto items-center"
+                      className={`${teacher.roleId === 2 ? 'bg-gray-400 text-gray-50' : 'bg-blue-600 hover:bg-blue-700 text-white'}  text-sm  p-2 rounded-md shadow-md  flex justify-center gap-2 max-w-60 mx-auto items-center`}
                     >
                       Reiniciar Contraseña
                       <IconKeyFilled stroke={2} />
@@ -134,13 +142,12 @@ export default function TeacherTableDepto({
               <tr>
                 <td colSpan={5} className="p-4">
                   <Pagination
-                  shape="rounded"
+                    shape="rounded"
                     page={page}
-                    count={10}
+                    count={count}
                     className=" w-full flex justify-center"
                     renderItem={(item) => (
                       <PaginationItem
-                      
                         component={Link}
                         to={`/myspace/${
                           PrivateRoutes.DEPARTMENT_HEAD_TEACHERS
@@ -156,7 +163,7 @@ export default function TeacherTableDepto({
         </div>
       ) : (
         <div className=" text-slate-500 font-normal flex justify-center items-center mt-20">
-          Aún no se han registrado docentes.
+          No hay docentes para mostrar.
         </div>
       )}
     </>

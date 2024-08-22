@@ -21,11 +21,12 @@ const teacherItems = [{
     text: "Chat",
     link: PrivateRoutes.CHAT,
 },
-{
-    icon: IconGraphFilled,
-    text: "Calificaciones",
-    link: "docente/calificaciones",
-},]
+// {
+//     icon: IconGraphFilled,
+//     text: "Calificaciones",
+//     link: "docente/calificaciones",
+// },
+]
 
 export const menuItems = {
     USER: {
@@ -71,7 +72,7 @@ export const menuItems = {
                 {
                     icon: IconMailForward,
                     text: "Solicitudes",
-                    link: PrivateRoutes.APPLICATION,
+                    link: "estudiante/solicitudes",
                 },
             ],
         },
@@ -96,22 +97,22 @@ export const menuItems = {
                 {
                     icon: IconNotes,
                     text: "Matricula",
-                    link: "jefe/matricula",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_ENROLLMENT,
                 },
                 {
                     icon: IconAddressBook,
                     text: "Historiales",
-                    link: "jefe/historiales-academicos",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_HISTORY
                 },
                 {
                     icon: IconCalendarUser ,
                     text: "Docentes",
-                    link: "jefe/docentes",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_TEACHERS,
                 },
                 {
                     icon: IconChartBar ,
                     text: "Estadísticas",
-                    link: "jefe/estadisticas",
+                    link: PrivateRoutes.DEPARTMENT_HEAD_STATS,
                 },
             ],
         }
@@ -148,17 +149,17 @@ export const menuItems = {
                 {
                     icon: IconClipboardData,
                     text: "Carga Académica",
-                    link: "coordinador/carga-academica",
+                    link: PrivateRoutes.COORDINATOR_ACADEMIC,
                 },
                 {
                     icon: IconMailForward,
                     text: "Solicitudes",
-                    link: "coordinador/solicitudes",
+                    link: PrivateRoutes.COORDINATOR_REQUEST,
                 },
                 {
                     icon: IconAddressBook,
                     text: "Historiales",
-                    link: "coordinador/historiales-academicos",
+                    link: PrivateRoutes.COORDINATOR_HISTORY,
                 },
             ],
         }

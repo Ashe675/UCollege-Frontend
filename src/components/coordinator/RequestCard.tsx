@@ -1,0 +1,43 @@
+import { RequestCancelClass } from "@/types/coordinator";
+import { Estado, getStatusColor, getStatusMessage } from "@/utils/dictionaries";
+import { Dispatch } from "react";
+
+type RequestCardProps = {
+  request: RequestCancelClass;
+  setSetRequestSelected: Dispatch<
+    React.SetStateAction<RequestCancelClass | undefined>
+  >;
+};
+
+export default function RequestCard({
+  request,
+  setSetRequestSelected,
+}: RequestCardProps) {
+  const handleClick = () => {
+    setSetRequestSelected(request);
+  };
+
+  return (
+    <div
+      className=" bg-white p-3 w-full shadow-md rounded-md space-y-2 text-slate-600 relative cursor-pointer hover:scale-105 transition-all "
+      onClick={handleClick}
+    >
+      <span
+        className={` p-1 px-2 text-xs text-white font-semibold shadow-sm absolute -top-2 -right-1 rounded-full ${getStatusColor(
+          request.estado as Estado
+        )}`}
+      >
+        {getStatusMessage(request.estado as Estado)}
+      </span>
+      <div className=" p-2 flex w-full justify-between pr-5 bg-slate-200 rounded-md font-semibold">
+        Estudiante : <span>{request.studentName}</span>
+      </div>
+      <div className=" p-2 flex w-full justify-between pr-5 bg-slate-200 rounded-md font-semibold">
+        Número de cuenta : <span>{request.identificationCode}</span>
+      </div>
+      <div className=" p-2 flex w-full justify-between pr-5 bg-slate-200 rounded-md font-semibold">
+        Correo Institucional : <span>{request.institutionalEmail}</span>
+      </div>
+    </div>
+  );
+}

@@ -80,3 +80,35 @@ export type NewPasswordFormData = z.infer<typeof newPasswordFormDataSchema>
 
 export type UserData = Pick<User, 'id' | 'institutionalEmail' | 'role' | 'person' | 'avatar'>
 
+// Esquema para 'images'
+const imageSchema = z.object({
+    id: z.number(),
+    url: z.string(),
+  });
+  
+  // Esquema para 'carrers'
+  const carrerSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+  });
+  
+  // Esquema para el objeto principal
+ export const profileSchema = z.object({
+    userId: z.number(),
+    dni: z.string(),
+    firstName: z.string(),
+    midleName: z.string().nullable(), // 'midleName' puede ser nulo
+    lastName: z.string(),
+    secondLastName: z.string().nullable(), // 'secondLastName' puede ser nulo
+    email: z.string(),
+    phone: z.string(), // Puedes añadir validaciones adicionales para el número de teléfono si es necesario
+    identificationCode: z.string(),
+    institutionalEmail: z.string(),
+    regionalCenter: z.string(),
+    avatar: z.string().nullable(),
+    role : z.string(),
+    depto: z.string().nullable(),
+    active: z.boolean(),
+    carrers: z.array(carrerSchema), // Es un array de objetos 'carrer'
+    images: z.array(imageSchema), // Es un array de objetos 'image'
+  });
