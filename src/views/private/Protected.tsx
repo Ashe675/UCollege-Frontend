@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import RoleGuard from "../../guards/RoleGuard";
 import { RoleEnum } from "@/types/auth";
+const GradesStudentView = lazy(() => import("./student/GradesStudentView"));
 const AcademicView = lazy(() => import("./coordinator/AcademicView"));
 const RequestView = lazy(() => import("./coordinator/RequestView"));
 const ProfileView = lazy(() => import("./ProfileView"));
@@ -97,6 +98,14 @@ export default function Protected() {
             element={
               <Suspense fallback={<SpinnerFull />}>
                 <StudentEnroll />
+              </Suspense>
+            }
+          />
+          <Route
+            path={PrivateRoutes.STUDENT_GRADES}
+            element={
+              <Suspense fallback={<SpinnerFull />}>
+                <GradesStudentView />
               </Suspense>
             }
           />

@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { classesSchema, sectionEnrollmentsSchema } from "@/types/student";
+import { classesSchema, sectionEnrollmentsSchema, sectionsGradeSchema } from "@/types/student";
 import { SectionHomeArraySchema } from "@/types/teacher";
 import { isAxiosError } from "axios";
 
@@ -139,6 +139,22 @@ export async function deleteImageProfile() {
                 throw new Error(error.response.data.error)
             }
             throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function getSectionsWithGrades() {
+    try {
+        const url = '/student/getAllGrade'
+        const { data } = await api(url)
+        const result = sectionsGradeSchema.safeParse(data)
+        if (result.success) {
+            return result.data
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
         }
         throw new Error("El Servidor no responde")
     }

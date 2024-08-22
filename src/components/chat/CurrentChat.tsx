@@ -238,13 +238,13 @@ export default function CurrentChat() {
 
   return (
     <div
-      className={` w-full text-slate-700 h-full shadow-md md:block md:relative max-md:px-3  max-md:pt-3 max-md:pb-2  rounded-md lg:col-span-2  ${
+      className={` w-full text-slate-700 h-full  md:block md:relative max-md:px-3  max-md:pt-3 max-md:pb-2  rounded-md lg:col-span-2  ${
         location.state?.id
           ? "block absolute z-20 top-0 left-0"
           : "hidden relative"
       }`}
     >
-      <div className=" flex flex-col  w-full h-full bg-white rounded-md relative max-h-[637px]">
+      <div className=" flex flex-col  w-full h-full bg-white shadow-md rounded-md relative max-h-[637px]">
         {conversation ? (
           <>
             <div className=" w-full  items-center flex shadow-md p-2  sm:px-3  gap-x-3">

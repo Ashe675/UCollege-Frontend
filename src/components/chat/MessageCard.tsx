@@ -109,7 +109,7 @@ export default function MessageCard({ msg }: MessageCardProps) {
           {formatLatinaHour(msg.createdAt)}{" "}
           <span>
             {msg.conversation.isGroup &&
-              getFullName(msg.sender.user.person.firstName)}
+              getFullName(msg.sender.user?.person?.firstName)}
           </span>
           {isTheSameUser && <IconChecks stroke={1} size={16} />}
         </span>
