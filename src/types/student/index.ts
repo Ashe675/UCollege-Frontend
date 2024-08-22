@@ -1,4 +1,5 @@
 import z from 'zod';
+import { ObservationEnum } from '../teacher';
 
 
 // Definir el esquema para el profesor
@@ -66,6 +67,49 @@ const sectionEnrollmentSchema = z.object({
     sectionId: z.number(),
 })
 
-export type DataSectionEnrollment =  z.infer<typeof sectionEnrollmentSchema>
+export type DataSectionEnrollment = z.infer<typeof sectionEnrollmentSchema>
 
 export type DataSectionEnrollments = z.infer<typeof sectionEnrollmentsSchema>
+
+
+
+const classGradeSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    active: z.boolean(),
+    createdAt: z.string(), // Puede ser `z.date()` si la fecha se está manejando como objeto Date en lugar de string
+    code: z.string(),
+    UV: z.number(),
+    departamentId: z.number(),
+});
+
+const sectionGradeSchema = z.object({
+    id: z.number(),
+    code: z.string(),
+    capacity: z.number(),
+    IH: z.number(),
+    FH: z.number(),
+    title: z.string().nullable(),
+    description: z.string().nullable(),
+    justification: z.string().nullable(),
+    active: z.boolean(),
+    classId: z.number(),
+    regionalCenter_Faculty_CareerId: z.number(),
+    teacherId: z.number(),
+    classroomId: z.number(),
+    academicPeriodId: z.number(),
+    class: classGradeSchema,
+});
+
+const itemSchema = z.object({
+    sectionCode: z.string(),
+    section: sectionGradeSchema,
+    teacherGrade: z.number().nullable(), // Puede ser ajustado según el tipo de dato real
+    className: z.string(),
+    nota: z.number().nullable(), // Puede ser ajustado según el tipo de dato real
+    obs: z.enum([ObservationEnum.ABD, ObservationEnum.APR, ObservationEnum.NSP, ObservationEnum.REP]).nullable(), // Puede ser ajustado según el tipo de dato real
+});
+
+export type SectionGrade = z.infer<typeof itemSchema>
+
+export const sectionsGradeSchema = z.array(itemSchema);

@@ -6,6 +6,7 @@ import { isAxiosError } from "axios";
 export async function createNewCurrentSection(formData: ClassSectionForm) {
     try {
         const url = '/section/'
+        console.log('current')
         const IH = +formData.IH
         const FH = +formData.FH
         const quota = +formData.quota

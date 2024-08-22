@@ -6,7 +6,7 @@ export function UserAvatar() {
 
   return (
     <div className="flex flex-wrap gap-2 min-w-10">
-      <Avatar img={user.avatar? user.avatar : ''} rounded  />
+      <Avatar img={user.avatar? user.avatar : ''} rounded status="online" statusPosition="bottom-right"  />
     </div>
   );
 }

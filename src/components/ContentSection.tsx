@@ -170,6 +170,7 @@ export default function ContentSection({ section }: ContentSectionProps) {
         setShow={setShowModalDelete}
       />
       <UploadVideoModal
+        setPreviewVideo={setPreviewVideo}
         file={acceptedFiles[0]}
         sectionId={section.id}
         setShow={setShowModalUpload}

@@ -3,14 +3,14 @@ import { ForgotPasswordData, loginUserSchema, NewPasswordFormData, optionsCareer
 import { isAxiosError } from "axios";
 
 
-export async function UserLogin(formData : UserLoginForm) {
+export async function UserLogin(formData: UserLoginForm) {
     try {
         const url = `/auth/login`
-        const {data} = await api.post(url, formData)
+        const { data } = await api.post(url, formData)
         const result = loginUserSchema.safeParse(data)
-        if(result.success){
-            const {jwtoken, user} = result.data
-            localStorage.setItem('AUTH_TOKEN',jwtoken)
+        if (result.success) {
+            const { jwtoken, user } = result.data
+            localStorage.setItem('AUTH_TOKEN', jwtoken)
             return user
         }
 
@@ -20,14 +20,28 @@ export async function UserLogin(formData : UserLoginForm) {
         }
         throw new Error("El servidor no Responde")
     }
-} 
+}
+
+
+export async function userLogout() {
+    try {
+        const url = `/auth/logout`
+        const { data } = await api.post(url)
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+        throw new Error("El servidor no Responde")
+    }
+}
 
 export async function getUser() {
     try {
         const url = `/auth/user`
-        const {data} = await api<UserData>(url)
+        const { data } = await api<UserData>(url)
         const result = userSchema.safeParse(data)
-        if(result.success){
+        if (result.success) {
             return result.data
         }
         return data
@@ -39,10 +53,10 @@ export async function getUser() {
     }
 }
 
-export async function sendInstructions(formData : ForgotPasswordData) {
+export async function sendInstructions(formData: ForgotPasswordData) {
     try {
         const url = `/auth/forgot-password`
-        const { data } = await api.post<string>(url,formData)
+        const { data } = await api.post<string>(url, formData)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -52,7 +66,7 @@ export async function sendInstructions(formData : ForgotPasswordData) {
     }
 }
 
-export async function getToken(token : string) {
+export async function getToken(token: string) {
     try {
         const url = `/auth/valid/${token}`
         const { data } = await api<string>(url)
@@ -65,10 +79,10 @@ export async function getToken(token : string) {
     }
 }
 
-export async function validateToken(token : string) {
+export async function validateToken(token: string) {
     try {
         const url = `/auth/validate-token`
-        const { data } = await api.post<string>(url,{ token })
+        const { data } = await api.post<string>(url, { token })
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -78,10 +92,10 @@ export async function validateToken(token : string) {
     }
 }
 
-export async function resetPassword({token, formData } : { token: string, formData : NewPasswordFormData}) {
+export async function resetPassword({ token, formData }: { token: string, formData: NewPasswordFormData }) {
     try {
         const url = `/auth/update-password/${token}`
-        const { data } = await api.post<string>(url,formData)
+        const { data } = await api.post<string>(url, formData)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -94,12 +108,12 @@ export async function resetPassword({token, formData } : { token: string, formDa
 export async function getOptionsCareesStudent() {
     try {
         const url = `/auth/student/options-careers`
-        const {data} = await api(url)
+        const { data } = await api(url)
         const result = optionsCareerStudentSchema.safeParse(data)
-        if(result.success){
+        if (result.success) {
             return result.data
         }
-        
+
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -109,15 +123,15 @@ export async function getOptionsCareesStudent() {
 }
 
 
-export async function getProfile(userId : number) {
+export async function getProfile(userId: number) {
     try {
         const url = `/user/get-profile/${userId}`
-        const {data} = await api(url)
+        const { data } = await api(url)
         const result = profileSchema.safeParse(data)
-        if(result.success){
+        if (result.success) {
             return result.data
         }
-        
+
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
