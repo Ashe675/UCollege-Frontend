@@ -7,7 +7,7 @@ const InitialView = lazy(() => import("./views/admission/InitialView"));
 const Inscripcion = lazy(() => import("./views/admission/Inscripcion"));
 const Examenes = lazy(() => import("./views/admission/Examenes"));
 const Resultados = lazy(() => import("./views/admission/Resultados"));
-const Login = lazy(() => import("./views/auth/Login"));
+const Login = lazy(() => import("./views/auth/login"));
 import SpinnerFull from "./components/spinner/SpinnerFull";
 import { PrivateRoutes, PublicRoutes } from "./data/routes";
 import Protected from "./views/private/Protected";

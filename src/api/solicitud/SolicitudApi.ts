@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import api  from "@/lib/axios";
-import { CancelSchema, ChangeCenterSchema, ChangeCarerrSchema, RepPaymentSchema, ExceptSchema } from "@/types/solicitud";
+import { CancelSchema, ChangeCenterSchema, ChangeCarerrSchema, RepPaymentSchema, ExceptSchema } from "@/types/request";
 import { isAxiosError } from 'axios';
 
 // Función para crear solicitud de cancelación
