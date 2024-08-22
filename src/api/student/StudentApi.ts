@@ -183,3 +183,72 @@ export async function gradeToTeacher({grade, sectionId}:{ sectionId : number, gr
         throw new Error("El Servidor no responde")
     }
 }
+
+
+export async function getCertificated() {
+    try {
+        const url = `/student/certificate`
+
+        const { data } = await api(url, { responseType: 'blob' })
+        return data
+    } catch (error) {
+        console.log(error)
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            if (isAxiosError(error) && error.response.data?.errors) {
+                throw new Error(error.response.data.errors[0].msg)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+
+export async function getRequestsCancelSectionStudent() {
+    try {
+        const url = `/solicitudes/cancelaciones`
+
+        const { data } = await api(url)
+        return data
+    } catch (error) {
+        console.log(error)
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            if (isAxiosError(error) && error.response.data?.errors) {
+                throw new Error(error.response.data.errors[0].msg)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+
+export async function sendRequestCancelSections({sectionsIds, justificacion, file}:{ sectionsIds : number[], justificacion : string, file : File }) {
+    try {
+        const url = `/solicitudes/cancelaciones`
+        const formData = new FormData()
+        formData.append('sectionIds', sectionsIds.join(','))
+        formData.append('justificacion', justificacion)
+        formData.append('files', file)
+       
+        const { data } = await api.post(url, formData)
+        return data.message
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            if (isAxiosError(error) && error.response.data?.errors) {
+                throw new Error(error.response.data.errors[0].msg)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}

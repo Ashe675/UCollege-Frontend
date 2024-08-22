@@ -130,9 +130,9 @@ export default function CancelExcepcionalContent() {
           <TabPanels
             className={`w-full  h-full py-3 grid grid-cols-1 lg:grid-cols-2 gap-3`}
           >
-            <TabPanel className={``}>
+            <TabPanel className={` space-y-6`}>
               {pendings?.length ? (
-                data.data.map((request) => (
+                pendings.map((request) => (
                   <RequestCard
                     setSetRequestSelected={setRequestSelected}
                     key={request.id}
@@ -145,7 +145,7 @@ export default function CancelExcepcionalContent() {
                 </div>
               )}
             </TabPanel>
-            <TabPanel>
+            <TabPanel className={'space-y-6'}>
               {data.data.length > 0 ? (
                 data.data.map((request) => (
                   <RequestCard

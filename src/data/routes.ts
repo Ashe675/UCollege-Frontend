@@ -23,6 +23,7 @@ export const PrivateRoutes = {
     ADMIN_ADD_PROCESS : 'admin/calendarizacion/nuevo-proceso',
     STUDENT_ENROLL : 'estudiante/matricula',
     STUDENT_GRADES : 'estudiante/calificaciones',
+    STUDENT_REQUESTS : 'estudiante/solicitudes',
     STUDENT_ENROLL_ADD_CLASS : 'estudiante/matricula/matricular-clase',
     STUDENT_ENROLL_CANCEL_CLASS : 'estudiante/matricula/cancelar-clase',
     COORDINATOR_HISTORY: 'coordinator/historiales-academicos',

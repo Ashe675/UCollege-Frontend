@@ -31,7 +31,7 @@ export async function getChargeAcademicPDF() {
 
 export async function getRequestCancelSection() {
     try {
-        const url = `/solicitudes/cancelaciones`
+        const url = `/solicitudes/cancelaciones-coordinator`
         const { data } = await api(url)
         const result = solicitudCancelSeccionSchema.safeParse(data)
         if (result.success) {
@@ -74,7 +74,7 @@ export async function dennyRequestChangeClass(solicitudId: number) {
 
 export async function getRequestChangeCareer() {
     try {
-        const url = `/solicitudes/carreras`
+        const url = `/solicitudes/carreras-coodinator`
         const { data } = await api(url)
         const result = changeCareerSchemaArray.safeParse(data)
         if (result.success) {
