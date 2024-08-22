@@ -16,16 +16,21 @@ import {
     IconCalendarMonth,
 } from "@tabler/icons-react";
 
-const teacherItems = [{
-    icon: IconMessageCircleFilled,
-    text: "Chat",
-    link: PrivateRoutes.CHAT,
-},
-// {
-//     icon: IconGraphFilled,
-//     text: "Calificaciones",
-//     link: "docente/calificaciones",
-// },
+const teacherItems = [
+    {
+        icon: IconUserFilled,
+        text: "Mi Perfil",
+        link: PrivateRoutes.PROFILE,
+    }, {
+        icon: IconMessageCircleFilled,
+        text: "Chat",
+        link: PrivateRoutes.CHAT,
+    },
+    // {
+    //     icon: IconGraphFilled,
+    //     text: "Calificaciones",
+    //     link: "docente/calificaciones",
+    // },
 ]
 
 export const menuItems = {
@@ -35,12 +40,7 @@ export const menuItems = {
                 icon: IconHomeFilled,
                 text: "Inicio",
                 link: `/${PrivateRoutes.PRIVATE}`,
-            },
-            {
-                icon: IconUserFilled,
-                text: "Mi Perfil",
-                link: PrivateRoutes.PROFILE,
-            },
+            }
         ],
         dropdown: {
             name: "",
@@ -50,6 +50,12 @@ export const menuItems = {
     },
     STUDENT: {
         itemsPrincipals: [
+
+            {
+                icon: IconUserFilled,
+                text: "Mi Perfil",
+                link: PrivateRoutes.PROFILE,
+            },
             {
                 icon: IconMessageCircleFilled,
                 text: "Chat",
@@ -92,7 +98,7 @@ export const menuItems = {
                 {
                     icon: IconClipboardList,
                     text: "Periodo",
-                    link:  PrivateRoutes.DEPARTMENT_HEAD_PERIOD,
+                    link: PrivateRoutes.DEPARTMENT_HEAD_PERIOD,
                 },
                 {
                     icon: IconNotes,
@@ -105,12 +111,12 @@ export const menuItems = {
                     link: PrivateRoutes.DEPARTMENT_HEAD_HISTORY
                 },
                 {
-                    icon: IconCalendarUser ,
+                    icon: IconCalendarUser,
                     text: "Docentes",
                     link: PrivateRoutes.DEPARTMENT_HEAD_TEACHERS,
                 },
                 {
-                    icon: IconChartBar ,
+                    icon: IconChartBar,
                     text: "Estadísticas",
                     link: PrivateRoutes.DEPARTMENT_HEAD_STATS,
                 },

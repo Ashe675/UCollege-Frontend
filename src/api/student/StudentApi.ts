@@ -111,3 +111,35 @@ export async function postNewImage({avatar, image}:{ avatar : boolean, image : F
         throw new Error("El Servidor no responde")
     }
 }
+
+export async function deleteImage({ imageId} : { imageId : number }) {
+    try {
+        const url = `/student/delete/image/${imageId}`
+        const { data } = await api.delete(url)
+        return data.message
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}
+
+export async function deleteImageProfile() {
+    try {
+        const url = `/student/delete/avatar`
+        const { data } = await api.delete(url)
+        return data.message
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            if(error.response.data.error){
+                throw new Error(error.response.data.error)
+            }
+            throw new Error(error.response.data.message)
+        }
+        throw new Error("El Servidor no responde")
+    }
+}

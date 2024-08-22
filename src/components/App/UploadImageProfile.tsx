@@ -31,6 +31,9 @@ export default function UploadImageProfile({ avatar, userId, setUploadFile }: Pr
       queryClient.invalidateQueries({
         queryKey: ["user", "profile", userId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
     },
     onError: (error) => {
       toast.update(toastId.current!, {
@@ -65,9 +68,9 @@ export default function UploadImageProfile({ avatar, userId, setUploadFile }: Pr
             const aspectRatio = width / height;
 
             if (avatar && aspectRatio !== 1) {
-              setErrors((prevErrors) => [
+              return setErrors((prevErrors) => [
                 ...prevErrors,
-                `La imagen ${file.name} tiene una proporción no permitida. Las foro de perfil solo pueden ser cuadradas 1:1.`,
+                `La imagen ${file.name} tiene una proporción no permitida. La foto de perfil solo puede ser cuadrada 1:1.`,
               ]);
             }
 
@@ -126,7 +129,7 @@ export default function UploadImageProfile({ avatar, userId, setUploadFile }: Pr
       {!previewFile && (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-md p-6 transition-colors h-[150px] 
+          className={`border-2 border-dashed mx-auto p-6 transition-colors h-[150px] ${avatar ? ' my-5 ' : 'rounded-md'}
                     ${
                       isDragActive
                         ? "border-blue-500 bg-blue-100"
@@ -154,23 +157,23 @@ export default function UploadImageProfile({ avatar, userId, setUploadFile }: Pr
         </div>
       )}
       {previewFile && (
-        <div className=" w-full max-w-3xl mx-aut border flex-col flex border-dashed border-blue-500 bg-blue-100  p-3 rounded-md">
+        <div className={`${avatar ? '  w-72 mx-auto' : ' max-w-3xl w-full' } rounded-md  mx-auto border flex-col flex border-dashed border-blue-500 bg-blue-100  p-3 `}>
           <img
-            className="max-h-[380px] object-contain w-full shadow-sm mx-auto relative bottom-0 max-w-2xl rounded-md bg-black mt-5"
+            className={` ${avatar ? ' size-36 rounded-full' : ' max-h-[380px] max-w-2xl rounded-md w-full' } object-contain  shadow-sm mx-auto relative bottom-0  bg-black mt-5`}
             src={URL.createObjectURL(previewFile)}
           />
           <div className="flex justify-between mt-4 flex-wrap gap-2">
             <button
               onClick={handleUploadImage}
               disabled={acceptedFiles.length === 0}
-              className="bg-blue-500 w-full sm:max-w-40 justify-center p-2 rounded-sm hover:bg-blue-600 text-white uppercase font-semibold flex items-center"
+              className="bg-blue-500 w-full sm:max-w-40 mx-auto  justify-center p-2 rounded-sm hover:bg-blue-600 text-white uppercase font-semibold flex items-center"
             >
               <IconUpload stroke={2} className="mr-2" />
               Publicar
             </button>
             <button
               onClick={removePreviewFile}
-              className="bg-red-500 p-2  w-full sm:max-w-40  justify-center rounded-sm hover:bg-red-600 text-white  uppercase font-semibold flex items-center"
+              className="bg-red-500 p-2  w-full sm:max-w-40 mx-auto  justify-center rounded-sm hover:bg-red-600 text-white  uppercase font-semibold flex items-center"
             >
               <IconTrash className="mr-2" />
               Quitar

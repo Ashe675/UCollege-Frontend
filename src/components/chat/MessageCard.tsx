@@ -94,8 +94,8 @@ export default function MessageCard({ msg }: MessageCardProps) {
         ) : (
           <div
             className={`  ${
-              isTheSameUser ? "bg-sky-500" : "bg-indigo-500"
-            } shadow-md  px-3 py-1 text-white rounded-xl text-center`}
+              isTheSameUser ? "bg-sky-500" : msg.sender.role === 'ADMIN' ? "bg-rose-500" : "bg-indigo-500"
+            } shadow-md  px-3 py-1 text-white rounded-full text-center`}
           >
             {msg.body}
           </div>

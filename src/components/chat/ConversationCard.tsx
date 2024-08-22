@@ -20,8 +20,8 @@ type ConversationCardProps = {
 export default function ConversationCard({
   newMessageInConversation,
   conversation,
-  // setNewMessageInConversation,
-}: ConversationCardProps) {
+}: // setNewMessageInConversation,
+ConversationCardProps) {
   const navigate = useNavigate();
   const { socket } = useSocketStore();
   const user = useUserStore((state) => state.user);
@@ -34,12 +34,12 @@ export default function ConversationCard({
     (msg) => msg.conversationId === conversation.id
   );
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [lastOnline, setLastOnline] = useState(member?.user.lastOnline);
 
   useEffect(() => {
-    setLastOnline(member?.user.lastOnline)
-  },[conversation, member])
+    setLastOnline(member?.user.lastOnline);
+  }, [conversation, member]);
 
   useEffect(() => {
     if (socket) {
@@ -52,10 +52,11 @@ export default function ConversationCard({
         isOnline: boolean;
         lastOnline: string;
       }) => {
+        console.log(userId, isOnline, lastOnline);
         if (member?.user.id == userId) {
           setLastOnline(isOnline ? undefined : lastOnline);
-          queryClient.invalidateQueries({queryKey : ["contacts"]})
-          queryClient.invalidateQueries({queryKey : ["conversations"]})
+          queryClient.invalidateQueries({ queryKey: ["contacts"] });
+          queryClient.invalidateQueries({ queryKey: ["conversations"] });
         }
       };
       socket.on("userStatusChanged", handleUserStatusChanged);
@@ -65,11 +66,7 @@ export default function ConversationCard({
     }
   }, [socket, member, queryClient]);
 
-  const status = isGroup
-    ? undefined
-    : lastOnline
-    ? "offline"
-    : "online";
+  const status = isGroup ? undefined : lastOnline ? "offline" : "online";
 
   return (
     <div
@@ -85,7 +82,13 @@ export default function ConversationCard({
       <div className=" min-w-10 flex items-center justify-center">
         <Avatar
           rounded
-          img={isGroup ? "/group-profile.jpg" :  member?.user.images.length ? member?.user.images[0]?.url : ''}
+          img={
+            isGroup
+              ? "/group-profile.jpg"
+              : member?.user.images?.length
+              ? member?.user.images[0]?.url
+              : ""
+          }
           size={"md"}
           status={status}
           statusPosition="bottom-right"
@@ -97,10 +100,10 @@ export default function ConversationCard({
             {isGroup
               ? conversation.groupTitle
               : getFullName(
-                  member?.user.person.firstName,
-                  member?.user.person.middleName,
-                  member?.user.person.lastName,
-                  member?.user.person.secondLastName
+                  member?.user.person?.firstName,
+                  member?.user.person?.middleName,
+                  member?.user.person?.lastName,
+                  member?.user.person?.secondLastName
                 )}
           </span>
           {!isGroup && (

@@ -133,9 +133,12 @@ export default function CurrentChat() {
   useEffect(() => {
     setMessageList(data);
     if (data?.length) {
-      setLastOnlineMember(data[0].sender.user.lastOnline);
+      const member = data.find(msg => msg.sender.userId !== user.id)
+      if(member){
+        setLastOnlineMember(member.sender.user.lastOnline);
+      }
     }
-  }, [data]);
+  }, [data, user]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
